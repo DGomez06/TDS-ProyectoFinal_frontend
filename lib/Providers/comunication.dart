@@ -9,6 +9,8 @@ class ContainerVisibility extends ChangeNotifier {
   bool get hideContainer => _hideContainer;
   String get imageUrl => _imageUrl;
 
+  
+
 
   void setImageUrl(String url) {
     _imageUrl = url;

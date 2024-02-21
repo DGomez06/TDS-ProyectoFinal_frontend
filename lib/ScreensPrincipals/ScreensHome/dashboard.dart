@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/find.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/information.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/models/products.dart';
@@ -16,7 +17,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final imageUrlProvider = Provider.of<ContainerVisibility>(context);
-    final String imageUrl = imageUrlProvider.imageUrl;
     return Scaffold(
       body: Center(
         child: Column(
@@ -30,7 +30,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: const Color(0xFFc2c2c2), width: 1.2),
+                    border:
+                        Border.all(color: const Color(0xFFc2c2c2), width: 1.2),
                     boxShadow: const [
                       BoxShadow(
                         color: Color(0xFFc2c2c2),
@@ -39,42 +40,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ],
                   ),
-                  child: Expanded(
-                    child: ListView.builder(
-                      itemCount: propertyListModel.addedProperties.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: const Color(0xFFc2c2c2)),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0xFFc2c2c2),
-                                blurRadius: 20,
-                                offset: Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                radius: 30,
-                                backgroundImage: NetworkImage(imageUrl),),
-                              title: Text(propertyListModel.addedProperties[index].nombre),
-                              subtitle: Text(propertyListModel.addedProperties[index].direccion),
-                              trailing: const Icon(Icons.arrow_forward_ios),
-                              onTap: () {
-                                _showDialog(propertyListModel.addedProperties[index]);
-                              },
-                              // Otros detalles de la propiedad
+                  child: ListView.builder(
+                    itemCount: propertyListModel.addedProperties.length,
+                    itemBuilder: (context, index) {
+                      final imageUrl = imageUrlProvider.imageUrl;
+                      return Container(
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: const Color(0xFFc2c2c2)),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0xFFc2c2c2),
+                              blurRadius: 20,
+                              offset: Offset(0, 10),
                             ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 30,
+                              backgroundImage:
+                                  NetworkImage(propertyListModel.addedProperties[index].imageUrl),
+                            ),
+                            title: Text(propertyListModel
+                                .addedProperties[index].nombre),
+                            subtitle: Text(propertyListModel
+                                .addedProperties[index].direccion),
+                            trailing: const Icon(Icons.arrow_forward_ios),
+                            onTap: () {
+                              _showDialog(
+                                  propertyListModel.addedProperties[index]);
+                            },
+                            // Otros detalles de la propiedad
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
@@ -89,7 +94,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        final imageUrlProvider = Provider.of<ContainerVisibility>(context, listen: false);
+        final imageUrlProvider =
+            Provider.of<ContainerVisibility>(context, listen: false);
         return AlertDialog(
           title: const Text('¿Qué desea hacer?'),
           content: Column(
@@ -115,65 +121,68 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       )
                     ]),
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) {
-                          return DetailScreen(
-                            property: property,
-                            imageUrl: imageUrlProvider.imageUrl,
-                          );
-                        },
-                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                          var begin = const Offset(0.0, 1.0);
-                          var end = Offset.zero;
-                          var curve = Curves.ease;
-                          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                        transitionDuration: const Duration(milliseconds: 500),
-                      ),
-                    );
-                  },
-                  child: Text('Detalles',
-                      style: GoogleFonts.yaldevi(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black))),
-              ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                margin: const EdgeInsets.only(top: 20),
-                width: 200,
-                height: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xFF26C2E4), Color(0x8026C2E4)]),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.7),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(0, 3),
-                      )
-                    ]),
-                child: TextButton(
                     onPressed: () {
-                      // Acción para "Contactar"
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return DetailScreen(
+                              property: property,
+                              imageUrl: imageUrlProvider.imageUrl,
+                            );
+                          },
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            var begin = const Offset(0.0, 1.0);
+                            var end = Offset.zero;
+                            var curve = Curves.ease;
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 500),
+                        ),
+                      );
                     },
-                    child: Text('Contactar',
+                    child: Text('Detalles',
                         style: GoogleFonts.yaldevi(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black)))),
+                            color: Colors.black))),
+              ),
+              Container(
+                  alignment: Alignment.bottomCenter,
+                  margin: const EdgeInsets.only(top: 20),
+                  width: 200,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Color(0xFF26C2E4), Color(0x8026C2E4)]),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.7),
+                          spreadRadius: 1,
+                          blurRadius: 2,
+                          offset: const Offset(0, 3),
+                        )
+                      ]),
+                  child: TextButton(
+                      onPressed: () {
+                        // Acción para "Contactar"
+                      },
+                      child: Text('Contactar',
+                          style: GoogleFonts.yaldevi(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)))),
             ],
           ),
         );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/dashboard.dart';
 import 'package:lease_managment/models/products.dart';
@@ -17,9 +18,10 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  List<Properties> addedProperties = [];
+  List<Properties> addedProperties = [];  
   @override
   Widget build(BuildContext context) {
+    String numberformat = NumberFormat('#,###').format(widget.property.precioAlquiler);
     return Scaffold(
       backgroundColor: const Color(0xFFf8f8f8),
       body: Center(
@@ -85,7 +87,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                       TextSpan(
-                        text: '${widget.property.precioAlquiler}',
+                        text: 'RD\$ $numberformat',
                         style: const TextStyle(
                           color: Colors.blue,
                           fontSize: 15,

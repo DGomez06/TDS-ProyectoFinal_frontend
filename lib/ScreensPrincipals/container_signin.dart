@@ -85,10 +85,9 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                                 border: InputBorder.none,
                                 hintText: 'Contraseña',
                                 hintStyle: GoogleFonts.yaldevi(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black))
-                                ),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black))),
                       ),
                     ),
                     AnimatedOpacity(
@@ -122,38 +121,56 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                             onPressed: () {
                               Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const ScreenHome(),
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const ScreenHome(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      const begin = Offset(0.0, 1.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.ease;
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+                                      return SlideTransition(
+                                        position: animation.drive(tween),
+                                        child: child,
+                                      );
+                                      
+                                    },
+                                    transitionDuration: const Duration(
+                                        milliseconds: 1000)
                                   ));
                             },
                             child: Center(
-                              child: Text('Iniciar Sesion',
-                                style: GoogleFonts.yaldevi(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black))
-                                ),
+                                child: Text('Iniciar Sesion',
+                                    style: GoogleFonts.yaldevi(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black))),
                           ),
                         ),
                       ),
                     ),
-                AnimatedOpacity(
-                  duration: Duration(milliseconds: containerVisibility.hideContainer ? 200 : 2000),
-                  opacity: containerVisibility.hideContainer ? 0.0 : 1.0,
-                  child: AnimatedContainer(
-                      duration: const Duration(seconds: 2),
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Center(
-                        child: Text('Olvidaste la contraseña?',
-                          style: GoogleFonts.yaldevi(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            decoration: TextDecoration.underline)),
-                  )),
-                ),
-              ]),
-            )),
+                    AnimatedOpacity(
+                      duration: Duration(
+                          milliseconds:
+                              containerVisibility.hideContainer ? 200 : 2000),
+                      opacity: containerVisibility.hideContainer ? 0.0 : 1.0,
+                      child: AnimatedContainer(
+                          duration: const Duration(seconds: 2),
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Center(
+                            child: Text('Olvidaste la contraseña?',
+                                style: GoogleFonts.yaldevi(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.underline)),
+                          )),
+                    ),
+                  ]),
+                )),
           );
         },
       ),

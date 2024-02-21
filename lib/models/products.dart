@@ -15,6 +15,7 @@ class Properties {
   final int precioAlquiler;
   final String cantHabitaciones;
   final TipoDePropiedad tipoDePropiedad;
+  String imageUrl = '';
 
   Properties({
     required this.id,
@@ -25,6 +26,7 @@ class Properties {
     required this.precioAlquiler,
     required this.cantHabitaciones,
     required this.tipoDePropiedad,
+    required this.imageUrl,
   });
 
   factory Properties.fromJson(Map<String, dynamic> json) => Properties(
@@ -35,7 +37,8 @@ class Properties {
         cantBanos: json["cant_banos"],
         precioAlquiler: json["precio_alquiler"],
         cantHabitaciones: json["cant_habitaciones"],
-        tipoDePropiedad: tipoDePropiedadValues.map[json["tipo_de_propiedad"]]!,
+        tipoDePropiedad: tipoDePropiedadValues.map[json["tipo_de_propiedad"]]!, 
+        imageUrl: '',
       );
 
   Map<String, dynamic> toJson() => {
