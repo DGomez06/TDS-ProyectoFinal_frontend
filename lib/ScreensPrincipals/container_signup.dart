@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Consumer<ContainerVisibility>(
+      child: Consumer<StatusProvider>(
         builder: (context, containerVisibility, _) {
           return AnimatedContainer(
             margin: const EdgeInsets.only(top: 10),
@@ -44,10 +45,12 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                           border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              icon: const Icon(
-                                Icons.perm_identity,
-                                size: 40,
+                              icon: SvgPicture.asset(
+                                'assets/icons/User.svg',
+                                height: 30,
+                                width: 30,
                               ),
+                              
                               border: InputBorder.none,
                               hintText: 'Nombre',
                               hintStyle: GoogleFonts.yaldevi(
@@ -72,9 +75,10 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                           border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              icon: const Icon(
-                                Icons.perm_identity,
-                                size: 40,
+                              icon: SvgPicture.asset(
+                                'assets/icons/User.svg',
+                                height: 30,
+                                width: 30,
                               ),
                               border: InputBorder.none,
                               hintText: 'Apellido',
@@ -100,9 +104,10 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                           border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              icon: const Icon(
-                                Icons.phone_in_talk_outlined,
-                                size: 40,
+                              icon: SvgPicture.asset(
+                                'assets/icons/Phone.svg',
+                                height: 30,
+                                width: 30,
                               ),
                               border: InputBorder.none,
                               hintText: 'Telefono',
@@ -128,9 +133,10 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                           border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              icon: const Icon(
-                                Icons.attach_email_outlined,
-                                size: 40,
+                              icon: SvgPicture.asset(
+                                'assets/icons/Correo.svg',
+                                height: 30,
+                                width: 30,
                               ),
                               border: InputBorder.none,
                               hintText: 'Correo',
@@ -156,10 +162,12 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                           border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
                       child: TextFormField(
                           decoration: InputDecoration(
-                              icon: const Icon(
-                                Icons.lock_outlined,
-                                size: 40,
+                              icon: SvgPicture.asset(
+                                'assets/icons/Password.svg',
+                                height: 30,
+                                width: 30,
                               ),
+                              
                               border: InputBorder.none,
                               hintText: 'Contraseña',
                               hintStyle: GoogleFonts.yaldevi(
@@ -210,7 +218,7 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                               child: Text('Registrate',
                                   style: GoogleFonts.yaldevi(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w600,
                                       color: Colors.black))),
                         ),
                       ),

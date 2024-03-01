@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final properties = propertiesFromJson(jsonString);
+
 import 'dart:convert';
 
 List<Properties> propertiesFromJson(String str) =>
@@ -8,67 +12,63 @@ String propertiesToJson(List<Properties> data) =>
 
 class Properties {
   final int id;
+  final Size size;
   final String nombre;
-  final Tamano tamano;
   final String direccion;
-  final String cantBanos;
-  final int precioAlquiler;
-  final String cantHabitaciones;
-  final TipoDePropiedad tipoDePropiedad;
-  String imageUrl = '';
+  final int numberRooms;
+  final int rentalPrice;
+  final PropertyType propertyType;
+  final int numberBathrooms;
+  //final String imageUrl;
 
   Properties({
     required this.id,
+    required this.size,
     required this.nombre,
-    required this.tamano,
     required this.direccion,
-    required this.cantBanos,
-    required this.precioAlquiler,
-    required this.cantHabitaciones,
-    required this.tipoDePropiedad,
-    required this.imageUrl,
+    required this.numberRooms,
+    required this.rentalPrice,
+    required this.propertyType,
+    required this.numberBathrooms,
+    //this.imageUrl = '',
   });
 
   factory Properties.fromJson(Map<String, dynamic> json) => Properties(
         id: json["id"],
-        nombre: json["nombre"],
-        tamano: tamanoValues.map[json["tamano"]]!,
-        direccion: json["direccion"],
-        cantBanos: json["cant_banos"],
-        precioAlquiler: json["precio_alquiler"],
-        cantHabitaciones: json["cant_habitaciones"],
-        tipoDePropiedad: tipoDePropiedadValues.map[json["tipo_de_propiedad"]]!, 
-        imageUrl: '',
+        size: sizeValues.map[json["Size"]]!,
+        nombre: json["Nombre"],
+        direccion: json["Direccion"],
+        numberRooms: json["NumberRooms"],
+        rentalPrice: json["RentalPrice"],
+        propertyType: propertyTypeValues.map[json["PropertyType"]]!,
+        numberBathrooms: json["NumberBathrooms"],
+       // imageUrl: json["imageUrl"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "nombre": nombre,
-        "tamano": tamanoValues.reverse[tamano],
-        "direccion": direccion,
-        "cant_banos": cantBanos,
-        "precio_alquiler": precioAlquiler,
-        "cant_habitaciones": cantHabitaciones,
-        "tipo_de_propiedad": tipoDePropiedadValues.reverse[tipoDePropiedad],
+        "Size": sizeValues.reverse[size],
+        "Nombre": nombre,
+        "Direccion": direccion,
+        "NumberRooms": numberRooms,
+        "RentalPrice": rentalPrice,
+        "PropertyType": propertyTypeValues.reverse[propertyType],
+        "NumberBathrooms": numberBathrooms,
       };
 }
 
-enum Tamano { grande, mediano, pequeno }
+enum PropertyType { EDIFICIO, PENT_HOUSE, PLANTA }
 
-final tamanoValues = EnumValues({
-  "Grande": Tamano.grande,
-  "Mediano": Tamano.mediano,
-  "Pequeno": Tamano.pequeno
+final propertyTypeValues = EnumValues({
+  "Edificio": PropertyType.EDIFICIO,
+  "PentHouse": PropertyType.PENT_HOUSE,
+  "Planta": PropertyType.PLANTA
 });
 
-enum TipoDePropiedad { casa, edificio, penhouse, planta }
+enum Size { BIG, MEDIUM, SMALL }
 
-final tipoDePropiedadValues = EnumValues({
-  "Casa": TipoDePropiedad.casa,
-  "Edificio": TipoDePropiedad.edificio,
-  "Penhouse": TipoDePropiedad.penhouse,
-  "Planta": TipoDePropiedad.planta
-});
+final sizeValues =
+    EnumValues({"Big": Size.BIG, "Medium": Size.MEDIUM, "Small": Size.SMALL});
 
 class EnumValues<T> {
   Map<String, T> map;
@@ -80,7 +80,12 @@ class EnumValues<T> {
     reverseMap = map.map((k, v) => MapEntry(v, k));
     return reverseMap;
   }
-  
 }
 
+PropertyType propertyTypeFromString(String value) {
+  return propertyTypeValues.map[value] ?? PropertyType.EDIFICIO;
+}
 
+Size sizeFromSting(String value) {
+  return sizeValues.map[value] ?? Size.BIG;
+}

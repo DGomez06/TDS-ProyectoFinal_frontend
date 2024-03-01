@@ -20,7 +20,7 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Consumer<ContainerVisibility>(
+      body: Consumer<StatusProvider>(
         builder: (context, containerVisibility, _) {
       return Container(
           decoration: const BoxDecoration(
@@ -58,7 +58,7 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                             gradient: const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
-                                colors: [Color(0xFF26C2E4), Color(0x8026C2E4)]),
+                                colors: [Color(0x2026C2E4), Color(0xFF26C2E4)]),
                             borderRadius: BorderRadius.circular(100),
                             boxShadow: [
                               BoxShadow(
@@ -109,7 +109,7 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                         backgroundGradient: const LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [Color(0xFF26C2E4), Color(0x8026C2E4)]),
+                            colors: [Color(0x8026C2E4) ,Color(0xFF26C2E4), Color(0x4026C2E4)]),
                         borderColor: Colors.grey,
                         indicatorColor: const Color(0xFFf2f2f2),
                         borderRadius: BorderRadius.circular(25),
@@ -144,7 +144,7 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                             setState(() {
                               value = i;
                             });
-                            Provider.of<ContainerVisibility>(context, listen: false).toggleVisibility();
+                            Provider.of<StatusProvider>(context, listen: false).toggleVisibility();
                           },
                 
                 

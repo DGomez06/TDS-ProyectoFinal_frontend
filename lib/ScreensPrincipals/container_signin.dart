@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/ScreensPrincipals/forgot_password.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +17,7 @@ class _ContainerSignInState extends State<ContainerSignIn> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Consumer<ContainerVisibility>(
+      child: Consumer<StatusProvider>(
         builder: (context, containerVisibility, _) {
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -45,9 +47,10 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                             color: Colors.white),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            icon: const Icon(
-                              Icons.perm_identity,
-                              size: 40,
+                            icon: SvgPicture.asset(
+                              'assets/icons/User.svg',
+                              height: 30,
+                              width: 30,
                             ),
                             border: InputBorder.none,
                             hintText: 'Nombre de usuario',
@@ -78,10 +81,10 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                         ),
                         child: TextFormField(
                             decoration: InputDecoration(
-                                icon: const Icon(
-                                  Icons.lock_outlined,
-                                  size: 40,
-                                ),
+                                icon: SvgPicture.asset(
+                                  'assets/icons/Password.svg',
+                                  height: 30,
+                                  width: 30,),
                                 border: InputBorder.none,
                                 hintText: 'Contraseña',
                                 hintStyle: GoogleFonts.yaldevi(
@@ -146,7 +149,7 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                                 child: Text('Iniciar Sesion',
                                     style: GoogleFonts.yaldevi(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.w600,
                                         color: Colors.black))),
                           ),
                         ),
@@ -161,12 +164,17 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                           duration: const Duration(seconds: 2),
                           padding: const EdgeInsets.only(top: 20),
                           child: Center(
-                            child: Text('Olvidaste la contraseña?',
-                                style: GoogleFonts.yaldevi(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    decoration: TextDecoration.underline)),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
+                              },
+                              child: Text('Olvidaste la contraseña?',
+                                  style: GoogleFonts.yaldevi(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline)),
+                            ),
                           )),
                     ),
                   ]),

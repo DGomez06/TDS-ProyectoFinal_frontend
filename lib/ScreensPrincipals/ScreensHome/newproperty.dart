@@ -1,123 +1,209 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:lease_managment/Fuctions/category_dialog.dart';
+import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/models/products.dart';
+import 'package:provider/provider.dart';
 
 class NewPropertyPage extends StatefulWidget {
-  const NewPropertyPage({super.key});
+  const NewPropertyPage({Key? key}) : super(key: key);
 
   @override
   State<NewPropertyPage> createState() => _NewPropertyPageState();
 }
 
 class _NewPropertyPageState extends State<NewPropertyPage> {
-  String name = '';
-  String address = '';
-  String propertyType = '';
-  double size = 0.0;
-  int numberOfRooms = 0;
-  int numberOfBathrooms = 0;
-  double rentalPrice = 0.0;
+  final TextEditingController _nombreController = TextEditingController();
+  final TextEditingController _direccionController = TextEditingController();
+  final TextEditingController _numberRoomsController = TextEditingController();
+  final TextEditingController _rentalPriceController = TextEditingController();
+  final TextEditingController _numberBathroomsController =
+      TextEditingController();
+
+  late PropertyType _selectedPropertyType;
+  late Size _selectedSize;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedPropertyType = PropertyType.EDIFICIO;
+    _selectedSize = Size.BIG;
+  }
+
+  String _formatNumber(String value) {
+    if (value.isEmpty) {
+      return '0';
+    } else {
+      final formatter = NumberFormat('#,###');
+      return formatter.format(int.parse(value.replaceAll(',', '')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Agregar Post'),
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical:80.0, horizontal: 20),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Name'),
+              DropdownButtonFormField<PropertyType>(
+                value: _selectedPropertyType,
                 onChanged: (value) {
                   setState(() {
-                    name = value;
+                    _selectedPropertyType = value!;
                   });
                 },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Address'),
-                onChanged: (value) {
-                  setState(() {
-                    address = value;
-                  });
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Property Type'),
-                onChanged: (value) {
-                  setState(() {
-                    propertyType = value;
-                  });
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Size'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    size = double.parse(value);
-                  });
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Number of Rooms'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    numberOfRooms = int.parse(value);
-                  });
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Number of Bathrooms'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    numberOfBathrooms = int.parse(value);
-                  });
-                },
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Rental Price'),
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    rentalPrice = double.parse(value);
-                  });
-                },
-              ),
-              const SizedBox(height: 16.0),
-              Container(
-                  alignment: Alignment.bottomCenter,
-                  margin: const EdgeInsets.only(top: 20),
-                  width: 200,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xFF26C2E4), Color(0x8026C2E4)]),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.7),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: const Offset(0, 3),
-                      )
-                    ]),
-                  child: TextButton(onPressed: (){
-                    Navigator.pop(context);
-                  }, child: Text('Guardar',
-                    style: GoogleFonts.yaldevi(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black))
-                  )
+                items: PropertyType.values.map((type) {
+                  return DropdownMenuItem<PropertyType>(
+                    value: type,
+                    child: Text(propertyTypeValues.reverse[type]!),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(
+                  labelText: 'Tipo de Propiedad',
                 ),
+              ),
+              const SizedBox(height: 10),
+              DropdownButtonFormField<Size>(
+                value: _selectedSize,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedSize = value!;
+                  });
+                },
+                items: Size.values.map((size) {
+                  return DropdownMenuItem<Size>(
+                    value: size,
+                    child: Text(sizeValues.reverse[size]!),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(
+                  labelText: 'Tamaño',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _nombreController,
+                decoration: const InputDecoration(
+                  labelText: 'Nombre',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _direccionController,
+                decoration: const InputDecoration(
+                  labelText: 'Dirección',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _numberRoomsController,
+                decoration: const InputDecoration(
+                  labelText: 'Número de Habitaciones',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _rentalPriceController,
+                decoration: const InputDecoration(
+                  labelText: 'Precio de Alquiler',
+                ),
+                inputFormatters: [ThousandsSeparatorInputFormatter()],
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  setState(() {
+                    _rentalPriceController.text = _formatNumber(value);
+                    _rentalPriceController.selection =
+                        TextSelection.fromPosition(
+                      TextPosition(offset: _rentalPriceController.text.length),
+                    );
+                    print(_rentalPriceController.text);
+                  });
+                },
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _numberBathroomsController,
+                decoration: const InputDecoration(
+                  labelText: 'Número de Baños',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _submitPost(context);
+                },
+                child: const Text('Agregar Post'),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void _submitPost(BuildContext context) async {
+    final propertiesProvider =
+        Provider.of<StatusProvider>(context, listen: false);
+
+    // Crear un nuevo post (propiedad)
+    final newProperty = Properties(
+      id: propertiesProvider.propertiesData.length + 1,
+      size: _selectedSize,
+      nombre: _nombreController.text,
+      direccion: _direccionController.text,
+      numberRooms: int.tryParse(_numberRoomsController.text) ?? 0,
+      rentalPrice:
+          int.tryParse(_rentalPriceController.text.replaceAll(',', '')) ?? 0,
+      propertyType: _selectedPropertyType,
+      numberBathrooms: int.tryParse(_numberBathroomsController.text) ?? 0,
+    );
+
+    // Insertar el nuevo post al principio de la lista de propiedades
+    await propertiesProvider.apiClient.addNewProperty(newProperty);
+
+    // Reiniciar los controladores de texto después de enviar el post
+    _nombreController.clear();
+    _direccionController.clear();
+    _numberRoomsController.clear();
+    _rentalPriceController.clear();
+    _numberBathroomsController.clear();
+    setState(() {
+      _selectedPropertyType = PropertyType.EDIFICIO;
+      _selectedSize = Size.BIG;
+    });
+
+    await propertiesProvider.apiClient.fetchProperties();
+    await propertiesProvider.fetchPropertiesAndImages();
+
+    // Mostrar un SnackBar para indicar que se ha agregado correctamente el nuevo post
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Se ha agregado correctamente el nuevo post'),
+        duration: Duration(seconds: 2), // Duración del mensaje
+      ),
+    );
+  }
+}
+
+class ThousandsSeparatorInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // Eliminar comas
+    String newText = newValue.text.replaceAll(',', '');
+
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
     );
   }
 }
