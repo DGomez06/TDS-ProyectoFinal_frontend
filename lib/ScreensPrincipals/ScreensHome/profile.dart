@@ -172,7 +172,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     trailing: const Icon(Icons.arrow_forward_ios_rounded,
                         color: Color(0xFFD3D2D2)),
                     onTap: () {
-                      
                       DialogManager.confirmationProperty(context);
                     },
                   ),

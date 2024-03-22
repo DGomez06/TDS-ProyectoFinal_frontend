@@ -1,17 +1,31 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/Fuctions/functionreal.dart';
 import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/models/user.dart';
 import 'package:provider/provider.dart';
 
 class ContainerSignUp extends StatefulWidget {
-  const ContainerSignUp({Key? key}) : super(key: key);
+  const ContainerSignUp({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ContainerSignUp> createState() => _ContainerSignUpState();
 }
 
 class _ContainerSignUpState extends State<ContainerSignUp> {
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  ApiConexion apiConexion = ApiConexion();
+
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -25,7 +39,6 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
             height: containerVisibility.hideContainer ? 450 : 0,
             color: Colors.transparent,
             child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -41,16 +54,18 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                       padding: const EdgeInsets.only(left: 30),
                       width: containerVisibility.hideContainer ? 340 : 0,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(17),
-                          border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
+                        borderRadius: BorderRadius.circular(17),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                        color: Colors.white,
+                      ),
                       child: TextFormField(
+                          controller: _nameController,
                           decoration: InputDecoration(
                               icon: SvgPicture.asset(
                                 'assets/icons/User.svg',
                                 height: 30,
                                 width: 30,
                               ),
-                              
                               border: InputBorder.none,
                               hintText: 'Nombre',
                               hintStyle: GoogleFonts.yaldevi(
@@ -71,9 +86,12 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                       padding: const EdgeInsets.only(left: 30),
                       width: containerVisibility.hideContainer ? 340 : 0,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(17),
-                          border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
+                        borderRadius: BorderRadius.circular(17),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                        color: Colors.white,
+                      ),
                       child: TextFormField(
+                          controller: _lastNameController,
                           decoration: InputDecoration(
                               icon: SvgPicture.asset(
                                 'assets/icons/User.svg',
@@ -100,9 +118,12 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                       padding: const EdgeInsets.only(left: 30),
                       width: containerVisibility.hideContainer ? 340 : 0,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(17),
-                          border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
+                        borderRadius: BorderRadius.circular(17),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                        color: Colors.white,
+                      ),
                       child: TextFormField(
+                          controller: _phoneController,
                           decoration: InputDecoration(
                               icon: SvgPicture.asset(
                                 'assets/icons/Phone.svg',
@@ -129,9 +150,12 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                       padding: const EdgeInsets.only(left: 30),
                       width: containerVisibility.hideContainer ? 340 : 0,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(17),
-                          border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
+                        borderRadius: BorderRadius.circular(17),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                        color: Colors.white,
+                      ),
                       child: TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                               icon: SvgPicture.asset(
                                 'assets/icons/Correo.svg',
@@ -158,16 +182,18 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                       padding: const EdgeInsets.only(left: 30),
                       width: containerVisibility.hideContainer ? 340 : 0,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(17),
-                          border: Border.all(width: 0.5, color: Colors.grey), color: Colors.white,),
+                        borderRadius: BorderRadius.circular(17),
+                        border: Border.all(width: 0.5, color: Colors.grey),
+                        color: Colors.white,
+                      ),
                       child: TextFormField(
+                          controller: _passwordController,
                           decoration: InputDecoration(
                               icon: SvgPicture.asset(
                                 'assets/icons/Password.svg',
                                 height: 30,
                                 width: 30,
                               ),
-                              
                               border: InputBorder.none,
                               hintText: 'Contraseña',
                               hintStyle: GoogleFonts.yaldevi(
@@ -205,6 +231,7 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                         fit: BoxFit.contain,
                         child: TextButton(
                           onPressed: () {
+                            registerUser();
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -231,5 +258,27 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
         },
       ),
     );
+  }
+
+  void registerUser() async{
+    try{
+      if (_nameController.text.isEmpty ||
+        _lastNameController.text.isEmpty ||
+        _phoneController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _passwordController.text.isEmpty) {
+      return;
+    }
+    final user = User(
+        firstName: _nameController.text,
+        lastName: _lastNameController.text,
+        phone: _phoneController.text,
+        email: _emailController.text,
+        password: _passwordController.text);
+
+    await apiConexion.registerUserAndGetToken(user);
+    }catch(e){
+      throw Exception('Error al registrar el usuario: $e');
+    }
   }
 }

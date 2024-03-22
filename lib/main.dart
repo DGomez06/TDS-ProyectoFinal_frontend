@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Asegura que los plugins estén inicializados
+  SharedPreferences.getInstance(); // Inicializa SharedPreferences
   runApp(
     ChangeNotifierProvider(
       create: (context) => StatusProvider(),
-      child: const MyApp(),
+      child: const MyApp(), // Pasa prefs como argumento a MyApp
     )
   );
 }

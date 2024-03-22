@@ -25,25 +25,25 @@ Future<List<Properties>> fetchProperties() async {
 List<Properties> properties = [];
 
 // Función para agregar una nueva propiedad
-Future<void> addNewProperty(Properties newProperty) async {
-  try {
-    const url = 'https://retoolapi.dev/Z5Zyc2/data';
-    final headers = {'Content-Type': 'application/json'};
-    final body = jsonEncode(newProperty.toJson());
-    final response = await _dio.post(url, data: body, options: Options(headers: headers));
+  Future<void> addNewProperty(Properties newProperty) async {
+    try {
+      const url = 'https://retoolapi.dev/Z5Zyc2/data';
+      final headers = {'Content-Type': 'application/json'};
+      final body = jsonEncode(newProperty.toJson());
+      final response = await _dio.post(url, data: body, options: Options(headers: headers));
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Nueva propiedad agregada correctamente');
-        final List<Properties> updatedList = await fetchProperties();
-        properties = updatedList;
-      } else {
-        throw Exception('Error al agregar la propiedad: ${response.statusCode}');
-      }
-  } catch (e) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+          print('Nueva propiedad agregada correctamente');
+          final List<Properties> updatedList = await fetchProperties();
+          properties = updatedList;
+        } else {
+          throw Exception('Error al agregar la propiedad: ${response.statusCode}');
+        }
+    } catch (e) {
 
-    throw Exception('Error al agregar la propiedad: $e');
+      throw Exception('Error al agregar la propiedad: $e');
+    }
   }
-}
 
 
   Future<List<String>> fetchRandomImageUrls(int count) async {
@@ -63,6 +63,7 @@ Future<void> addNewProperty(Properties newProperty) async {
       throw Exception('Error al cargar las imágenes aleatorias: $e');
     }
   }
+
 
 
 }

@@ -139,7 +139,7 @@ class _NewPropertyPageState extends State<NewPropertyPage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  _submitPost(context);
+                  submitPost(context);
                 },
                 child: const Text('Agregar Post'),
               ),
@@ -150,7 +150,7 @@ class _NewPropertyPageState extends State<NewPropertyPage> {
     );
   }
 
-  void _submitPost(BuildContext context) async {
+  void submitPost(BuildContext context) async {
     final propertiesProvider =
         Provider.of<StatusProvider>(context, listen: false);
 

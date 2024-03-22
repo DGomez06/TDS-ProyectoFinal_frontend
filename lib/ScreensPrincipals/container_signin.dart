@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/Fuctions/functionreal.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/ScreensPrincipals/forgot_password.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
@@ -14,6 +15,8 @@ class ContainerSignIn extends StatefulWidget {
 }
 
 class _ContainerSignInState extends State<ContainerSignIn> {
+  TextEditingController _userController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -46,6 +49,7 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                             border: Border.all(width: 0.5, color: Colors.grey),
                             color: Colors.white),
                         child: TextFormField(
+                          controller: _userController,
                           decoration: InputDecoration(
                             icon: SvgPicture.asset(
                               'assets/icons/User.svg',
@@ -80,11 +84,13 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
+                            controller: _passwordController,
                             decoration: InputDecoration(
                                 icon: SvgPicture.asset(
                                   'assets/icons/Password.svg',
                                   height: 30,
-                                  width: 30,),
+                                  width: 30,
+                                ),
                                 border: InputBorder.none,
                                 hintText: 'Contraseña',
                                 hintStyle: GoogleFonts.yaldevi(
@@ -122,28 +128,7 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                           fit: BoxFit.contain,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation,
-                                            secondaryAnimation) =>
-                                        const ScreenHome(),
-                                    transitionsBuilder: (context, animation,
-                                        secondaryAnimation, child) {
-                                      const begin = Offset(0.0, 1.0);
-                                      const end = Offset.zero;
-                                      const curve = Curves.ease;
-                                      var tween = Tween(begin: begin, end: end)
-                                          .chain(CurveTween(curve: curve));
-                                      return SlideTransition(
-                                        position: animation.drive(tween),
-                                        child: child,
-                                      );
-                                      
-                                    },
-                                    transitionDuration: const Duration(
-                                        milliseconds: 1000)
-                                  ));
+                              login();
                             },
                             child: Center(
                                 child: Text('Iniciar Sesion',
@@ -166,7 +151,11 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ForgotPasswordScreen()));
                               },
                               child: Text('Olvidaste la contraseña?',
                                   style: GoogleFonts.yaldevi(
@@ -182,6 +171,48 @@ class _ContainerSignInState extends State<ContainerSignIn> {
           );
         },
       ),
+    );
+  }
+
+  void login() async {
+    ApiConexion api = ApiConexion();
+    if (_userController.text.isEmpty || _passwordController.text.isEmpty) {
+      return;
+    }
+    final user = _userController.text;
+    final password = _passwordController.text;
+
+    final response = await api.login(user, password);
+    if (response == 'Correcto') {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Seccion iniciada correctamente')));
+      navegar();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error al inicar seccion')));
+    }
+  }
+
+  void navegar() {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const ScreenHome(),
+          transitionsBuilder:
+              (context, animation, secondaryAnimation, child) {
+            const begin = Offset(0.0, 1.0);
+            const end = Offset.zero;
+            const curve = Curves.ease;
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+        transitionDuration: const Duration(milliseconds: 1000)
+      )
     );
   }
 }
