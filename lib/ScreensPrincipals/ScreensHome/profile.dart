@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Fuctions/category_dialog.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensHome/newproperty.dart';
+import 'package:lease_managment/Fuctions/functionreal.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,6 +12,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  ApiConexion api = ApiConexion();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -279,10 +280,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     trailing: const Icon(Icons.arrow_forward_ios_rounded,
                         color: Color(0xFFD3D2D2)),
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PrincipalScreen()));
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Cerrar Sesion'),
+                          content: const Text('¿Estas seguro de cerrar sesion?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                api.logout();
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PrincipalScreen()));
+                              },
+                              child: const Text('Si'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('No'),
+                            ),
+                          ],
+                        );
+                      });
                     },
                   ),
                 ],

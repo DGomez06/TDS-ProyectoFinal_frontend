@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/Fuctions/functionreal.dart';
 import 'package:lease_managment/ScreensPrincipals/validate_password.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -11,6 +12,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  TextEditingController emailController = TextEditingController();
+  ApiConexion apiConexion = ApiConexion();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -35,6 +38,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 
                 child: TextFormField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     icon: SvgPicture.asset('assets/icons/Email.svg'),
                     enabledBorder: const UnderlineInputBorder(
@@ -49,7 +53,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 width: 250,
                 child: TextButton(
                 onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ValidatePasswordScreen()));
+                  if (emailController.text.isNotEmpty) {
+                    apiConexion.forgotPassword(emailController.text);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ValidatePasswordScreen()));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor, introduce un correo')));
+                    
+                  }
                 }, 
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF26C2E4),
