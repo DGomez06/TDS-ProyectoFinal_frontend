@@ -48,31 +48,35 @@ class ApiConexion {
     }
   }
 
-  Future<void> resetPassword(String resetToken, String newPassword) async {
-    Map<String, String> passwordMap = {
-      'resetToken': resetToken,
-      'newPassword': newPassword,
-    };
-
+  Future<String> verifyToken(String resetToken) async {
     try {
-      final response = await dio.post('$base/reset-password',
-          data: passwordMap,
-          options: Options(
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-          ));
-
-      // Comprueba si la solicitud fue exitosa (código de estado 200)
+      final response = await dio.post(
+        '$base/verify-token',
+        data: {'resetToken': resetToken},
+      );
       if (response.statusCode == 200) {
-        return;
+        return 'Token verificado correctamente';
       } else {
-        // Si la solicitud falla, imprime el mensaje de error recibido del servidor
+        throw Exception('Error al verificar el token: ${response.data}');
+      }
+    } catch (e) {
+      throw Exception('Error al verificar el token: $e');
+    }
+  }
+
+  Future<String> resetPassword(String resetToken, String newPassword) async {
+    try {
+      final response = await dio.post(
+        '$base/reset-password',
+        data: {'resetToken': resetToken, 'newPassword': newPassword},
+      );
+      if (response.statusCode == 200) {
+        return 'Contraseña restablecida correctamente';
+      } else {
         throw Exception('Error al restablecer la contraseña: ${response.data}');
       }
     } catch (e) {
-      // Maneja cualquier error de red o excepción
-      throw Exception('Error al restablecer la contraseña: $e');
+      return 'Error al restablecer la contraseña';
     }
   }
 
