@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Fuctions/functionreal.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
@@ -219,16 +220,15 @@ class _ValidatePasswordScreenState extends State<ValidatePasswordScreen> {
           if (index == 4) {
             Future.delayed(const Duration(milliseconds: 500), () {
               apiConexion.verifyToken(_controllers[0].text + _controllers[1].text + _controllers[2].text + _controllers[3].text + _controllers[4].text).then((value) {
-                if(value == 'Token verificado correctamente'){
+                if(value){
                   setState(() {
                     tokenVerified = true;
                   });
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Token incorrecto')));
+                  Fluttertoast.showToast(msg: 'Token incorrecto', );
                 }
               });
             });
-            
           }else{
             setState(() {
               tokenVerified = false;

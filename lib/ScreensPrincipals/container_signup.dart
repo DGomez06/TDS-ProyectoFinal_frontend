@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,14 +18,12 @@ class ContainerSignUp extends StatefulWidget {
 }
 
 class _ContainerSignUpState extends State<ContainerSignUp> {
-
   TextEditingController _nameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   ApiConexion apiConexion = ApiConexion();
-
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +122,12 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                         color: Colors.white,
                       ),
                       child: TextFormField(
+                          maxLength: 12,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [PhoneNumberFormatter()],
                           controller: _phoneController,
                           decoration: InputDecoration(
+                              counterText: '',
                               icon: SvgPicture.asset(
                                 'assets/icons/Phone.svg',
                                 height: 30,
@@ -154,6 +158,15 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                         color: Colors.white,
                       ),
                       child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            if (!value.contains('@') || !value.contains('.')) {
+                              return 'Please enter a valid email';
+                            }
+                            return null;
+                          },
                           controller: _emailController,
                           decoration: InputDecoration(
                               icon: SvgPicture.asset(
@@ -186,6 +199,7 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                         color: Colors.white,
                       ),
                       child: TextFormField(
+                          obscureText: true,
                           controller: _passwordController,
                           decoration: InputDecoration(
                               icon: SvgPicture.asset(
@@ -231,14 +245,7 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                         child: TextButton(
                           onPressed: () {
                             registerUser();
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const AlertDialog(
-                                  title: Text('Registro Completado'),
-                                );
-                              },
-                            );
+                            
                           },
                           child: Center(
                               child: Text('Registrate',
@@ -259,24 +266,49 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
     );
   }
 
-  void registerUser() async{
-    try{
-      if (_nameController.text.isEmpty ||
+  String _validateFields() {
+    if (_nameController.text.isEmpty ||
         _lastNameController.text.isEmpty ||
         _phoneController.text.isEmpty ||
         _emailController.text.isEmpty ||
         _passwordController.text.isEmpty) {
-      return;
+      return 'Por favor, llena todos los campos';
     }
-    final user = User(
-        firstName: _nameController.text,
-        lastName: _lastNameController.text,
-        phone: _phoneController.text,
-        email: _emailController.text,
-        password: _passwordController.text);
+    if (!_emailController.text.contains('@') ||
+        !_emailController.text.contains('.')) {
+      return 'Por favor, introduce un correo valido';
+    }
+    return 'Correcto';
+  }
 
-    await apiConexion.registerUserAndGetToken(user);
-    }catch(e){
+  void registerUser() async {
+    try {
+      if (_validateFields() == "Correcto") {
+        final user = User(
+          firstName: _nameController.text,
+          lastName: _lastNameController.text,
+          phone: _phoneController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+        await apiConexion.registerUserAndGetToken(user);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Usuario registrado correctamente')));
+        _nameController.clear();
+        _lastNameController.clear();
+        _phoneController.clear();
+        _emailController.clear();
+        _passwordController.clear();
+      }
+      if (_validateFields() == "Por favor, llena todos los campos") {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Por favor, llena todos los campos')));
+      }
+      if (_validateFields() == "Por favor, introduce un correo valido") {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Por favor, introduce un correo valido')));
+      }
+    } catch (e) {
       throw Exception('Error al registrar el usuario: $e');
     }
   }

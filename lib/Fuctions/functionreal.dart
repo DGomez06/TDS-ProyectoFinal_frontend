@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:lease_managment/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,19 +49,19 @@ class ApiConexion {
     }
   }
 
-  Future<String> verifyToken(String resetToken) async {
+  Future<bool> verifyToken(String resetToken) async {
     try {
       final response = await dio.post(
         '$base/verify-token',
         data: {'resetToken': resetToken},
       );
       if (response.statusCode == 200) {
-        return 'Token verificado correctamente';
+        return true;
       } else {
         throw Exception('Error al verificar el token: ${response.data}');
       }
     } catch (e) {
-      throw Exception('Error al verificar el token: $e');
+      return false;
     }
   }
 
@@ -89,5 +90,31 @@ class ApiConexion {
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
+  }
+}
+
+
+class PhoneNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    final StringBuffer newText = StringBuffer();
+    final String formattedText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (formattedText.length >= 4) {
+      newText.write(formattedText.substring(0, 3) + '-');
+      if (formattedText.length >= 7) {
+        newText.write(formattedText.substring(3, 6) + '-');
+        newText.write(formattedText.substring(6, formattedText.length));
+      } else {
+        newText.write(formattedText.substring(3, formattedText.length));
+      }
+    } else {
+      newText.write(formattedText);
+    }
+
+    return TextEditingValue(
+      text: newText.toString(),
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
   }
 }

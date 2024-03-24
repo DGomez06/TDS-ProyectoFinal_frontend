@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/find.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: PrincipalScreen(),
+      home: ScreenHome(),
     );
   }
 }

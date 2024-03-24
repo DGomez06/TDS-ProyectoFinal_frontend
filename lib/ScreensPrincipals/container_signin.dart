@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -52,12 +54,12 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                           controller: _userController,
                           decoration: InputDecoration(
                             icon: SvgPicture.asset(
-                              'assets/icons/User.svg',
+                              'assets/icons/Email.svg',
                               height: 30,
                               width: 30,
                             ),
                             border: InputBorder.none,
-                            hintText: 'Nombre de usuario',
+                            hintText: 'Email',
                             hintStyle: GoogleFonts.yaldevi(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
@@ -84,6 +86,7 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
+                          obscureText: true,
                             controller: _passwordController,
                             decoration: InputDecoration(
                                 icon: SvgPicture.asset(
@@ -189,7 +192,7 @@ class _ContainerSignInState extends State<ContainerSignIn> {
       navegar();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Error al inicar seccion')));
+          const SnackBar(content: Text('Datos incorrectos')));
     }
   }
 

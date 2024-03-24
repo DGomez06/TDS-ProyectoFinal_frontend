@@ -40,9 +40,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 child: TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
+                    border: InputBorder.none,
                     icon: SvgPicture.asset('assets/icons/Email.svg'),
                     enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide.none,
+                      
                     ),
                     hintText: 'Example@gmail.com', hintStyle: GoogleFonts.yaldevi(fontWeight: FontWeight.w400, color: const Color(0xFF727272) ),
                   ),
@@ -58,7 +60,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const ValidatePasswordScreen()));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor, introduce un correo')));
-                    
                   }
                 }, 
                 style: TextButton.styleFrom(

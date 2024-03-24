@@ -1,0 +1,102 @@
+PopupMenuButton<String>(
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                    color: Color(0xFFc2c2c2),
+                                    width: 1.2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                icon: SvgPicture.asset('assets/icons/Settings.svg'),
+                                onSelected: (String value) {
+                                  if (value == 'Precio') {
+                                    DialogManager.showSubcategoryMenuPrecio(
+                                        context,
+                                        selectedCategory,
+                                        selectedSubCategory,
+                                        searchController1,
+                                        searchController2, (String newValue) {
+                                      setState(() {
+                                        selectedSubCategory = newValue;
+                                      });
+                                    }, (String value1, String value2) {
+                                      Provider.of<StatusProvider>(context,
+                                              listen: false)
+                                          .updateFilteredProperties(
+                                              'Precio',
+                                              '',
+                                              int.parse(value1),
+                                              int.parse(value2));
+                                    });
+                                  } else if (value == 'Tipo de Propiedad') {
+                                    DialogManager.showSubcategoryMenuPropiedad(
+                                      context,
+                                      selectedCategory,
+                                      selectedSubCategory,
+                                      (String newValue) {
+                                        setState(() {
+                                          selectedSubCategory = newValue;
+                                        });
+                                      },
+                                      (String newCategory) {
+                                        setState(() {
+                                          selectedCategory = newCategory;
+                                        });
+                                        Provider.of<StatusProvider>(context,
+                                                listen: false)
+                                            .updateFilteredProperties(
+                                                selectedCategory,
+                                                selectedSubCategory,
+                                                0,
+                                                0);
+                                      },
+                                    );
+                                  } else if (value == 'Tamaño') {
+                                    DialogManager.showSubcategoryMenuTamano(
+                                        context,
+                                        selectedCategory,
+                                        selectedSubCategory, (String newValue) {
+                                      setState(() {
+                                        selectedSubCategory = newValue;
+                                      });
+                                    }, (String newCategory) {
+                                      setState(() {
+                                        selectedCategory = newCategory;
+                                      });
+                                      Provider.of<StatusProvider>(context,
+                                              listen: false)
+                                          .updateFilteredProperties(
+                                              selectedCategory,
+                                              selectedSubCategory,
+                                              0,
+                                              0);
+                                    });
+                                  } else if (value == 'Borrar Filtro') {
+                                    Provider.of<StatusProvider>(context,
+                                            listen: false)
+                                        .updateFilteredProperties('', '', 0, 0);
+                                    setState(() {
+                                      selectedCategory = '';
+                                      selectedSubCategory = '';
+                                    });
+                                  }
+                                },
+                                itemBuilder: (BuildContext context) =>
+                                    <PopupMenuEntry<String>>[
+                                  const PopupMenuItem<String>(
+                                    value: 'Precio',
+                                    child: Text('Precio'),
+                                  ),
+                                  const PopupMenuItem<String>(
+                                    value: 'Tipo de Propiedad',
+                                    child: Text('Tipo de Propiedad'),
+                                  ),
+                                  const PopupMenuItem<String>(
+                                    value: 'Tamaño',
+                                    child: Text('Tamaño'),
+                                  ),
+                                  const PopupMenuItem(
+                                    value: 'Borrar Filtro',
+                                    child: Text('Borrar Filtro'),
+                                  )
+                                ],
+                              ),

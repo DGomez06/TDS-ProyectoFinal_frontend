@@ -188,15 +188,7 @@ class _ScreenHomeState extends State<ScreenHome> {
             index: selectedIndex,
             children: screen,
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              height: 1,
-              color: const Color(0xFFc2c2c2),
-            ),
-          ),
+          
         ],
       ),
     );
