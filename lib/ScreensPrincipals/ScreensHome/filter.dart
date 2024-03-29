@@ -99,96 +99,117 @@ class _FilterContainer extends State<FilterContainer>
               color: Colors.grey,
               thickness: 1,
             ),
-            const Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Categoría de alquileres",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.only(left: 30),
+                child: Row(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Categoría de alquileres",
+                            style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          "Donde te sientas más cómodo!",
+                          style: GoogleFonts.inter(fontWeight: FontWeight.w400, fontSize: 15),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                SizedBox(height: 5),
-                Text(
-                  "Donde te sientas más cómodo!",
-                  style: TextStyle(fontSize: 15),
-                ),
-              ],
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blue),
-                borderRadius: BorderRadius.circular(10),
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: _onPressed1,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextButton(
-                              onPressed: _onPressed1,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.house,
-                                    color: _isSelected1
-                                        ? Colors.white
-                                        : const Color(0xFF26c2e4),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey, width: 0.5),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: const Offset(0, 3),
+                          )
+                        ]
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: _onPressed1,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextButton(
+                                onPressed: _onPressed1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.house,
+                                      color: _isSelected1
+                                          ? Colors.white
+                                          : const Color(0xFF26c2e4),
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const Text("Casa"),
+                                  ],
+                                ),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: _isSelected1
+                                      ? const Color(0xFF26c2e4)
+                                      : Colors.white,
+                                  foregroundColor: _isSelected1
+                                      ? Colors.white
+                                      : const Color(0xFF26c2e4),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  const SizedBox(width: 5),
-                                  const Text("Casa"),
-                                ],
-                              ),
-                              style: TextButton.styleFrom(
-                                backgroundColor: _isSelected1
-                                    ? const Color(0xFF26c2e4)
-                                    : Colors.white,
-                                foregroundColor: _isSelected1
-                                    ? Colors.white
-                                    : const Color(0xFF26c2e4),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: TextButton(
-                              onPressed: _onPressed2,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/icons/buildings.svg',
-                                    color: _isSelected2
-                                        ? Colors.white
-                                        : const Color(0xFF26c2e4),
-                                    height: 20,
+                            Expanded(
+                              child: TextButton(
+                                onPressed: _onPressed2,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/buildings.svg',
+                                      color: _isSelected2
+                                          ? Colors.white
+                                          : const Color(0xFF26c2e4),
+                                      height: 20,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const Text("Departamento"),
+                                  ],
+                                ),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: _isSelected2
+                                      ? const Color(0xFF26c2e4)
+                                      : Colors.white,
+                                  foregroundColor: _isSelected2
+                                      ? Colors.white
+                                      : const Color(0xFF26c2e4),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  const SizedBox(width: 5),
-                                  const Text("Departamento"),
-                                ],
-                              ),
-                              style: TextButton.styleFrom(
-                                backgroundColor: _isSelected2
-                                    ? const Color(0xFF26c2e4)
-                                    : Colors.white,
-                                foregroundColor: _isSelected2
-                                    ? Colors.white
-                                    : const Color(0xFF26c2e4),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 10),
@@ -297,10 +318,10 @@ class _FilterContainer extends State<FilterContainer>
                             offset: const Offset(0, 3),
                           )
                         ]),
-                    child: const Column(
+                    child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Text('Minimo'), Text('RD\$2,000')])),
+                        children: [const Text('Minimo'), Text('RD\$${_currentRangeValues.start.toString().substring(0, _currentRangeValues.start.toString().length - 2).replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',')}')])),
                 Container(
                   width: 25,
                   height: 2,
@@ -322,10 +343,10 @@ class _FilterContainer extends State<FilterContainer>
                             offset: const Offset(0, 3),
                           )
                         ]),
-                    child: const Column(
+                    child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Text('Maximo'), Text('RD\$5,000')]))
+                        children: [const Text('Maximo'), Text('RD\$${_currentRangeValues.end.toString().substring(0, _currentRangeValues.end.toString().length - 2).replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), ',')}')])),
               ])
             ]),
             const SizedBox(height: 20),
