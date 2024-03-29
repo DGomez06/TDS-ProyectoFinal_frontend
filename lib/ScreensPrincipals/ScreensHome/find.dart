@@ -1,7 +1,16 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/filter.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/list.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +30,7 @@ class _FindScreenState extends State<FindScreen>
   late Animation<Offset> _slideAnimation;
   OverlayEntry? overlayEntry;
   bool isFilterVisible = false;
+
 
   @override
   void initState() {
@@ -76,11 +86,13 @@ class _FindScreenState extends State<FindScreen>
                     ),
                   )
                 : AnimatedContainer(
-                  height: MediaQuery.of(context).size.height,
-                  duration: const Duration(milliseconds: 900),
+                    height: MediaQuery.of(context).size.height,
+                    duration: const Duration(milliseconds: 900),
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      color: isFilterVisible ? const Color(0xFF8a8a8a) : Colors.white,
+                      color: isFilterVisible
+                          ? const Color(0xFF8a8a8a)
+                          : Colors.white,
                     ),
                     child: SingleChildScrollView(
                       child: Column(
@@ -197,100 +209,18 @@ class _FindScreenState extends State<FindScreen>
   }
 
   void _toggleOverlay() {
-  setState(() {
-    if (!isFilterVisible) {
-      overlayEntry = _createOverlayEntry();
-      Overlay.of(context).insert(overlayEntry!);
-      _animationController.forward(from: 0);
-    } else {
-      _animationController.reverse().whenComplete(() {
-        overlayEntry!.remove();
-        overlayEntry = null;
-      });
-    }
-    isFilterVisible = !isFilterVisible;
-  });
-}
-}
-
-class FilterContainer extends StatelessWidget {
-  final bool isVisible;
-  final VoidCallback onClose;
-
-  const FilterContainer({
-    Key? key,
-    required this.isVisible,
-    required this.onClose,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: AnimatedContainer(
-        margin: const EdgeInsets.only(top: 50),
-        duration: const Duration(milliseconds: 500),
-        width: isVisible ? MediaQuery.of(context).size.width : 0,
-        height: isVisible ? 900 : 0,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-        ),),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 20),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: onClose,
-                  icon: const Icon(Icons.arrow_back),
-                ),
-                const SizedBox(width: 125),
-                const Text(
-                  'Filtros',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-
-            const Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            ElevatedButton(
-              onPressed: onClose,
-              child: const Text('Close'),
-            ),
-          ],
-        ),
-      ),
-    );
+    setState(() {
+      if (!isFilterVisible) {
+        overlayEntry = _createOverlayEntry();
+        Overlay.of(context).insert(overlayEntry!);
+        _animationController.forward(from: 0);
+      } else {
+        _animationController.reverse().whenComplete(() {
+          overlayEntry!.remove();
+          overlayEntry = null;
+        });
+      }
+      isFilterVisible = !isFilterVisible;
+    });
   }
 }
