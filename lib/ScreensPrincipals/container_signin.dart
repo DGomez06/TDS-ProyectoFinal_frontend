@@ -77,6 +77,7 @@ class _ContainerSignInState extends State<ContainerSignIn> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
+                            obscureText: true,
                             decoration: InputDecoration(
                                 icon: const Icon(
                                   Icons.lock_outlined,
