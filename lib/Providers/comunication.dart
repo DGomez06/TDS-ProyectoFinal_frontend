@@ -8,10 +8,10 @@ class StatusProvider extends ChangeNotifier {
   bool _hideContainer = false;
 
   List<Properties> _propertiesData = [];
-  List<Properties> _selectedProperties = [];
+  final List<Properties> _selectedProperties = [];
 
   List<String> _propertiesImage = [];
-  List<String> _propertiesImageList = [];
+  final List<String> _propertiesImageList = [];
   final ApiClient _apiClient = ApiClient();
   String _searchTerm = '';
   String _selectedCategory = '';

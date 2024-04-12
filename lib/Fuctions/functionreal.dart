@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiConexion {
   Dio dio = Dio();
-  String base = 'http://10.0.0.2:8060/api/v1/auth';
+  String base = 'http://192.168.1.6:8060/api/v1/auth';
 
   Future<String> registerUserAndGetToken(User user) async {
     try {
@@ -101,9 +101,9 @@ class PhoneNumberFormatter extends TextInputFormatter {
     final String formattedText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
 
     if (formattedText.length >= 4) {
-      newText.write(formattedText.substring(0, 3) + '-');
+      newText.write('${formattedText.substring(0, 3)}-');
       if (formattedText.length >= 7) {
-        newText.write(formattedText.substring(3, 6) + '-');
+        newText.write('${formattedText.substring(3, 6)}-');
         newText.write(formattedText.substring(6, formattedText.length));
       } else {
         newText.write(formattedText.substring(3, formattedText.length));

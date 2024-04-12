@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,6 +21,7 @@ class _ValidatePasswordScreenState extends State<ValidatePasswordScreen> {
   ApiConexion apiConexion = ApiConexion();
   TextEditingController newPassword = TextEditingController();
   TextEditingController newConfirmPassword = TextEditingController();
+  bool isPressed = false;
 
 
   @override
@@ -54,13 +57,14 @@ class _ValidatePasswordScreenState extends State<ValidatePasswordScreen> {
                 ),
                 child: Transform.scale(
                     scale: 0.7,
-                    child: SvgPicture.asset('assets/icons/EmailBlue.svg'))),
+                    child: SvgPicture.asset('assets/icons/EmailBlue.svg'))
+                  ),
               const SizedBox(height: 20),
-              Text('Verifica tu correo',
+              Text(tokenVerified ? 'Crear nueva Contraseña' : 'Verifica tu token',
                   style: GoogleFonts.yaldevi(
                       fontWeight: FontWeight.bold, fontSize: 25)),
               Text(
-                'Introduce el código recibido en el correo ',
+                tokenVerified?  'Introduce tu nueva contraseña, deben ser iguales ' : 'Introduce el codigo recibido en el correo ',
                 style: GoogleFonts.inter(
                     fontWeight: FontWeight.w400, color: Colors.black),
               ),
@@ -75,19 +79,63 @@ class _ValidatePasswordScreenState extends State<ValidatePasswordScreen> {
                     child: _buildTextField(index));
                 }),
               ),
-              const SizedBox(height: 20),
-            
+              AnimatedContainer(
+                duration: const Duration(seconds: 1),
+                curve: Curves.easeInOut,
+                margin: const EdgeInsets.only(top: 20, bottom: 10),
+                width: tokenVerified ? 0 : 250,
+                height: tokenVerified ? 0 : 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)]),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.7),
+                      spreadRadius: 1,
+                      blurRadius: 2,
+                      offset: const Offset(0, 3),
+                    )
+                  ]),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: TextButton(
+                    onPressed: () {
+                      
+                    },
+                    child: Center(
+                      child: Text('Reenviar token',
+                        style: GoogleFonts.yaldevi(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xff000000)))),
+                  ),
+                ),
+              ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 800),
                 curve: Curves.easeInOut,
                 width: tokenVerified ? 350 : 0,
-                height: tokenVerified ? 250 : 0,
+                height: tokenVerified ? 350 : 0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          color: Colors.grey.withOpacity(0.1),
+                        ),
+                child: Transform.scale(
+                    scale: 0.7,
+                    child: SvgPicture.asset('assets/icons/unlock.svg'))
+                  ),
                       const SizedBox(height: 20),
                       AnimatedContainer(
                         duration: const Duration(seconds: 1),
@@ -129,20 +177,40 @@ class _ValidatePasswordScreenState extends State<ValidatePasswordScreen> {
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
-                            hintText: 'Confirmar nueva contraseña', hintStyle: GoogleFonts.yaldevi(fontWeight: FontWeight.w400, color: const Color(0xFF727272) ),
+                            hintText: 'Repetir contraseña', hintStyle: GoogleFonts.yaldevi(fontWeight: FontWeight.w400, color: const Color(0xFF727272) ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                        SizedBox(
-                        width: 250,
-                        child: TextButton(
-                          onPressed: () {
-                            if(newPassword.text.isNotEmpty && newConfirmPassword.text.isNotEmpty){
+                      AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.easeInOut,
+                          margin: const EdgeInsets.only(top: 20, bottom: 10),
+                          width: tokenVerified ? 250 : 0,
+                          height: tokenVerified ? 50 : 0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Color(0xFf44CBE8), Color(0xFF44CBE8)]),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.7),
+                                spreadRadius: 1,
+                                blurRadius: 2,
+                                offset: const Offset(0, 3),
+                              )
+                            ]),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: TextButton(
+                              onPressed: () {
+                                if(newPassword.text.isNotEmpty && newConfirmPassword.text.isNotEmpty){
                               if(newPassword.text == newConfirmPassword.text){
                                 apiConexion.resetPassword(_controllers[0].text + _controllers[1].text + _controllers[2].text + _controllers[3].text + _controllers[4].text, newPassword.text).then((value) {
                                   if(value == 'Contraseña restablecida correctamente'){
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PrincipalScreen()));
+                                    _showSuccess(context, isPressed);
+                                    //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PrincipalScreen()));
                                   } else if (value == 'Error al restablecer la contraseña'){
                                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error al restablecer la contraseña')));
                                   } else {
@@ -155,22 +223,17 @@ class _ValidatePasswordScreenState extends State<ValidatePasswordScreen> {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor, introduce una contraseña')));
                             }
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: const Color(0xFF26C2E4),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
+                              },
+                              child: Center(
+                                child: Text('Crear Contraseña',
+                                  style: GoogleFonts.yaldevi(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xffFFFFFF)))),
                             ),
                           ),
-                          child: Text('Guardar',
-                            style: GoogleFonts.yaldevi(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: Colors.white)),
                         ),
-                      ),
+                        
                     ],
                   ),
                 ),
@@ -243,6 +306,57 @@ class _ValidatePasswordScreenState extends State<ValidatePasswordScreen> {
           }
         },
       ),
+    );
+  }
+
+  _showSuccess(BuildContext context, bool isPressed){
+    return showDialog(
+      context: context,
+      builder: (context) {
+          isPressed = true;
+        Timer(const Duration(seconds: 2), () { // Replace 3 with your desired duration
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> const PrincipalScreen())); // Dismiss the dialog
+        });
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            width: isPressed ? 300 : 50,
+            height: isPressed ? 270 : 50,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        color: Colors.grey.withOpacity(0.1),
+                      ),
+                      child: Transform.scale(
+                          scale: 0.7,
+                          child: SvgPicture.asset('assets/icons/shield-tick.svg'))),
+                  const SizedBox(height: 20),
+                  
+                  Text('Contraseña Exitosa!',
+                  textAlign: TextAlign.center,
+                      style: GoogleFonts.yaldevi(
+                          fontWeight: FontWeight.bold, fontSize: 25, )),
+                  const SizedBox(height: 20), 
+
+                  Text('Tu contraseña ha sido restablecida correctamente',
+                  textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w400, color: Colors.black, fontSize: 16)),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:lease_managment/Fuctions/category_dialog.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/models/products.dart';
 import 'package:provider/provider.dart';
@@ -124,7 +123,6 @@ class _NewPropertyPageState extends State<NewPropertyPage> {
                         TextSelection.fromPosition(
                       TextPosition(offset: _rentalPriceController.text.length),
                     );
-                    print(_rentalPriceController.text);
                   });
                 },
               ),

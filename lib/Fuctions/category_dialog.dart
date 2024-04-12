@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/information.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensHome/newproperty.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/newproperty.dart';
 import 'package:lease_managment/models/products.dart';
 import 'package:provider/provider.dart';
 
@@ -348,7 +348,7 @@ class DialogManager {
                 Center(
                   child: SlideTransition(
                     position: Tween<Offset>(
-                      begin: Offset(0, 1),
+                      begin: const Offset(0, 1),
                       end: Offset.zero,
                     ).animate(CurvedAnimation(
                       parent: _,

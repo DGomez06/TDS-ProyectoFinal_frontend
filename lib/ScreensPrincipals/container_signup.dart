@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Fuctions/functionreal.dart';
 import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/Widgets/field.dart';
 import 'package:lease_managment/models/user.dart';
 import 'package:provider/provider.dart';
 
@@ -18,11 +18,11 @@ class ContainerSignUp extends StatefulWidget {
 }
 
 class _ContainerSignUpState extends State<ContainerSignUp> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   ApiConexion apiConexion = ApiConexion();
 
   @override
@@ -41,180 +41,51 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AnimatedOpacity(
-                    duration: Duration(
-                        milliseconds:
-                            containerVisibility.hideContainer ? 2000 : 200),
-                    opacity: containerVisibility.hideContainer ? 1.0 : 0.0,
-                    child: AnimatedContainer(
-                      duration: const Duration(seconds: 2),
-                      curve: Curves.easeInOut,
-                      margin: const EdgeInsets.only(top: 20),
-                      padding: const EdgeInsets.only(left: 30),
-                      width: containerVisibility.hideContainer ? 340 : 0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                        border: Border.all(width: 0.5, color: Colors.grey),
-                        color: Colors.white,
-                      ),
-                      child: TextFormField(
-                          controller: _nameController,
-                          decoration: InputDecoration(
-                              icon: SvgPicture.asset(
-                                'assets/icons/User.svg',
-                                height: 30,
-                                width: 30,
-                              ),
-                              border: InputBorder.none,
-                              hintText: 'Nombre',
-                              hintStyle: GoogleFonts.yaldevi(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black))),
-                    ),
-                  ),
-                  AnimatedOpacity(
-                    duration: Duration(
-                        milliseconds:
-                            containerVisibility.hideContainer ? 2000 : 200),
-                    opacity: containerVisibility.hideContainer ? 1.0 : 0.0,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 2500),
-                      curve: Curves.easeInOut,
-                      margin: const EdgeInsets.only(top: 15),
-                      padding: const EdgeInsets.only(left: 30),
-                      width: containerVisibility.hideContainer ? 340 : 0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                        border: Border.all(width: 0.5, color: Colors.grey),
-                        color: Colors.white,
-                      ),
-                      child: TextFormField(
-                          controller: _lastNameController,
-                          decoration: InputDecoration(
-                              icon: SvgPicture.asset(
-                                'assets/icons/User.svg',
-                                height: 30,
-                                width: 30,
-                              ),
-                              border: InputBorder.none,
-                              hintText: 'Apellido',
-                              hintStyle: GoogleFonts.yaldevi(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black))),
-                    ),
-                  ),
-                  AnimatedOpacity(
-                    duration: Duration(
-                        milliseconds:
-                            containerVisibility.hideContainer ? 2000 : 200),
-                    opacity: containerVisibility.hideContainer ? 1.0 : 0.0,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 3000),
-                      curve: Curves.easeInOut,
-                      margin: const EdgeInsets.only(top: 15),
-                      padding: const EdgeInsets.only(left: 30),
-                      width: containerVisibility.hideContainer ? 340 : 0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                        border: Border.all(width: 0.5, color: Colors.grey),
-                        color: Colors.white,
-                      ),
-                      child: TextFormField(
-                          maxLength: 12,
-                          keyboardType: TextInputType.phone,
-                          inputFormatters: [PhoneNumberFormatter()],
-                          controller: _phoneController,
-                          decoration: InputDecoration(
-                              counterText: '',
-                              icon: SvgPicture.asset(
-                                'assets/icons/Phone.svg',
-                                height: 30,
-                                width: 30,
-                              ),
-                              border: InputBorder.none,
-                              hintText: 'Telefono',
-                              hintStyle: GoogleFonts.yaldevi(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black))),
-                    ),
-                  ),
-                  AnimatedOpacity(
-                    duration: Duration(
-                        milliseconds:
-                            containerVisibility.hideContainer ? 2000 : 200),
-                    opacity: containerVisibility.hideContainer ? 1.0 : 0.0,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 3500),
-                      curve: Curves.easeInOut,
-                      margin: const EdgeInsets.only(top: 15),
-                      padding: const EdgeInsets.only(left: 30),
-                      width: containerVisibility.hideContainer ? 340 : 0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                        border: Border.all(width: 0.5, color: Colors.grey),
-                        color: Colors.white,
-                      ),
-                      child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            if (!value.contains('@') || !value.contains('.')) {
-                              return 'Please enter a valid email';
-                            }
-                            return null;
-                          },
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                              icon: SvgPicture.asset(
-                                'assets/icons/Correo.svg',
-                                height: 30,
-                                width: 30,
-                              ),
-                              border: InputBorder.none,
-                              hintText: 'Correo',
-                              hintStyle: GoogleFonts.yaldevi(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black))),
-                    ),
-                  ),
-                  AnimatedOpacity(
-                    duration: Duration(
-                        milliseconds:
-                            containerVisibility.hideContainer ? 2000 : 200),
-                    opacity: containerVisibility.hideContainer ? 1.0 : 0.0,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 4000),
-                      curve: Curves.easeInOut,
-                      margin: const EdgeInsets.only(top: 15),
-                      padding: const EdgeInsets.only(left: 30),
-                      width: containerVisibility.hideContainer ? 340 : 0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17),
-                        border: Border.all(width: 0.5, color: Colors.grey),
-                        color: Colors.white,
-                      ),
-                      child: TextFormField(
-                          obscureText: true,
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                              icon: SvgPicture.asset(
-                                'assets/icons/Password.svg',
-                                height: 30,
-                                width: 30,
-                              ),
-                              border: InputBorder.none,
-                              hintText: 'Contraseña',
-                              hintStyle: GoogleFonts.yaldevi(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black))),
-                    ),
-                  ),
+                  TextFormFieldWidget(
+                    durationAnimation: const Duration(seconds: 2),
+                    containerDuration: containerVisibility.hideContainer ? 2000 : 200,
+                    containerOpacity: containerVisibility.hideContainer ? 1.0 : 0.0,
+                    containerWidth: containerVisibility.hideContainer ? 340 : 0,
+                    controller: _nameController,
+                    icon: 'assets/icons/User.svg',
+                    hintText: 'Nombre',
+                ),
+                  TextFormFieldWidget(
+                    durationAnimation: const Duration(milliseconds: 2500),
+                    containerDuration: containerVisibility.hideContainer ? 2000 : 200,
+                    containerOpacity: containerVisibility.hideContainer ? 1.0 : 0.0,
+                    containerWidth: containerVisibility.hideContainer ? 340 : 0,
+                    controller: _lastNameController,
+                    icon: 'assets/icons/User.svg',
+                    hintText: 'Apellido',
+                ),
+                  TextFormFieldWidget(
+                    durationAnimation: const Duration(milliseconds: 3000),
+                    containerDuration: containerVisibility.hideContainer ? 2000 : 200,
+                    containerOpacity: containerVisibility.hideContainer ? 1.0 : 0.0,
+                    containerWidth: containerVisibility.hideContainer ? 340 : 0,
+                    controller: _phoneController,
+                    icon: 'assets/icons/Phone.svg',
+                    hintText: 'Telefono',
+                ),
+                  TextFormFieldWidget(
+                    durationAnimation: const Duration(milliseconds: 3500),
+                    containerDuration: containerVisibility.hideContainer ? 2000 : 200,
+                    containerOpacity: containerVisibility.hideContainer ? 1.0 : 0.0,
+                    containerWidth: containerVisibility.hideContainer ? 340 : 0,
+                    controller: _emailController,
+                    icon: 'assets/icons/Correo.svg',
+                    hintText: 'Correo',
+                ),
+                  TextFormFieldWidget(
+                    durationAnimation: const Duration(milliseconds: 4000),
+                    containerDuration: containerVisibility.hideContainer ? 2000 : 200,
+                    containerOpacity: containerVisibility.hideContainer ? 1.0 : 0.0,
+                    containerWidth: containerVisibility.hideContainer ? 340 : 0,
+                    controller: _passwordController,
+                    icon: 'assets/icons/Password.svg',
+                    hintText: 'Contraseña',
+                ),
                   AnimatedOpacity(
                     duration: Duration(
                         milliseconds:
@@ -252,7 +123,7 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                                   style: GoogleFonts.yaldevi(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
-                                      color: Colors.black))),
+                                      color: Colors.white))),
                         ),
                       ),
                     ),

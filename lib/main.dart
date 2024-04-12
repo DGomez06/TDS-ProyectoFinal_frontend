@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:lease_managment/Providers/comunication.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensHome/find.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/about.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/appdetails.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/changepass.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/darkmode.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/darkmode.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/pay_collect.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/homeLandlord.dart';
+import 'package:lease_managment/ScreensPrincipals/container_signup.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
+import 'package:lease_managment/ScreensPrincipals/validate_password.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Asegura que los plugins estén inicializados
-  SharedPreferences.getInstance(); // Inicializa SharedPreferences
+  WidgetsFlutterBinding.ensureInitialized(); 
+  SharedPreferences.getInstance(); 
   runApp(
     ChangeNotifierProvider(
       create: (context) => StatusProvider(),
-      child: const MyApp(), // Pasa prefs como argumento a MyApp
+      child: const MyApp(), 
     )
   );
 }
@@ -22,10 +30,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: ScreenHome(),
+      home: AppDetails(),
     );
   }
 }

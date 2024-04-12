@@ -1,8 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/ScreensPrincipals/container_signin.dart';

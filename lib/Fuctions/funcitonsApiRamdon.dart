@@ -33,7 +33,6 @@ List<Properties> properties = [];
       final response = await _dio.post(url, data: body, options: Options(headers: headers));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-          print('Nueva propiedad agregada correctamente');
           final List<Properties> updatedList = await fetchProperties();
           properties = updatedList;
         } else {

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Fuctions/category_dialog.dart';
@@ -83,42 +84,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 7,
             ),
             Container(
-                height: 130,
+                height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: const Color(0xFFD3D2D2)),
                 ),
                 child: Column(
                   children: [
-                    ListTile(
-                      dense: true,
-                      title: Text('Configuracion',
-                          style: GoogleFonts.inter(
-                              fontSize: 14, fontWeight: FontWeight.w400)),
-                      subtitle: Text('Usuario, Edad, Genero, Foto',
-                          style: GoogleFonts.inter(
-                              fontSize: 12, fontWeight: FontWeight.w300)),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Información Personal', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w500)),
+                              Text('Nombre, Corre, Dirección', style: GoogleFonts.inter( fontSize: 10, fontWeight: FontWeight.w300, color: Colors.black)),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
+                        ],
                       ),
                     ),
-                    const Divider(
-                      height: 0,
-                      indent: 17,
-                      endIndent: 30,
-                      color: Color(0xFFD3D2D2),
+                    const SizedBox(height: 8),
+                    Container(
+                      height: 1,
+                      width: 300,
+                      color: const Color(0xFFD3D2D2),
                     ),
-                    ListTile(
-                      dense: true,
-                      title: Text('Ocultar',
-                          style: GoogleFonts.inter(
-                              fontSize: 14, fontWeight: FontWeight.w400)),
-                      subtitle: Text('Genero, Edad',
-                          style: GoogleFonts.inter(
-                              fontSize: 12, fontWeight: FontWeight.w300)),
-                      trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                          color: Color(0xFFD3D2D2)),
+                    const SizedBox(height: 4),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Cambio de contraseña', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400)),
+                              Text('Modificar', style: GoogleFonts.inter( fontSize: 10, fontWeight: FontWeight.w300, color: Colors.black),),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
                     ),
                   ],
                 )),
@@ -132,50 +143,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
             Container(
-              height: 130,
+              height: 105,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFFD3D2D2)),
               ),
               child: Column(
                 children: [
-                  ListTile(
-                    dense: true,
-                    title: Text('Notificaciones',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Desactivar o activar',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color(0xFFD3D2D2),
+                  const SizedBox(height: 10),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Pagos y Cobros', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400)),
+                              Text('Metodos de pago', style: GoogleFonts.inter( fontSize: 10, fontWeight: FontWeight.w300, color: Colors.black),),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
-                  ),
-                  ListTile(
-                    dense: true,
-                    title: Text(
-                      'Agregar Propiedad',
-                      style: GoogleFonts.inter(
-                          fontSize: 14, fontWeight: FontWeight.w400),
+                  const SizedBox(height: 8),
+                  Container(
+                      height: 1,
+                      width: 300,
+                      color: const Color(0xFFD3D2D2),
                     ),
-                    subtitle: Text(
-                      'Ponga su propiedad a la venta',
-                      style: GoogleFonts.inter(
-                          fontSize: 12, fontWeight: FontWeight.w300),
+                  const SizedBox(height: 8),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Vuelvete Arrendador', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black)),
+                              Text('Ponga su propiedad a la venta', style: GoogleFonts.inter( fontSize: 10, fontWeight: FontWeight.w300, color: Colors.black),),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
                     ),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
-                    onTap: () {
-                      DialogManager.confirmationProperty(context);
-                    },
-                  ),
                 ],
               ),
             ),
@@ -184,8 +198,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Preferencias',
-                    style: GoogleFonts.inter(
-                        fontSize: 16, fontWeight: FontWeight.w600)),
+                  style: GoogleFonts.inter(
+                    fontSize: 16, fontWeight: FontWeight.w600)),
               ],
             ),
             Container(
@@ -195,92 +209,80 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: Column(
                 children: [
-                  ListTile(
-                    dense: true,
-                    title: Text('Modo Oscuro',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Activar o Desactivar',
-                        style: GoogleFonts.inter(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black)),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color(0xFFD3D2D2),
+                  const SizedBox(height: 10),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Modo Oscuro', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black)),
+                              Text('Activar o Desactivar', style: GoogleFonts.inter( fontSize: 10, fontWeight: FontWeight.w300, color: Colors.black),),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
+                    ),
+                  const SizedBox(height: 8),
+                  Container(
+                      height: 1,
+                      width: 300,
+                      color: const Color(0xFFD3D2D2),
+                    ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Detalles de la App', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black)),
+                            Text('Politica de provacidad - Terminos y condiciones', style: GoogleFonts.inter( fontSize: 10, fontWeight: FontWeight.w300, color: Colors.black),),
+                          ],
+                        ),
+                        const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
+                      ],
                     ),
                   ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
+                  const SizedBox(height: 8),
+                  Container(
+                      height: 1,
+                      width: 300,
+                      color: const Color(0xFFD3D2D2),
+                    ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Acerca de', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black)),
+                          ],
+                        ),
+                        const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
+                      ],
+                    ),
                   ),
-                  ListTile(
-                    dense: true,
-                    title: Text('Ayuda',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Manual de informaciones',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
-                  ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
-                  ),
-                  ListTile(
-                    dense: true,
-                    title: Text('Detalles de la App',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Almacenamiento de la Aplicacion',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
-                  ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
-                  ),
-                  ListTile(
-                    dense: true,
-                    title: Text('Eliminar cuenta',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Completar el borrado de acceso',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
-                  ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
-                  ),
-                  ListTile(
-                    dense: true,
-                    title: Text('Cerrar Sesion',
-                        style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.red)),
-                    subtitle: Text('Cerrar sesion de la cuenta',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
-                    onTap: () {
-                      showDialog(context: context, builder: (context) {
+                  const SizedBox(height: 8),
+                  Container(
+                      height: 1,
+                      width: 300,
+                      color: const Color(0xFFD3D2D2),
+                    ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(context: context, builder: (context) {
                         return AlertDialog(
                           title: const Text('Cerrar Sesion'),
                           content: const Text('¿Estas seguro de cerrar sesion?'),
@@ -301,8 +303,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         );
                       });
-                    },
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Cerrar Sesion', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.red)),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
+                    ),
                   ),
+                  const SizedBox(height: 8),
                 ],
               ),
             )

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -111,7 +110,7 @@ class _FilterContainer extends State<FilterContainer>
                           "Categoría de alquileres",
                             style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
                           "Donde te sientas más cómodo!",
                           style: GoogleFonts.inter(fontWeight: FontWeight.w400, fontSize: 15),
@@ -121,7 +120,7 @@ class _FilterContainer extends State<FilterContainer>
                   ],
                 ),
               ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Container(
@@ -148,6 +147,17 @@ class _FilterContainer extends State<FilterContainer>
                             Expanded(
                               child: TextButton(
                                 onPressed: _onPressed1,
+                                style: TextButton.styleFrom(
+                                  backgroundColor: _isSelected1
+                                      ? const Color(0xFF26c2e4)
+                                      : Colors.white,
+                                  foregroundColor: _isSelected1
+                                      ? Colors.white
+                                      : const Color(0xFF26c2e4),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -161,22 +171,22 @@ class _FilterContainer extends State<FilterContainer>
                                     const Text("Casa"),
                                   ],
                                 ),
+                              ),
+                            ),
+                            Expanded(
+                              child: TextButton(
+                                onPressed: _onPressed2,
                                 style: TextButton.styleFrom(
-                                  backgroundColor: _isSelected1
+                                  backgroundColor: _isSelected2
                                       ? const Color(0xFF26c2e4)
                                       : Colors.white,
-                                  foregroundColor: _isSelected1
+                                  foregroundColor: _isSelected2
                                       ? Colors.white
                                       : const Color(0xFF26c2e4),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: TextButton(
-                                onPressed: _onPressed2,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -190,17 +200,6 @@ class _FilterContainer extends State<FilterContainer>
                                     const SizedBox(width: 5),
                                     const Text("Departamento"),
                                   ],
-                                ),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: _isSelected2
-                                      ? const Color(0xFF26c2e4)
-                                      : Colors.white,
-                                  foregroundColor: _isSelected2
-                                      ? Colors.white
-                                      : const Color(0xFF26c2e4),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
                                 ),
                               ),
                             ),
@@ -416,7 +415,7 @@ class _FilterContainer extends State<FilterContainer>
                           horizontal: 5.0, vertical: 10.0),
                       decoration: BoxDecoration(
                           color: selectedRooms == rooms
-                              ? Color(0xFF26C2E4)
+                              ? const Color(0xFF26C2E4)
                               : Colors.white,
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(
