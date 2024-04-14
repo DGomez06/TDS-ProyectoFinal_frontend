@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class AppDetails extends StatefulWidget {
-  const AppDetails({super.key});
+class TransactionsEmpty extends StatefulWidget {
+  const TransactionsEmpty({super.key});
 
   @override
-  AppDetailsState createState() => AppDetailsState();
+  TransactionsEmptyState createState() => TransactionsEmptyState();
 }
 
-class AppDetailsState extends State<AppDetails> {
+class TransactionsEmptyState extends State<TransactionsEmpty> {
 
 
   @override
@@ -32,9 +32,9 @@ class AppDetailsState extends State<AppDetails> {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
                 children: [
-                  SvgPicture.asset('assets/icons/ProfileScreen/barsfill.svg'),
+                  SvgPicture.asset('assets/icons/Payment/emptywallet.svg'),
                   const SizedBox(width: 10.0,),
-                  const Text('Detalles de la app', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0)),
+                  const Text('Transaciones', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0)),
                   
                 ],
               ),
@@ -46,7 +46,7 @@ class AppDetailsState extends State<AppDetails> {
               child: ListView(
                 children: const [
                   ListTile(
-                    title: Text('Politica de Privacidad ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                    title: Text('Aquí podrás ver tus pagos cuando hallas realizado tu primer pago y podrás comprobar los pagos hechos.  ', style: TextStyle( fontSize: 13),),
                   ),
 
 

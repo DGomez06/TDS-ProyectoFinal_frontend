@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/pay_collects.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/transactions.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/transactionsempty.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/about.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/appdetails.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/changepass.dart';
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: AppDetails(),
+      home: Transactions(),
     );
   }
 }

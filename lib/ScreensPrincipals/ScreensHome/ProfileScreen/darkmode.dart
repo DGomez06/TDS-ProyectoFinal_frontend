@@ -26,7 +26,7 @@ class _DarkModeState extends State<DarkMode> {
                 alignment: Alignment.topRight,
               ),
             ),
-            SizedBox(height: 15.0,),
+            const SizedBox(height: 15.0,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
@@ -57,7 +57,7 @@ class _DarkModeState extends State<DarkMode> {
                       },
                     ),
                   ),
-                  Divider( indent: 30, endIndent: 30,),
+                  const Divider( indent: 30, endIndent: 30,),
                   ListTile(
                     leading: SvgPicture.asset('assets/icons/ProfileScreen/sun.svg'),
                     title: Text('Modo Claro'),
@@ -71,7 +71,7 @@ class _DarkModeState extends State<DarkMode> {
                       },
                     ),
                   ),
-                  Divider(indent: 30, endIndent: 30,),
+                  const Divider(indent: 30, endIndent: 30,),
                   ListTile(
                     leading: SvgPicture.asset('assets/icons/ProfileScreen/bars.svg'),
                     title: Text('Configuración del sistema'),
