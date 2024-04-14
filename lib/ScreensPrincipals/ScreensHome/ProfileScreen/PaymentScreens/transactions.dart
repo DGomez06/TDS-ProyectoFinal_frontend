@@ -38,59 +38,46 @@ class Transactions extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const Padding(
-              padding:  EdgeInsets.only(left: 5), 
+              padding: EdgeInsets.only(left: 5),
               child: Text(
                 'Dic 2023',
-                style:  TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color(0xFFD3D2D2),
-                  width: 0.5,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Card(
-                elevation: 5, 
-                child: ListTile(
-                  leading: SvgPicture.asset(
-                    'assets/icons/Payment/PayPal.svg',
-                    height: 50,
-                  ),
-                  title: const Text(
-                    'PayPal',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+            Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 0.5,
                     ),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  subtitle: const Text(
-                    '20/02/2024',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  trailing: Stack(
-                    alignment: Alignment.centerRight,
-                    children: <Widget>[
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.blue[200],
-                          shape: BoxShape.circle,
+                  child: Card(
+                    elevation: 5,
+                    child: ListTile(
+                      leading: SvgPicture.asset(
+                        'assets/icons/Payment/PayPal.svg',
+                        height: 50,
+                      ),
+                      title: const Text(
+                        'PayPal',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SvgPicture.asset(
-                        'assets/icons/ProfileScreen/arrow.svg',
-                        height: 20,
+                      subtitle: const Text(
+                        '20/02/2024',
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
                       ),
-                      const Text(
+                      trailing: const Text(
                         'RD\$ 4500',
                         style: TextStyle(
                           fontSize: 20,
@@ -98,10 +85,32 @@ class Transactions extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+                Positioned(
+                  right: -20, // Posiciona el círculo justo en el borde derecho
+                  top: 20, // Posiciona el círculo justo en el borde superior
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF26C2E4),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right:
+                      -5, // Ajusta esta posición para alinear la flecha como desees
+                  top:
+                      30, // Ajusta esta posición para alinear la flecha como desees
+                  child: SvgPicture.asset(
+                    'assets/icons/ProfileScreen/arrow.svg',
+                    height: 20,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

@@ -40,6 +40,7 @@ class _ScreenHomeState extends State<ScreenHome> {
       _controller0.forward();
     }
   }
+
   void _animateIcon1() {
     if (selectedIndex == 1) {
       _controller1.forward();
@@ -47,6 +48,7 @@ class _ScreenHomeState extends State<ScreenHome> {
       _controller1.reverse();
     }
   }
+
   void _animateIcon2() {
     if (selectedIndex == 2) {
       _controller2.forward();
@@ -54,6 +56,7 @@ class _ScreenHomeState extends State<ScreenHome> {
       _controller2.reverse();
     }
   }
+
   void _animateIcon3() {
     if (selectedIndex == 3) {
       _controller3.forward();
@@ -61,6 +64,7 @@ class _ScreenHomeState extends State<ScreenHome> {
       _controller3.reverse();
     }
   }
+
   void _animateIcon4() {
     if (selectedIndex == 4) {
       _controller4.forward();
@@ -68,8 +72,6 @@ class _ScreenHomeState extends State<ScreenHome> {
       _controller4.reverse();
     }
   }
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class _ScreenHomeState extends State<ScreenHome> {
         },
       ),
       const DashboardScreen(),
-      const MessageScreen(),
+      const MessageScreenEmpty(),
       const ProfileScreen(),
     ];
 
@@ -106,7 +108,7 @@ class _ScreenHomeState extends State<ScreenHome> {
         onTap: (index) {
           setState(() {
             selectedIndex = index;
-            _animateIcon0(); 
+            _animateIcon0();
             _animateIcon1();
             _animateIcon2();
             _animateIcon3();
@@ -122,11 +124,12 @@ class _ScreenHomeState extends State<ScreenHome> {
               size: selectedIndex == 0 ? 22 : 20,
               children: [
                 SvgPicture.asset('assets/icons/Active/LupaBlue.svg'),
-                SvgPicture.asset('assets/icons/Desactive/LupaBlack.svg',),
+                SvgPicture.asset(
+                  'assets/icons/Desactive/LupaBlack.svg',
+                ),
               ],
             ),
             label: 'Buscar',
-            
           ),
           BottomNavigationBarItem(
             icon: AnimatedSvg(
@@ -188,7 +191,6 @@ class _ScreenHomeState extends State<ScreenHome> {
             index: selectedIndex,
             children: screen,
           ),
-          
         ],
       ),
     );

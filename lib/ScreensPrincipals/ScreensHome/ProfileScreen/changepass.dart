@@ -54,7 +54,7 @@ class ChangePass extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                     ),
                   ),
@@ -76,7 +76,7 @@ class ChangePass extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                     ),
                   ),
@@ -98,7 +98,7 @@ class ChangePass extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                     ),
                   ),
