@@ -107,7 +107,7 @@ class _FindScreenState extends State<FindScreen> {
     }
   }
 
-  // Aplicar filtrado por término de búsqueda
+  // Aplicar filtrado por término de búsquedaf
   tempFilteredList = tempFilteredList
       .where((element) =>
           element.direccion.toLowerCase().contains(searchTerm.toLowerCase()))
@@ -334,10 +334,10 @@ class _FindScreenState extends State<FindScreen> {
                   },
                 ),
                 ListTile(
-                  title: const Text('Penhouse'),
+                  title: const Text('Penthouse'),
                   onTap: () {
                     setState(() {
-                      selectedSubCategory = 'Penhouse';
+                      selectedSubCategory = 'Penthouse';
                     });
                     Navigator.of(context).pop();
                     filterProperties('Tipo de Propiedad');
