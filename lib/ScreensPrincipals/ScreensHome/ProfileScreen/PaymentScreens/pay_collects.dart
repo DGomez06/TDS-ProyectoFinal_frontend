@@ -61,7 +61,8 @@ class PayCollectsState extends State<PayCollects> {
                     children: [
                       Text(
                         'Métodos de pago ',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25.0),
                       ),
                     ],
                   ),
@@ -118,19 +119,19 @@ class PayCollectsState extends State<PayCollects> {
               ],
             ),
           ),
-            GestureDetector(
-              onTap: _toggleOverlayVisibility,
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 300),
-                opacity: _isOverlayVisible ? 0.5 : 0,
-                curve: Curves.easeInOut,
-                child: Container(
-                  color: Colors.black,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                ),
+          GestureDetector(
+            onTap: _toggleOverlayVisibility,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: _isOverlayVisible ? 0.5 : 0,
+              curve: Curves.easeInOut,
+              child: Container(
+                color: Colors.black,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
               ),
             ),
+          ),
           AnimatedPositioned(
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeInOut,
@@ -141,7 +142,8 @@ class PayCollectsState extends State<PayCollects> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
                 height: 220,
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.only(
@@ -234,7 +236,8 @@ class PayCollectsState extends State<PayCollects> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
                 height: 450,
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.only(
@@ -254,87 +257,95 @@ class PayCollectsState extends State<PayCollects> {
                   child: Column(
                     children: [
                       Container(
-                        width: 300,
-                        height: 180,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xFF20D7FF),
-                              Color(0xFF275E6A),
-                            ],
+                          width: 300,
+                          height: 180,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xFF20D7FF),
+                                Color(0xFF275E6A),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20,),
-                          width: double.infinity,
-                          height: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const SizedBox(height: 10),
-                              const Text(
-                                'Tarjeta de crédito o débito',
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/Payment/chip.png',
-                                    height: 31,
-                                  ),
-                                  
-                                  SvgPicture.asset(
-                                    'assets/icons/Payment/wifi.svg',
-                                    height: 35,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              SizedBox(
-                                height: 28,
-                                child: Text(
-                                  formatCardNumber(cardNumber),
-                                  style: const TextStyle(
-                                    fontSize: 25,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                            ),
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const SizedBox(height: 10),
+                                const Text(
+                                  'Tarjeta de crédito o débito',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                   ),
                                 ),
-                              ),
-                              const Text('0000', style: TextStyle(color: Colors.white)),
-                              const SizedBox(height: 6),
-                              const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Nombre del titular', style: TextStyle(color: Colors.white)),
-                                    ],
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/Payment/chip.png',
+                                      height: 31,
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/icons/Payment/wifi.svg',
+                                      height: 35,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                SizedBox(
+                                  height: 28,
+                                  child: Text(
+                                    formatCardNumber(cardNumber),
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('00/00', style: TextStyle(color: Colors.white)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              
-                            ],
-                          ),
-                        )
-                      ),
+                                ),
+                                const Text('0000',
+                                    style: TextStyle(color: Colors.white)),
+                                const SizedBox(height: 6),
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Nombre del titular',
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('00/00',
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )),
                       const SizedBox(height: 20),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -356,11 +367,10 @@ class PayCollectsState extends State<PayCollects> {
                         ),
                         child: TextField(
                           decoration: InputDecoration(
-                            hintText: 'Codigo de 16 digitos',
-                            hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
-                            border: InputBorder.none
-                          ),
-                        
+                              hintText: 'Codigo de 16 digitos',
+                              hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.5)),
+                              border: InputBorder.none),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -368,63 +378,60 @@ class PayCollectsState extends State<PayCollects> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        width: 160,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: const Color(0xFF22d7ff),
-                            width: 2.5,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.4),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(4, 7),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            width: 160,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: const Color(0xFF22d7ff),
+                                width: 2.5,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(4, 7),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Nombre Titular',
-                            hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
-                            border: InputBorder.none
-                          ),
-                        
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Container(
-                        width: 160,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: const Color(0xFF22d7ff),
-                            width: 2.5,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.4),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(4, 7),
-                            ),
-                          ],
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Mes/Año',
-                            hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
-                            border: InputBorder.none
-                          ),
-                        
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  hintText: 'Nombre Titular',
+                                  hintStyle: TextStyle(
+                                      color: Colors.black.withOpacity(0.5)),
+                                  border: InputBorder.none),
                             ),
                           ),
-                          
+                          const SizedBox(width: 10),
+                          Container(
+                            width: 160,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: const Color(0xFF22d7ff),
+                                width: 2.5,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.4),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(4, 7),
+                                ),
+                              ],
+                            ),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  hintText: 'Mes/Año',
+                                  hintStyle: TextStyle(
+                                      color: Colors.black.withOpacity(0.5)),
+                                  border: InputBorder.none),
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -451,18 +458,17 @@ class PayCollectsState extends State<PayCollects> {
                           ],
                         ),
                         child: TextButton(
-                          onPressed: (){
-                            _toggleOverlayCardVisibility2();
-                          }, 
-                          child: Text(
-                            'Añadir metodo de pago',
-                            style: GoogleFonts.yaldevi(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )
-                        ),
+                            onPressed: () {
+                              _toggleOverlayCardVisibility2();
+                            },
+                            child: Text(
+                              'Añadir metodo de pago',
+                              style: GoogleFonts.yaldevi(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )),
                       ),
                     ],
                   ),
@@ -480,7 +486,8 @@ class PayCollectsState extends State<PayCollects> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
                 height: 380,
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.only(
@@ -499,83 +506,92 @@ class PayCollectsState extends State<PayCollects> {
                 child: Column(
                   children: [
                     Container(
-                      width: 300,
-                      height: 180,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFF20D7FF),
-                            Color(0xFF275E6A),
-                          ],
+                        width: 300,
+                        height: 180,
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color(0xFF20D7FF),
+                              Color(0xFF275E6A),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const SizedBox(height: 30,),
-                            Container(
-                              width: double.infinity,
-                              height: 35,
-                              color: Colors.black,
-                            ),
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 7),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: 150,
-                                    height: 35,
-                                    padding: const EdgeInsets.only(right: 4),
-                                    alignment: Alignment.centerRight,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                height: 35,
+                                color: Colors.black,
+                              ),
+                              const SizedBox(height: 20),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 7),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      width: 150,
+                                      height: 35,
+                                      padding: const EdgeInsets.only(right: 4),
+                                      alignment: Alignment.centerRight,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: const Text('999',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20)),
                                     ),
-                                    child: const Text('999', style: TextStyle(color: Colors.black, fontSize: 20)),
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/icons/Payment/wifi.svg',
-                                    height: 35,
-                                  ),
-                                ],
+                                    SvgPicture.asset(
+                                      'assets/icons/Payment/wifi.svg',
+                                      height: 35,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 5),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 7, right: 70),
-                              child: Container(
-                                height: 7,
-                                color: Colors.white,
+                              const SizedBox(height: 5),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 7, right: 70),
+                                child: Container(
+                                  height: 7,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 7, right: 70),
-                              child: Container(
-                                height: 7,
-                                color: Colors.white,
+                              const SizedBox(height: 4),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 7, right: 70),
+                                child: Container(
+                                  height: 7,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 7, right: 70),
-                              child: Container(
-                                height: 7,
-                                color: Colors.white,
+                              const SizedBox(height: 4),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 7, right: 70),
+                                child: Container(
+                                  height: 7,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ),
+                            ],
+                          ),
+                        )),
                     const SizedBox(height: 15),
                     Container(
                       width: 160,
@@ -599,39 +615,39 @@ class PayCollectsState extends State<PayCollects> {
                       ),
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: 'Mes/Año',
-                          hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
-                          border: InputBorder.none
-                        ),
+                            hintText: 'Mes/Año',
+                            hintStyle:
+                                TextStyle(color: Colors.black.withOpacity(0.5)),
+                            border: InputBorder.none),
                       ),
                     ),
                     const SizedBox(height: 20),
                     Container(
-                        height: 40,
-                        width: 300,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xFF2BD9FF),
-                              Color(0xFF21A9C7),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.4),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
-                            ),
+                      height: 40,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFF2BD9FF),
+                            Color(0xFF21A9C7),
                           ],
                         ),
-                        child: TextButton(
-                          onPressed: (){
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.4),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: TextButton(
+                          onPressed: () {
                             _toggleOverlayCardVisibility2();
-                          }, 
+                          },
                           child: Text(
                             'Añadir metodo de pago',
                             style: GoogleFonts.yaldevi(
@@ -639,9 +655,8 @@ class PayCollectsState extends State<PayCollects> {
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
                             ),
-                          )
-                        ),
-                      ),
+                          )),
+                    ),
                   ],
                 ),
               ),
@@ -651,6 +666,7 @@ class PayCollectsState extends State<PayCollects> {
       ),
     );
   }
+
   String formatCardNumber(String cardNumber) {
     cardNumber = cardNumber.replaceAll(RegExp(r'\s+\b|\b\s'), '');
 

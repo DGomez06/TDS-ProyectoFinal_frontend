@@ -1,20 +1,22 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CreateProperty extends StatefulWidget {
-  const CreateProperty({Key? key});
+class EditProperty extends StatefulWidget {
+  const EditProperty({Key? key});
 
   @override
-  CreatePropertyState createState() => CreatePropertyState();
+  EditPropertyState createState() => EditPropertyState();
 }
 
-class CreatePropertyState extends State<CreateProperty> {
+class EditPropertyState extends State<EditProperty> {
   @override
   Widget build(BuildContext context) {
     int _currentHabitaciones = 1;
     int _currentBanos = 1;
     int _selectedPropertyTypeId = -1;
+    String _selectedOption = 'Disponible';
     return Scaffold(
         body: SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -28,50 +30,121 @@ class CreatePropertyState extends State<CreateProperty> {
             height: 25,
             alignment: Alignment.topRight,
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           const Padding(
             padding: EdgeInsets.only(left: 50),
             child: Row(
               children: [
                 SizedBox(width: 10),
                 Text(
-                  'NUEVA PROPIEDAD',
+                  'DATOS DE LA PROPIEDAD',
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
           ),
-          const Column(
-            // Wrap the texts in another Column
-            children: [
-              Row(
-                // Use a Row to display texts side-by-side
-                mainAxisAlignment:
-                    MainAxisAlignment.center, // Center the texts horizontally
-                children: [
-                  Text('General'),
-                  SizedBox(width: 50), // Add spacing between texts
-                  Text('Ubicación'),
-                  SizedBox(width: 50), // Add spacing between texts
-                  Text('Adicional'),
-                ],
-              ),
-              Divider(
-                color: Colors.grey,
-                indent: 20,
-                endIndent: 5,
-                thickness: 2,
-              ),
-            ],
-          ),
           const SizedBox(height: 20),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Tipo de propiedad',
+              'ID de Usuario que usara la propiedad',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Container(
+              height: 40,
+              width: 350, // Altura deseada del TextField
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey
+                        .withOpacity(0.5), // Color y opacidad de la sombra
+                    spreadRadius: 1, // Radio de dispersión de la sombra
+                    blurRadius: 2, // Radio de difuminado de la sombra
+                    offset: const Offset(0, 2), // Desplazamiento de la sombra
+                  ),
+                ],
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Ej: 93405934', // Icono deseado
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 8, horizontal: 12), // Ajusta el espacio interno
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Disponibilidad',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Container(
+              padding: const EdgeInsets.only(left: 20),
+              width: 350,
+              height: 50,
+              decoration: BoxDecoration(
+                border: Border.all(width: 3, color: const Color(0xFFD3D2D2)),
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(
+                        0, 3), // Cambia la posición de la sombra aquí
+                  ),
+                ],
+              ),
+              child: DropdownButton<String>(
+                value: _selectedOption,
+                items: const [
+                  DropdownMenuItem<String>(
+                    value: 'Disponible',
+                    child: Text('Disponible'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: 'No disponible',
+                    child: Text('No disponible'),
+                  ),
+                ],
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedOption = newValue!;
+                  });
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Tipo de Propiedad',
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -352,7 +425,10 @@ class CreatePropertyState extends State<CreateProperty> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const Text('Habitaciones'),
+                          const Text(
+                            'Habitaciones',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           const SizedBox(height: 5),
                           Container(
                             width: 120,
@@ -403,7 +479,10 @@ class CreatePropertyState extends State<CreateProperty> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const Text('Baños'),
+                          const Text(
+                            'Baños',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           const SizedBox(height: 5),
                           Container(
                             width: 120,
@@ -413,7 +492,7 @@ class CreatePropertyState extends State<CreateProperty> {
                               borderRadius: BorderRadius.circular(8),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
+                                  color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 1,
                                   blurRadius: 2,
                                   offset: const Offset(0, 2),
@@ -450,46 +529,326 @@ class CreatePropertyState extends State<CreateProperty> {
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          Center(
-            child: Container(
-              height: 40,
-              width: 300,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF2BD9FF),
-                    Color(0xFF21A9C7),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.4),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Siguiente',
-                    style: GoogleFonts.yaldevi(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+          const SizedBox(height: 15),
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Ublica tu propiedad',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
+          Stack(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20), // Borde circular
+                  ),
+                  child: Image.asset(
+                    'assets/map.jpg',
+                    fit: BoxFit.cover, // Ajusta cómo se redimensiona la imagen
+                    width: double
+                        .infinity, // Hace que la imagen ocupe todo el ancho
+                    height: 200, // Establece la altura de la imagen
+                  ),
+                ),
+              ),
+
+              // Positioned to align the button to the bottom right corner
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    // Handle button press
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF26C2E4),
+                  ),
+                  icon: const Icon(
+                    Icons.location_on,
+                    color: Colors.white,
+                    size: 15,
+                  ),
+                  label: const Text(
+                    'UBICAR',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: ListTile(
+                  title: const Center(
+                    child: Text(
+                      'Latitud',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  subtitle: SizedBox(
+                    width: double.infinity,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Ej: 12.656595',
+                          hintStyle: TextStyle(fontSize: 15),
+                          prefixIcon: Icon(
+                            Icons.location_on,
+                            size: 15,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 15, // Adjust vertical size here
+                            horizontal: 20, // Adjust horizontal size here
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: ListTile(
+                  title: const Center(
+                    child: Text(
+                      'Longitud',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  subtitle: SizedBox(
+                    width: double.infinity,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Ej: 12.656595',
+                          hintStyle: TextStyle(fontSize: 15),
+                          prefixIcon: Icon(
+                            Icons.location_on,
+                            size: 15,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 15, // Adjust vertical size here
+                            horizontal: 20, // Adjust horizontal size here
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15),
+          DottedBorder(
+            color: Colors.black,
+            strokeWidth: 2,
+            dashPattern: const [5, 5],
+            borderType: BorderType.RRect,
+            radius: const Radius.circular(20),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              child: Container(
+                width: 350,
+                height: 150,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color:
+                      Colors.grey[200], // Cambia el color del contenedor a azul
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SvgPicture.asset(
+                      'assets/icons/camera.svg',
+                      height: 70,
+                    ),
+                    const Text(
+                      'Subir Imagen',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                        color: Colors
+                            .grey, // Hace que el color del texto esté desvanecido
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Imágenes',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Container(
+            width: 350,
+            height: 120,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                // Add images using AssetImage or NetworkImage
+                Image.asset(
+                  'assets/map.jpg',
+                  fit: BoxFit.cover,
+                  height: 100,
+                  width: 100,
+                ),
+                Image.asset(
+                  'assets/map.jpg',
+                  fit: BoxFit.cover,
+                  height: 100,
+                  width: 100,
+                ),
+                Image.asset(
+                  'assets/map.jpg',
+                  fit: BoxFit.cover,
+                  height: 100,
+                  width: 100,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Row(
+              children: [
+                Container(
+                  height: 40,
+                  width: 150,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFFFF0202),
+                        Color(0xFFa82930),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      // Lógica para eliminar
+                    },
+                    child: Text(
+                      'Eliminar',
+                      style: GoogleFonts.yaldevi(
+                        fontSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10), // Espacio entre los botones
+                Container(
+                  height: 40,
+                  width: 150,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFF2BD9FF),
+                        Color(0xFF21A9C7),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      // Lógica para tu botón normal
+                    },
+                    child: Text(
+                      'Actualizar',
+                      style: GoogleFonts.yaldevi(
+                        fontSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     ));

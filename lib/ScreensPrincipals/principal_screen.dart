@@ -15,7 +15,6 @@ class PrincipalScreen extends StatefulWidget {
 }
 
 class _PrincipalScreenState extends State<PrincipalScreen> {
-
   int value = 0;
   @override
   Widget build(BuildContext context) {
@@ -49,35 +48,32 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElasticInUp(
-                          delay: const Duration(milliseconds: 100),
-                          child: AnimatedContainer(
-                            width: 110,
-                            height: 110,
-                            decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Color(0x2026C2E4),
-                                      Color(0xFF26C2E4)
-                                    ]),
-                                borderRadius: BorderRadius.circular(100),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.7),
-                                    spreadRadius: 2,
-                                    blurRadius: 2,
-                                    offset: const Offset(0, 3),
-                                  )
-                                ]),
-                            duration: const Duration(seconds: 1),
-                            child: ElasticInUp(
-                              delay: const Duration(milliseconds: 100),
-                              child: const Image(
-                                image: AssetImage('assets/buildings.png'),
-                                color: Colors.white,
+                        Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey
+                                    .withOpacity(0.5), // Color de la sombra
+                                spreadRadius:
+                                    2, // Radio de propagación de la sombra
+                                blurRadius:
+                                    5, // Radio de desenfoque de la sombra
+                                offset: const Offset(
+                                    0, 2), // Desplazamiento de la sombra
                               ),
+                            ],
+                            borderRadius: BorderRadius.circular(
+                                10), // Bordes redondeados del contenedor
+                          ),
+                          child: ElasticInUp(
+                            delay: const Duration(milliseconds: 100),
+                            child: Image.asset(
+                              'assets/logo_app.png',
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),

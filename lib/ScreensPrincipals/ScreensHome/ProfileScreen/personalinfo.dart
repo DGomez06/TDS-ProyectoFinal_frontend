@@ -51,6 +51,31 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ),
                 const SizedBox(width: 10),
                 const Text(
+                  'ID de Usuario',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const TextField(
+              decoration: InputDecoration(
+                  hintText: '723820930',
+                  hintStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                  )),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/ProfileScreen/user.svg',
+                  height: 25,
+                ),
+                const SizedBox(width: 10),
+                const Text(
                   'Nombre Completo',
                   style: TextStyle(
                     fontSize: 20,
@@ -202,7 +227,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ),
               ),
             ),
-            const SizedBox(height: 150),
+            const SizedBox(height: 70),
             GestureDetector(
               onTap: () {
                 showDialog(

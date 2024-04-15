@@ -12,10 +12,16 @@ import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/pay_
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/personalinfo.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/message.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/crear.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createproperty.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpropertylocation.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpropertyplus.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/dashboardLandlord.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/editproperty.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/homeLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/profile.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/viewtenant.dart';
+import 'package:lease_managment/ScreensPrincipals/container_signin.dart';
 import 'package:lease_managment/ScreensPrincipals/container_signup.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 import 'package:lease_managment/ScreensPrincipals/validate_password.dart';
@@ -39,7 +45,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: CreateProperty(),
+      home: EditProperty(),
     );
   }
 }
