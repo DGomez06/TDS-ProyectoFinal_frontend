@@ -1,15 +1,37 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:lease_managment/Providers/Properties/property.dart';
+import 'package:provider/provider.dart';
 
 class CreatePropertyLocation extends StatefulWidget {
-  const CreatePropertyLocation({Key? key});
+  const CreatePropertyLocation({
+    super.key,
+  });
 
   @override
   CreatePropertyLocationState createState() => CreatePropertyLocationState();
 }
 
 class CreatePropertyLocationState extends State<CreatePropertyLocation> {
+  TextEditingController _latitudeController = TextEditingController();
+  TextEditingController _longitudeController = TextEditingController();
+  String text =
+      'assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss';
+  LatLng _markerPosition = const LatLng(37.7749, -122.4194);
+
+  void _handleMapTap(LatLng tapPosition) {
+    setState(() {
+      _markerPosition = tapPosition;
+      _latitudeController.text = _markerPosition.latitude.toString();
+      _longitudeController.text = _markerPosition.longitude.toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,51 +41,6 @@ class CreatePropertyLocationState extends State<CreatePropertyLocation> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
-            SvgPicture.asset(
-              'assets/icons/ProfileScreen/back.svg',
-              height: 25,
-              alignment: Alignment.topRight,
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.only(left: 50),
-              child: Row(
-                children: [
-                  SizedBox(width: 10),
-                  Text(
-                    'NUEVA PROPIEDAD',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Column(
-              // Wrap the texts in another Column
-              children: [
-                Row(
-                  // Use a Row to display texts side-by-side
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Center the texts horizontally
-                  children: [
-                    Text('General'),
-                    SizedBox(width: 50), // Add spacing between texts
-                    Text('Ubicación'),
-                    SizedBox(width: 50), // Add spacing between texts
-                    Text('Adicional'),
-                  ],
-                ),
-                Divider(
-                  color: Colors.grey,
-                  indent: 20,
-                  endIndent: 5,
-                  thickness: 2,
-                ),
-              ],
-            ),
             const SizedBox(height: 15),
             const Center(
               child: Padding(
@@ -78,51 +55,53 @@ class CreatePropertyLocationState extends State<CreatePropertyLocation> {
               ),
             ),
             // Use a Stack to overlay the button on top of the image
-            Stack(
-              children: [
-                // Expanded to make the image fill the available space
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20), // Borde circular
+            Container(
+                width: 350,
+                height: 450,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
                     ),
-                    child: Image.asset(
-                      'assets/map.jpg',
-                      fit:
-                          BoxFit.cover, // Ajusta cómo se redimensiona la imagen
-                      width: double
-                          .infinity, // Hace que la imagen ocupe todo el ancho
-                      height: 450, // Establece la altura de la imagen
-                    ),
-                  ),
+                  ],
                 ),
-
-                // Positioned to align the button to the bottom right corner
-                Positioned(
-                  bottom: 20,
-                  right: 20,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      // Handle button press
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          const Color(0xFF26C2E4), // Set button color to blue
-                    ),
-                    icon: const Icon(Icons.location_on,
-                        color: Colors.white), // Add icon to button
-                    label: const Text(
-                      'UBICAR',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white, // Set text color to white
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: FlutterMap(
+                    options: MapOptions(
+                        initialCenter: const LatLng(18.7357, -70.1627),
+                        initialZoom: 9.0,
+                        onTap: (tabposition, point) {
+                          _handleMapTap(point);
+                        }),
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        subdomains: const ['a', 'b', 'c'],
                       ),
-                    ),
+                      MarkerLayer(
+                        markers: [
+                          Marker(
+                            width: 80.0,
+                            height: 80.0,
+                            point: _markerPosition,
+                            child: SvgPicture.asset(
+                              'assets/icons/property/Pin_fill.svg',
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
+                )),
             const SizedBox(
               height: 20,
             ),
@@ -152,6 +131,7 @@ class CreatePropertyLocationState extends State<CreatePropertyLocation> {
                           ],
                         ),
                         child: TextFormField(
+                          controller: _latitudeController,
                           decoration: const InputDecoration(
                             hintText: 'Ej: 12.656595',
                             hintStyle: TextStyle(fontSize: 15),
@@ -198,6 +178,7 @@ class CreatePropertyLocationState extends State<CreatePropertyLocation> {
                           ],
                         ),
                         child: TextFormField(
+                          controller: _longitudeController,
                           decoration: const InputDecoration(
                             hintText: 'Ej: 12.656595',
                             hintStyle: TextStyle(fontSize: 15),
@@ -249,7 +230,23 @@ class CreatePropertyLocationState extends State<CreatePropertyLocation> {
                 ),
                 child: Center(
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final propertyData =
+                          Provider.of<PropertyData>(context, listen: false);
+                      if (_latitudeController.text.isNotEmpty &&
+                          _longitudeController.text.isNotEmpty) {
+                        propertyData.setUbication(
+                            double.parse(_latitudeController.text),
+                            double.parse(_longitudeController.text));
+                        propertyData.setIndex(2);
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Por favor, ingrese la ubicación de la propiedad'),
+                          ),
+                        );
+                      }
+                    },
                     child: Text(
                       'Siguiente',
                       style: GoogleFonts.yaldevi(

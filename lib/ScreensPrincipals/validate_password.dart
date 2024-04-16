@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lease_managment/Fuctions/functionreal.dart';
+import 'package:lease_managment/Fuctions/function_login_logout.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 
 class ValidatePasswordScreen extends StatefulWidget {

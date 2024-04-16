@@ -1,18 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lease_managment/Fuctions/funcitonsApiRamdon.dart';
-import 'package:lease_managment/models/products.dart';
+import 'package:lease_managment/Fuctions/Properties/funciton_get_propertie.dart';
+import 'package:lease_managment/models/properties.dart';
 
 class StatusProvider extends ChangeNotifier {
   bool _hideContainer = false;
 
   List<Properties> _propertiesData = [];
   final List<Properties> _selectedProperties = [];
-
-  List<String> _propertiesImage = [];
   final List<String> _propertiesImageList = [];
-  final ApiClient _apiClient = ApiClient();
+  final ApiPropertiesGet _apiClient = ApiPropertiesGet();
   String _searchTerm = '';
   String _selectedCategory = '';
   String _selectedSubCategory = '';
@@ -22,11 +20,10 @@ class StatusProvider extends ChangeNotifier {
 
   bool get hideContainer => _hideContainer;
   int get selectedIndex => _selectedIndex;
-  ApiClient get apiClient => _apiClient;
+  ApiPropertiesGet get apiClient => _apiClient;
 
   List<Properties> get propertiesData => _propertiesData;
   List<Properties> get addedPropertiesList => _selectedProperties;
-  List<String> get propertiesImage => _propertiesImage;
   List<String> get propertiesImageList => _propertiesImageList;
   String get selectedCategory => _selectedCategory;
   String get selectedSubCategory => _selectedSubCategory;
@@ -35,17 +32,12 @@ class StatusProvider extends ChangeNotifier {
 
   String get getSearchTerm => _searchTerm;
 
-  Future<void> fetchPropertiesAndImages() async {
+  Future<void> fetchProperties() async {
   try {
     _propertiesData = await _apiClient.fetchProperties();
-    _propertiesImage = await _apiClient.fetchRandomImageUrls(_propertiesData.length);
-    
-    // Asociar cada URL de imagen aleatoria con una propiedad aleatoria
-    for (var property in _propertiesData) {
-      int randomIndex = Random().nextInt(_propertiesImage.length);
-      propertiesImage[randomIndex] = _propertiesImage[randomIndex];
+    if (_propertiesData.isEmpty) {
+      throw ('No properties found');
     }
-    
     notifyListeners();
   } catch (e) {
     throw ('Error fetching properties: $e');
@@ -59,34 +51,34 @@ class StatusProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Properties> get filteredProperties {
-    if (_searchTerm.isEmpty) {
-      return _propertiesData.where((property) {
-        if (_selectedCategory == 'Precio') {
-          // Filtrar por precio
-          return property.rentalPrice > _value1 &&
-              property.rentalPrice < _value2;
-        } else if (_selectedCategory == 'Tipo de Propiedad') {
-          // Filtrar por tipo de propiedad
-          PropertyType selectedType =
-              propertyTypeFromString(_selectedSubCategory);
-          return property.propertyType == selectedType;
-        } else if (_selectedCategory == 'Tamaño') {
-          // Filtrar por tamaño
-          Size selectedSize = sizeFromSting(_selectedSubCategory);
-          return property.size == selectedSize;
-        } else {
-          return true;
-        }
-      }).toList();
-    } else {
-      return _propertiesData
-          .where((property) => property.direccion
-              .toLowerCase()
-              .contains(_searchTerm.toLowerCase()))
-          .toList();
-    }
-  }
+  // List<Properties> get filteredProperties {
+  //   if (_searchTerm.isEmpty) {
+  //     return _propertiesData.where((property) {
+  //       if (_selectedCategory == 'Precio') {
+  //         // Filtrar por precio
+  //         return property.rentalPrice > _value1 &&
+  //             property.rentalPrice < _value2;
+  //       } else if (_selectedCategory == 'Tipo de Propiedad') {
+  //         // Filtrar por tipo de propiedad
+  //         PropertyType selectedType =
+  //             propertyTypeFromString(_selectedSubCategory);
+  //         return property.propertyType == selectedType;
+  //       } else if (_selectedCategory == 'Tamaño') {
+  //         // Filtrar por tamaño
+  //         Size selectedSize = sizeFromSting(_selectedSubCategory);
+  //         return property.size == selectedSize;
+  //       } else {
+  //         return true;
+  //       }
+  //     }).toList();
+  //   } else {
+  //     return _propertiesData
+  //     .where((property) => property.direccion
+  //         .toLowerCase()
+  //         .contains(_searchTerm.toLowerCase()))
+  //     .toList();
+  //   }
+  // }
 
   void updateFilteredProperties(
       String category, String subCategory, int value1, int value2) {

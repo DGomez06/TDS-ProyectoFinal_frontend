@@ -4,9 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/information.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/newproperty.dart';
-import 'package:lease_managment/models/products.dart';
+import 'package:lease_managment/models/properties.dart';
 import 'package:provider/provider.dart';
 
 class DialogManager {
@@ -225,7 +226,7 @@ class DialogManager {
   }
 
   static void detailsFav(
-      BuildContext context, Properties property, String imageUrl) {
+      BuildContext context, Content content, String imageUrl) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -263,7 +264,7 @@ class DialogManager {
                             pageBuilder:
                                 (context, animation, secondaryAnimation) {
                               return DetailScreen(
-                                property: property,
+                                content: content,
                                 imageUrl: imageUrl,
                               );
                             },
@@ -416,7 +417,7 @@ class DialogManager {
                                       context,
                                       PageRouteBuilder(
                                         pageBuilder: (context, animation, secondaryAnimation) =>
-                                            const NewPropertyPage(),
+                                            const ScreenHome(),
                                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                           const begin = Offset(1.0, 0.0);
                                           const end = Offset.zero;

@@ -2,7 +2,6 @@ import 'package:animated_svg/animated_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensHome/dashboard.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/fav.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/find.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/message_user/message.dart';
@@ -30,7 +29,6 @@ class _ScreenHomeState extends State<ScreenHome> {
     _animateIcon1();
     _animateIcon2();
     _animateIcon3();
-    _animateIcon4();
   }
 
   void _animateIcon0() {
@@ -65,14 +63,6 @@ class _ScreenHomeState extends State<ScreenHome> {
     }
   }
 
-  void _animateIcon4() {
-    if (selectedIndex == 4) {
-      _controller4.forward();
-    } else {
-      _controller4.reverse();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final screen = [
@@ -84,7 +74,8 @@ class _ScreenHomeState extends State<ScreenHome> {
           });
         },
       ),
-      const DashboardScreen(),
+
+      const MessageScreenEmpty(),
       const Message(),
       const ProfileScreen(),
     ];
@@ -112,7 +103,6 @@ class _ScreenHomeState extends State<ScreenHome> {
             _animateIcon1();
             _animateIcon2();
             _animateIcon3();
-            _animateIcon4();
           });
         },
         items: [
@@ -144,25 +134,13 @@ class _ScreenHomeState extends State<ScreenHome> {
             ),
             label: 'Favoritos',
           ),
-          BottomNavigationBarItem(
-            icon: AnimatedSvg(
-              controller: _controller2,
-              duration: const Duration(milliseconds: 500),
-              isActive: false,
-              size: selectedIndex == 2 ? 22 : 20,
-              children: [
-                SvgPicture.asset('assets/icons/Desactive/DashBoardBlack.svg'),
-                SvgPicture.asset('assets/icons/Active/DashBoardBlue.svg'),
-              ],
-            ),
-            label: 'Tablero',
-          ),
+          
           BottomNavigationBarItem(
             icon: AnimatedSvg(
               controller: _controller3,
               duration: const Duration(milliseconds: 500),
               isActive: false,
-              size: selectedIndex == 3 ? 22 : 20,
+              size: selectedIndex == 2 ? 22 : 20,
               children: [
                 SvgPicture.asset('assets/icons/Desactive/MessageBlack.svg'),
                 SvgPicture.asset('assets/icons/Active/MessageBlue.svg'),
@@ -175,7 +153,7 @@ class _ScreenHomeState extends State<ScreenHome> {
               controller: _controller4,
               duration: const Duration(milliseconds: 500),
               isActive: false,
-              size: selectedIndex == 4 ? 22 : 20,
+              size: selectedIndex == 3 ? 22 : 20,
               children: [
                 SvgPicture.asset('assets/icons/Desactive/ProfileBlack.svg'),
                 SvgPicture.asset('assets/icons/Active/ProfileBlue.svg'),

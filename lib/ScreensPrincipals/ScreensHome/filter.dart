@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
+import 'package:provider/provider.dart';
 
 class FilterContainer extends StatefulWidget {
   final bool isVisible;
@@ -18,7 +20,7 @@ class FilterContainer extends StatefulWidget {
 
 class _FilterContainer extends State<FilterContainer>
     with SingleTickerProviderStateMixin {
-  RangeValues _currentRangeValues = const RangeValues(2000, 5000);
+  RangeValues _currentRangeValues = const RangeValues(2000, 50000);
   int selectedRooms = 0;
   int selectedBath = 0;
   late AnimationController _animationController;
@@ -243,7 +245,7 @@ class _FilterContainer extends State<FilterContainer>
                       _currentRangeValues.end
                     ],
                     rangeSlider: true,
-                    max: 5000,
+                    max: 50000,
                     min: 2000,
                     onDragging: (handlerIndex, lowerValue, upperValue) {
                       if (lowerValue >= 2000) {
@@ -547,6 +549,14 @@ class _FilterContainer extends State<FilterContainer>
                   _animationController.reverse();
                 });
                 Future.delayed(const Duration(milliseconds: 400), () {
+                  final filtered = Provider.of<PropertyDataProvider>(context, listen: false);
+                  filtered.filterContentApi(
+                    type: _isSelected1 ? 'Casa' : 'Apartamento',
+                    minPrice: _currentRangeValues.start,
+                    maxPrice: _currentRangeValues.end,
+                    rooms: selectedRooms,
+                    bathrooms: selectedBath,
+                  );
                   widget.onClose();
                 });
               },

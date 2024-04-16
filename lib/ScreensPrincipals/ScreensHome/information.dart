@@ -1,14 +1,15 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:lease_managment/models/products.dart';
+import 'package:lease_managment/models/properties.dart';
 
 class DetailScreen extends StatefulWidget {
-  final Properties property;
-  final String imageUrl;
+  final Content content;
+  final String? imageUrl;
 
-  const DetailScreen({Key? key, required this.property, required this.imageUrl})
+  const DetailScreen({Key? key, required this.content, this.imageUrl})
       : super(key: key);
 
   @override
@@ -16,24 +17,55 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    String numberformat =  NumberFormat('#,###').format((widget.property.rentalPrice));
+    String numberformat =  NumberFormat('#,###').format((widget.content.price));
     return Scaffold(
       backgroundColor: const Color(0xFFf8f8f8),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AnimatedContainer(
-              duration: const Duration(seconds: 1),
-              height: 295,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(widget.imageUrl),
-                  fit: BoxFit.cover,
+            SizedBox(
+              height: 400,
+              child: Stack(
+              children: [
+                PageView.builder(
+                  itemCount: widget.content.images.length,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        _showImageDialog(context, widget.content.images);
+                      },
+                      child: Image.network(
+                        widget.content.images[index].url,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
                 ),
-              ),
+                Positioned(
+                  bottom: 10.0,
+                  left: 0,
+                  right: 0,
+                  child: DotsIndicator(
+                    dotsCount: widget.content.images.length,
+                    position: _currentIndex,
+                    decorator: const DotsDecorator(
+                      color: Colors.grey, // Color de los puntos inactivos
+                      activeColor: Colors.blue, // Color del punto activo
+                      size: Size.square(8.0),
+                      activeSize: Size.square(10.0),
+                    ),
+                  ),
+                ),
+              ],
+                        ),
             ),
             const SizedBox(height: 20),
             Container(
@@ -43,7 +75,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.property.nombre,
+                    widget.content.owner.firstName + ' ' + widget.content.owner.lastName,
                     style: GoogleFonts.inter(
                         fontWeight: FontWeight.bold, fontSize: 23),
                   ),
@@ -62,7 +94,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.property.direccion,
+                              widget.content.address,
                               style: GoogleFonts.inter(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 13,
@@ -140,7 +172,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Habitaciones: ${widget.property.numberRooms}',
+                        'Habitaciones: ${widget.content.rooms}',
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w400,
                           fontSize: 14,
@@ -162,7 +194,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Baños: ${widget.property.numberBathrooms}',
+                        'Baños: ${widget.content.bathrooms}',
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w400,
                           fontSize: 14,
@@ -180,7 +212,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    'Este encantador apartamento en alquiler se encuentra en una ubicación privilegiada, a solo unos pasos de restaurantes, tiendas y transporte público. Está situado en el barrio céntrico y vibrante de la ciudad, ofreciendo conveniencia y accesibilidad.',
+                    widget.content.description,
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.w400,
                       fontSize: 13,
@@ -188,29 +220,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                       textAlign: TextAlign.justify,
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Detalles',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text('1 television\n2 muebles\n3 estufas', style: GoogleFonts.inter(fontWeight: FontWeight.w400, fontSize: 13)),
-                  const SizedBox(height: 10),
-                  const Divider(
-                    color: Color(0xFFD3D2D2),
-                    thickness: 2,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Mapa de ubicacion',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
+                  
                   const SizedBox(height: 10),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -260,7 +270,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           SizedBox(
                             height: 23,
                             child: Text(
-                              'Marcelo',
+                              '${widget.content.owner.firstName} ${widget.content.owner.lastName}',
                               style: GoogleFonts.inter(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
@@ -268,7 +278,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                           ),
                           Text(
-                            'agachateyconocelo@gmail.com',
+                            widget.content.owner.email,
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
@@ -300,6 +310,37 @@ class _DetailScreenState extends State<DetailScreen> {
           ],
         ),
       ),
+    );
+  }
+  void _showImageDialog(BuildContext context, List<ImageFile> images) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: PageView.builder(
+              itemCount: images.length,
+              controller: PageController(initialPage: _currentIndex),
+              onPageChanged: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+              itemBuilder: (context, index) {
+                return Hero(
+                  tag: images[index].id,
+                  child: Image.network(
+                    images[index].url,
+                    fit: BoxFit.contain,
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
