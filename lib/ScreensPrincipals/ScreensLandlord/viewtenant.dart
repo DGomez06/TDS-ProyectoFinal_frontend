@@ -118,7 +118,6 @@ class ViewTenantState extends State<ViewTenant> {
                                   ),
                                 ],
                               ),
-                              // Aquí va el resto de la información del inquilino
                               const SizedBox(height: 10),
                               Row(
                                 children: [

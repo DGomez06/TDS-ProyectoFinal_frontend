@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class Transactions extends StatelessWidget {
-  const Transactions({super.key});
+class TransactionsLandLord extends StatelessWidget {
+  const TransactionsLandLord({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +21,11 @@ class Transactions extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(left: 30),
+          const Padding(
+            padding: EdgeInsets.only(left: 30),
             child: Row(
               children: [
-                SvgPicture.asset(
-                  'assets/icons/Payment/emptywallet.svg',
-                  height: 25,
-                ),
-                const SizedBox(width: 10),
-                const Text(
+                Text(
                   'Transacciones',
                   style: TextStyle(
                     fontSize: 25,
