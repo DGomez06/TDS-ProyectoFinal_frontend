@@ -74,8 +74,6 @@ class _ScreenHomeState extends State<ScreenHome> {
           });
         },
       ),
-
-      const MessageScreenEmpty(),
       const Message(),
       const ProfileScreen(),
     ];
