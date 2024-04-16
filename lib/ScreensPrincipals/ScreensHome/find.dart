@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/filter.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/list.dart';
@@ -28,7 +29,7 @@ class _FindScreenState extends State<FindScreen>
   void initState() {
     super.initState();
     Provider.of<StatusProvider>(context, listen: false)
-        .fetchPropertiesAndImages();
+        .fetchProperties();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -101,10 +102,10 @@ class _FindScreenState extends State<FindScreen>
                                   padding: const EdgeInsets.only(right: 10),
                                   child: TextField(
                                     onChanged: (value) {
-                                      Provider.of<StatusProvider>(
+                                      Provider.of<PropertyDataProvider>(
                                         context,
                                         listen: false,
-                                      ).setSearchTerm(value);
+                                      ).filterContent(value);
                                     },
                                     decoration: InputDecoration(
                                       border: InputBorder.none,

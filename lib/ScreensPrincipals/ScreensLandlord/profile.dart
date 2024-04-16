@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Fuctions/category_dialog.dart';
-import 'package:lease_managment/Fuctions/functionreal.dart';
+import 'package:lease_managment/Fuctions/function_login_logout.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 
 class ProfileLandlord extends StatefulWidget {
@@ -173,7 +175,7 @@ class _ProfileLandlord extends State<ProfileLandlord> {
                     trailing: const Icon(Icons.arrow_forward_ios_rounded,
                         color: Color(0xFFD3D2D2)),
                     onTap: () {
-                      DialogManager.confirmationProperty(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenHome()));
                     },
                   ),
                 ],

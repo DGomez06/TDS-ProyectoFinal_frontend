@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/toggle_slider.dart';
 
 class CrearLandlord extends StatefulWidget {
   const CrearLandlord({super.key});
@@ -95,7 +96,9 @@ class _CrearLandlordState extends State<CrearLandlord> {
                           ),
                           child: Center(
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ToggleSliderCreateProperty()));
+                              },
                               child: Text(
                                 'Siguiente',
                                 style: GoogleFonts.yaldevi(

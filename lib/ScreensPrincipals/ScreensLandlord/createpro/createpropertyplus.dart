@@ -1,7 +1,15 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lease_managment/Fuctions/Properties/function_register_properties.dart';
+import 'package:lease_managment/Providers/Properties/property.dart';
+import 'package:provider/provider.dart';
 
 class CreatePropertyPlus extends StatefulWidget {
   const CreatePropertyPlus({Key? key});
@@ -11,6 +19,77 @@ class CreatePropertyPlus extends StatefulWidget {
 }
 
 class CreatePropertyPlusState extends State<CreatePropertyPlus> {
+  List<XFile> _images = [];
+
+  Future<void> getImage(ImageSource source) async {
+    List<XFile>? pickedFiles = [];
+    try {
+      pickedFiles = await ImagePicker().pickMultiImage(
+        imageQuality: 70,  // Adjust image quality (0 to 100)
+        maxWidth: 800,    // Adjust max width for images
+        maxHeight: 800,   // Adjust max height for images
+      );
+    } catch (e) {
+      print('Error picking images: $e');
+    }
+
+    if (pickedFiles != null) {
+      setState(() {
+        _images.addAll(pickedFiles!);
+      });
+    }
+  }
+
+  Future<void> takePicture() async {
+    final XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      imageQuality: 70,  // Adjust image quality (0 to 100)
+      maxWidth: 800,    // Adjust max width for images
+      maxHeight: 800,   // Adjust max height for images
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _images.add(pickedFile);
+      });
+    }
+  }
+
+  void removeImage(int index) {
+    setState(() {
+      _images.removeAt(index);
+    });
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Galería'),
+                onTap: () {
+                  getImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Cámara'),
+                onTap: () {
+                  takePicture();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,85 +99,45 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
-            SvgPicture.asset(
-              'assets/icons/ProfileScreen/back.svg',
-              height: 25,
-              alignment: Alignment.topRight,
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.only(left: 50),
-              child: Row(
-                children: [
-                  SizedBox(width: 10),
-                  Text(
-                    'NUEVA PROPIEDAD',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Column(
-              // Wrap the texts in another Column
-              children: [
-                Row(
-                  // Use a Row to display texts side-by-side
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Center the texts horizontally
-                  children: [
-                    Text('General'),
-                    SizedBox(width: 50), // Add spacing between texts
-                    Text('Ubicación'),
-                    SizedBox(width: 50), // Add spacing between texts
-                    Text('Adicional'),
-                  ],
-                ),
-                Divider(
-                  color: Colors.grey,
-                  indent: 20,
-                  endIndent: 5,
-                  thickness: 2,
-                ),
-              ],
-            ),
             const SizedBox(height: 15),
-            DottedBorder(
-              color: Colors.black,
-              strokeWidth: 2,
-              dashPattern: const [5, 5],
-              borderType: BorderType.RRect,
-              radius: const Radius.circular(20),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                child: Container(
-                  width: 350,
-                  height: 200,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors
-                        .grey[200], // Cambia el color del contenedor a azul
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SvgPicture.asset(
-                        'assets/icons/camera.svg',
-                        height: 70,
-                      ),
-                      const Text(
-                        'Subir Imagen',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal,
-                          color: Colors
-                              .grey, // Hace que el color del texto esté desvanecido
+            GestureDetector(
+              onTap: () {
+                _showPicker(context);
+              },
+              child: DottedBorder(
+                color: Colors.black,
+                strokeWidth: 2,
+                dashPattern: const [5, 5],
+                borderType: BorderType.RRect,
+                radius: const Radius.circular(20),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  child: Container(
+                    width: 350,
+                    height: 200,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors
+                          .grey[200], // Cambia el color del contenedor a azul
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SvgPicture.asset(
+                          'assets/icons/camera.svg',
+                          height: 70,
                         ),
-                      ),
-                    ],
+                        const Text(
+                          'Subir Imagen',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors
+                                .grey, // Hace que el color del texto esté desvanecido
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -127,31 +166,28 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
                 spacing: 10,
                 runSpacing: 10,
                 children: [
-                  // Add images using AssetImage or NetworkImage
-                  Image.asset(
-                    'assets/map.jpg',
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: 100,
-                  ),
-                  Image.asset(
-                    'assets/map.jpg',
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: 100,
-                  ),
-                  Image.asset(
-                    'assets/map.jpg',
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: 100,
-                  ),
-                  Image.asset(
-                    'assets/map.jpg',
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: 100,
-                  ),
+                  for (var image in _images)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Stack(
+                        children: [Image.file(
+                          File(image.path),
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
+                          Positioned(
+                        top: -10,
+                        right: -10,
+                        child: IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            removeImage(_images.indexOf(image));
+                          },
+                        ),
+                      ),
+                    ]),
+                    ),
                 ],
               ),
             ),
@@ -247,9 +283,37 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
                                           ),
                                         ),
                                         child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(
-                                                context); // Close the dialog
+                                          onPressed: () async {
+                                            final propertyData = Provider.of<PropertyData>(context, listen: false);
+                                            dynamic response = await ApiRegister().postRegisterProperty(
+                                              propertyData.typeProperty!,
+                                              propertyData.address!,
+                                              propertyData.description!,
+                                              propertyData.price!,
+                                              propertyData.dimensions!,
+                                              propertyData.rooms!,
+                                              propertyData.bathrooms!,
+                                              propertyData.latitude!,
+                                              propertyData.longitude!,
+                                              _images
+                                            );
+
+                                              if(response is int){
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(
+                                                content: Text('Propiedad creada con éxito'),
+                                                backgroundColor: Colors.green,
+                                              ),
+                                            );
+                                              Navigator.pop(context);
+                                            }else{
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(
+                                                content: Text('Error al crear la propiedad'),
+                                                backgroundColor: Colors.red,
+                                              ),
+                                            );
+                                            }
                                           },
                                           style: ElevatedButton.styleFrom(
                                             shape: RoundedRectangleBorder(

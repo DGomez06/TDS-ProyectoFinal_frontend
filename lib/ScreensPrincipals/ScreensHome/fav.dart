@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lease_managment/Fuctions/category_dialog.dart';
 import 'package:lease_managment/Providers/comunication.dart';
-import 'package:lease_managment/models/products.dart';
+import 'package:lease_managment/models/properties.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 
@@ -68,24 +68,7 @@ class _FavScreenState extends State<FavScreen> {
                         ),
                       ]),
                 ),
-                add
-                    ? Center(
-                        child: AnimatedContainer(
-                          duration: const Duration(seconds: 3),
-                          margin: const EdgeInsets.only(top: 300, bottom: 300),
-                          child: IconButton(
-                            icon: const Icon(Icons.add_circle_outline_rounded,
-                                size: 100, color: Colors.blue),
-                            onPressed: () {
-                              setState(() {
-                                widget.onPressed();
-                                add = false;
-                              });
-                            },
-                          ),
-                        ),
-                      )
-                    : SizedBox(
+                SizedBox(
                         width: 350,
                         height: 700,
                         child: GridView.count(
@@ -99,19 +82,19 @@ class _FavScreenState extends State<FavScreen> {
                             (index) {
                               return GestureDetector(
                                 onTap: () {
-                                  DialogManager.detailsFav(
-                                    context,
-                                    propertiesProvider
-                                        .addedPropertiesList[index],
-                                    propertiesProvider.propertiesImage[index]);
+                                  // DialogManager.detailsFav(
+                                  //   context,
+                                  //   propertiesProvider
+                                  //       .addedPropertiesList[index],
+                                  //   propertiesProvider.propertiesImage[index]);
                                     
                                 },
-                                child: _buildPropertyItem(
-                                  propertiesProvider.addedPropertiesList[index],
-                                  propertiesProvider.propertiesImage[index],
-                                  context,
-                                  propertiesProvider,
-                                ),
+                                // child: _buildPropertyItem(
+                                //   propertiesProvider.addedPropertiesList[index],
+                                //   propertiesProvider.propertiesImage[index],
+                                //   context,
+                                //   propertiesProvider,
+                                // ),
                               );
                             },
                           ),
@@ -196,7 +179,7 @@ class _FavScreenState extends State<FavScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                properties.nombre,
+                properties.content[0].toString(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -204,7 +187,7 @@ class _FavScreenState extends State<FavScreen> {
                 ),
               ),
               Text(
-                properties.direccion,
+                properties.content[1].toString(),
                 style: const TextStyle(
                   fontSize: 12.0,
                   color: Colors.black,
@@ -212,7 +195,7 @@ class _FavScreenState extends State<FavScreen> {
               ),
               Text(
                 NumberFormat.currency(symbol: 'RD\$')
-                    .format(properties.rentalPrice),
+                    .format(properties.content[2]),
                 style: const TextStyle(
                   fontSize: 14.0,
                   color: Colors.black,

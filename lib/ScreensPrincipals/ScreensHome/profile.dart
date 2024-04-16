@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Fuctions/category_dialog.dart';
-import 'package:lease_managment/Fuctions/functionreal.dart';
+import 'package:lease_managment/Fuctions/function_login_logout.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/homeLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -179,12 +181,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Vuelvete Arrendador', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black)),
-                              Text('Ponga su propiedad a la venta', style: GoogleFonts.inter( fontSize: 10, fontWeight: FontWeight.w300, color: Colors.black),),
-                            ],
+                          GestureDetector(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreensLandlord())),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Vuelvete Arrendador', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black)),
+                                Text('Ponga su propiedad a la venta', style: GoogleFonts.inter( fontSize: 10, fontWeight: FontWeight.w300, color: Colors.black),),
+                              ],
+                            ),
                           ),
                           const Icon(Icons.arrow_forward_ios_rounded,  color: Color(0xFFD3D2D2)),
                         ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
 import 'package:lease_managment/Providers/comunication.dart';
+import 'package:lease_managment/Providers/Properties/property.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/pay_collects.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/transactions.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/transactionsempty.dart';
@@ -13,12 +15,14 @@ import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/pers
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/message.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/crear.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createproperty.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpropertylocation.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpropertyplus.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/createproperty.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/createpropertylocation.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/createpropertyplus.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/toggle_slider.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/dashboardLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/editproperty.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/homeLandlord.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/newproperty.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/profile.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/viewtenant.dart';
 import 'package:lease_managment/ScreensPrincipals/container_signin.dart';
@@ -33,7 +37,13 @@ void main() async {
   SharedPreferences.getInstance();
   runApp(ChangeNotifierProvider(
     create: (context) => StatusProvider(),
-    child: const MyApp(),
+    child: ChangeNotifierProvider(
+      create: (context) => PropertyData(),
+      child: ChangeNotifierProvider(
+        create: (context) => PropertyDataProvider(),
+        child:const  MyApp(),
+      )
+    ),
   ));
 }
 
@@ -45,7 +55,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: EditProperty(),
+      home: ScreenHome(),
     );
   }
 }

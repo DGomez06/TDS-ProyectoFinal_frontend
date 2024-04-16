@@ -5,15 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiConexion {
   Dio dio = Dio();
-  String base = 'http://192.168.1.6:8060/api/v1/auth';
+  String base = 'http://192.168.1.8:8060/api/v1/auth';
 
-  Future<String> registerUserAndGetToken(User user) async {
+  Future<void> registerUserAndGetToken(User user) async {
     try {
       final response = await dio.post('$base/register', data: user.toJson());
-      final token = response.data['token'];
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', token);
-      return token;
+      return response.data;
     } catch (e) {
       throw Exception('Error al registrar el usuario: $e');
     }
@@ -26,15 +23,17 @@ class ApiConexion {
         throw Exception('No se encontró un token almacenado');
       }
 
-      await dio.post(
+      final response = await dio.post(
         '$base/authenticate',
         data: {'email': user, 'password': password},
-        options: Options(
-          headers: {'Authorization': 'Bearer $token'},
-        ),
       );
-
-      return 'Correcto';
+      if (response.statusCode == 200) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', response.data['token']);
+        return 'Correcto';
+      } else {
+        throw Exception('Error al iniciar sesión: ${response.data}');
+      }
     } catch (e) {
       return 'Incorrecto';
     }
@@ -93,12 +92,13 @@ class ApiConexion {
   }
 }
 
-
 class PhoneNumberFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     final StringBuffer newText = StringBuffer();
-    final String formattedText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+    final String formattedText =
+        newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
 
     if (formattedText.length >= 4) {
       newText.write('${formattedText.substring(0, 3)}-');
