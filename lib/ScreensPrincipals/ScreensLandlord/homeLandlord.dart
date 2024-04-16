@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/crear.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/dashboardLandlord.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/messages.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/Message_LandLord/messages.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/profile.dart';
 
 class ScreensLandlord extends StatefulWidget {
@@ -37,6 +37,7 @@ class _ScreensLandlord extends State<ScreensLandlord> {
       _controller0.forward();
     }
   }
+
   void _animateIcon1() {
     if (selectedIndex == 1) {
       _controller1.forward();
@@ -44,6 +45,7 @@ class _ScreensLandlord extends State<ScreensLandlord> {
       _controller1.reverse();
     }
   }
+
   void _animateIcon2() {
     if (selectedIndex == 2) {
       _controller2.forward();
@@ -51,6 +53,7 @@ class _ScreensLandlord extends State<ScreensLandlord> {
       _controller2.reverse();
     }
   }
+
   void _animateIcon3() {
     if (selectedIndex == 3) {
       _controller3.forward();
@@ -58,15 +61,13 @@ class _ScreensLandlord extends State<ScreensLandlord> {
       _controller3.reverse();
     }
   }
-  
-
 
   @override
   Widget build(BuildContext context) {
     final screen = [
       const CrearLandlord(),
       const DashboardLandlord(),
-      const MessageLandlord(),
+      const MessagesLandLord(),
       const ProfileLandlord(),
     ];
 
@@ -89,7 +90,7 @@ class _ScreensLandlord extends State<ScreensLandlord> {
         onTap: (index) {
           setState(() {
             selectedIndex = index;
-            _animateIcon0(); 
+            _animateIcon0();
             _animateIcon1();
             _animateIcon2();
             _animateIcon3();
@@ -156,7 +157,6 @@ class _ScreensLandlord extends State<ScreensLandlord> {
             index: selectedIndex,
             children: screen,
           ),
-          
         ],
       ),
     );

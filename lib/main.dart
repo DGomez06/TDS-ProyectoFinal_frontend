@@ -11,7 +11,11 @@ import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/dark
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/pay_collect.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/personalinfo.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensHome/message.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/message_user/createmessege.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/message_user/message.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/message_user/message_received.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/Message_LandLord/createmessagelandlord.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/Message_LandLord/messages.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/crear.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createproperty.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpropertylocation.dart';
@@ -20,6 +24,7 @@ import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/dashboardLandl
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/editproperty.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/homeLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/profile.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/transactionsLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/viewtenant.dart';
 import 'package:lease_managment/ScreensPrincipals/container_signin.dart';
 import 'package:lease_managment/ScreensPrincipals/container_signup.dart';
@@ -45,7 +50,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: EditProperty(),
+      home: ToggleSliderCreateMessageLandLord(),
     );
   }
 }

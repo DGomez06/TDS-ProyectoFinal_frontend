@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/dashboard.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/fav.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/find.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensHome/message.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/message_user/message.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/profile.dart';
 
 class ScreenHome extends StatefulWidget {
@@ -85,7 +85,7 @@ class _ScreenHomeState extends State<ScreenHome> {
         },
       ),
       const DashboardScreen(),
-      const MessageScreenEmpty(),
+      const Message(),
       const ProfileScreen(),
     ];
 

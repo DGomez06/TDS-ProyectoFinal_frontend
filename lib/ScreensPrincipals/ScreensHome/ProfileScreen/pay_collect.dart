@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 class PayCollect extends StatelessWidget {
   const PayCollect({super.key});
 
