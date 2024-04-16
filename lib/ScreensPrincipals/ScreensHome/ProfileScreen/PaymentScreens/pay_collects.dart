@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class PayCollects extends StatefulWidget {
   const PayCollects({Key? key}) : super(key: key);
@@ -182,16 +183,86 @@ class PayCollectsState extends State<PayCollects> {
                     const SizedBox(height: 20),
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/icons/Payment/PayPal.svg',
-                          height: 25,
-                        ),
-                        const SizedBox(width: 10),
-                        const Text(
-                          'PayPal',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) => PaypalCheckout(
+                                sandboxMode: true,
+                                clientId:
+                                    "AYM5RUgBd9U4IzFjQuzpatRLTKsgMo6JRwyf2pCzYQ6LBrNxZn4qEm0iG7m_U-LzSv8x5Kz8J6U8pX_G",
+                                secretKey:
+                                    "EOQCwuD5xO5QdECc5Z9o_edzYPpZaVF-FZn1C7aDnM_fdVkXm9FHpjSCtqrQppX0r_oEZlmBlgJNsII1",
+                                returnURL: "https://www.sandbox.paypal.com",
+                                cancelURL: "https://www.sandbox.paypal.com",
+                                transactions: const [
+                                  {
+                                    "amount": {
+                                      "total": '70',
+                                      "currency": "USD",
+                                      "details": {
+                                        "subtotal": '70',
+                                        "shipping": '0',
+                                        "shipping_discount": 0
+                                      }
+                                    },
+                                    "description":
+                                        "The payment transaction description.",
+                                    // "payment_options": {
+                                    //   "allowed_payment_method":
+                                    //       "INSTANT_FUNDING_SOURCE"
+                                    // },
+                                    "item_list": {
+                                      "items": [
+                                        {
+                                          "name": "Apple",
+                                          "quantity": 4,
+                                          "price": '5',
+                                          "currency": "USD"
+                                        },
+                                        {
+                                          "name": "Pineapple",
+                                          "quantity": 5,
+                                          "price": '10',
+                                          "currency": "USD"
+                                        }
+                                      ],
+                                    },
+                                    "note_to_payer":
+                                        "Pago mensual del alquiler.",
+                                  }
+                                ],
+                                note:
+                                    "Contact us for any questions on your order.",
+                                onSuccess: (Map params) async {
+                                  // Maneja el pago exitoso
+                                  print("onSuccess: $params");
+                                },
+                                onError: (error) {
+                                  // Maneja el error de pago
+                                  print("onError: $error");
+                                },
+                                onCancel: () {
+                                  // Maneja la cancelación del pago
+                                  print('cancelled:');
+                                },
+                              ),
+                            ));
+                          },
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/Payment/PayPal.svg',
+                                height: 25,
+                              ),
+                              const SizedBox(width: 10),
+                              const Text(
+                                'PayPal',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

@@ -37,6 +37,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animation_progress_bar: ^2.3.1
+  flutter_paypal_checkout: ^1.0.1
+  flutter_inappwebview: ^5.8.0
   flutter_svg: ^2.0.10+1
   dotted_border: ^2.0.0+1
   flutter_xlider: ^3.5.0
@@ -52,6 +54,9 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+
+dependency_overrides:
+  http: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
