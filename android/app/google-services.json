@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "80777034304",
+    "project_id": "rentalm-e4a0c",
+    "storage_bucket": "rentalm-e4a0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80777034304:android:5a93f56f580467bc2bbda5",
+        "android_client_info": {
+          "package_name": "com.example.lease_managment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1QLme5Cg96wh7dDTjnaaX4dZONHUEUt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

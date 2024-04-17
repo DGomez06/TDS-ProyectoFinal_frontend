@@ -36,13 +36,15 @@ dependencies:
   dio: ^5.4.1
   dots_indicator: ^3.0.0
   dotted_border: ^2.0.0+1
+  firebase_analytics: ^10.10.2
+  firebase_core: ^2.30.0
+  firebase_messaging: ^14.8.2
   flutter:
     sdk: flutter
   flutter_animation_progress_bar: ^2.3.1
+  flutter_inappwebview: ^5.8.0
   flutter_map: ^6.1.0
   flutter_paypal_checkout: ^1.0.1
-  flutter_inappwebview: ^5.8.0
-
   flutter_svg: ^2.0.10+1
   flutter_xlider: ^3.5.0
   fluttertoast: ^8.2.4

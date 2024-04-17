@@ -1,4 +1,7 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lease_managment/Firebase/firebase_api.dart';
 import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/Providers/Properties/property.dart';
@@ -40,6 +43,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseApi().initNotifications();
+  FirebaseAnalytics.instance;
   SharedPreferences.getInstance();
   runApp(ChangeNotifierProvider(
     create: (context) => StatusProvider(),
@@ -60,8 +66,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: PayCollects(),
-
+      home: PrincipalScreen(),
     );
   }
 }

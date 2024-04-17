@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:lease_managment/Fuctions/Properties/function_message.dart';
 import 'package:lease_managment/models/properties.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -296,9 +297,97 @@ class _DetailScreenState extends State<DetailScreen> {
                           color: const Color(0xFF26C2E4),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: SvgPicture.asset(
-                          'assets/icons/Active/mail.svg',
-                          fit: BoxFit.contain,
+                        child: GestureDetector(
+                          onTap: (){
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  title: const Text('Solicitud de vivienda'),
+                                  titlePadding: EdgeInsets.only(left: 70, top: 30),
+                                  titleTextStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.black),
+                                  content: const Text(
+                                      '¿Te gustaría solicitar información para adquirir la vivienda?', textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            ApiMessage().sendMessage(widget.content.id);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20.0),
+                                              gradient: const LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  Color(0xFF08D0FC),
+                                                  Color(0xFF0daacc),
+                                                ],
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 20),
+                                            child: const Text(
+                                              'Solicitar',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                            width: 10), // Espacio entre los botones
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Container(
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20.0),
+                                              gradient: const LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  Color(0xFF08D0FC),
+                                                  Color(0xFF0daacc),
+                                                ],
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 20),
+                                            child: const Text(
+                                              'Volver',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            'assets/icons/Active/mail.svg',
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ],
