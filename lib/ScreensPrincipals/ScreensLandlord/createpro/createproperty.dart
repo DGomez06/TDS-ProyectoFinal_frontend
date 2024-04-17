@@ -282,7 +282,7 @@ class CreatePropertyState extends State<CreateProperty> {
 
               child: TextField(
                 controller: _descriptionController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Ej: Detalles del lugar',
                   prefixIcon: Icon(Icons.add_business_sharp), // Icono deseado
                   border: InputBorder.none, // Quitamos el borde del TextField

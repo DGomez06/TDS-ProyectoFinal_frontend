@@ -783,7 +783,7 @@ class PayCollectsState extends State<PayCollects> {
                         keyboardType: TextInputType.number,
                         controller: cardCodeController,
                         decoration: InputDecoration(
-                            hintText: 'Mes/Año',
+                            hintText: 'CVC',
                             hintStyle:
                                 TextStyle(color: Colors.black.withOpacity(0.5)),
                             border: InputBorder.none),
