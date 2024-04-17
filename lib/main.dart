@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lease_managment/Firebase/firebase_api.dart';
+import 'package:lease_managment/Providers/Properties/dashboard_provider.dart';
 import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/Providers/Properties/property.dart';
@@ -33,7 +34,7 @@ import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/homeLandlord.d
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/newproperty.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/profile.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/transactionsLandlord.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/viewtenant.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/DashboardScreens/viewtenant.dart';
 import 'package:lease_managment/ScreensPrincipals/container_signin.dart';
 import 'package:lease_managment/ScreensPrincipals/container_signup.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
@@ -53,7 +54,10 @@ void main() async {
         create: (context) => PropertyData(),
         child: ChangeNotifierProvider(
           create: (context) => PropertyDataProvider(),
-          child: const MyApp(),
+          child: ChangeNotifierProvider(
+            create: (context) => DashboardProvider(),
+            child: const MyApp(),
+          ),
         )),
   ));
 }

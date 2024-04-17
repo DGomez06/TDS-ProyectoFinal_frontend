@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class About extends StatefulWidget {
+  const About({super.key});
+
   @override
   _AboutState createState() => _AboutState();
 }

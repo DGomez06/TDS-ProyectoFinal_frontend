@@ -14,10 +14,13 @@ class Transactions extends StatelessWidget {
           const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.only(left: 25),
-            child: SvgPicture.asset(
-              'assets/icons/ProfileScreen/back.svg',
-              height: 25,
-              alignment: Alignment.topRight,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: SvgPicture.asset(
+                'assets/icons/ProfileScreen/back.svg',
+                height: 25,
+                alignment: Alignment.topRight,
+              ),
             ),
           ),
           const SizedBox(height: 20),

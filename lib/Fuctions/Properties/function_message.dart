@@ -6,7 +6,7 @@ class ApiMessage{
   String url = 'http://192.168.1.8:8060/api/v1/property/notify';
 
   Future<void> sendMessage(int id) async {
-    String? token = await ApiConexion().getToken();
+    String? token = await ApiConexion().getTokenNorify();
     try {
       final response = await dio.post('$url/$id', data: {'notifyToken': 'dkV0iQ96ScKIi-062yorCO:APA91bG-3mEAyCjCl6RXvE6VIBBVXKOaim5J0O_joPSXh-6fsvZDzxHE7vunSnpzOMJm0G1CAlXTjvn4Fax7o7ECJC_I_NDrK7kHKmaX_2pcOk6F5MNl9yfoKepY2ReluVSHmJUvpsol'},
       options: Options(headers: {'Authorization': 'Bearer $token'}));

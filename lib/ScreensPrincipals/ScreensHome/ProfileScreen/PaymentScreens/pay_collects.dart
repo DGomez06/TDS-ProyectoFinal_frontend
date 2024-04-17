@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
+import 'package:lease_managment/Fuctions/function_login_logout.dart';
 
 class PayCollects extends StatefulWidget {
   const PayCollects({Key? key}) : super(key: key);
@@ -595,7 +596,7 @@ class PayCollectsState extends State<PayCollects> {
                                   hintStyle: TextStyle(
                                       color: Colors.black.withOpacity(0.5)),
                                   border: InputBorder.none),
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(5), _MonthYearInputFormatter()],
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(5), MonthYearInputFormatter()],
                             ),
                           ),
                         ],
@@ -835,65 +836,5 @@ class PayCollectsState extends State<PayCollects> {
       ),
     );
   }
-
-  // String formatCardNumber(String cardNumber) {
-  //   String formattedNumber = '';
-  //   for (int i = 0; i < cardNumber.length; i += 4) {
-  //     formattedNumber += cardNumber.substring(i, i + 4);
-  //     if (i + 4 < cardNumber.length) {
-  //       formattedNumber += ' ';
-  //     }
-  //   }
-  //   return formattedNumber;
-  // }
 }
 
-class CardNumberFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    final StringBuffer newText = StringBuffer();
-    final String formattedText =
-        newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
-
-    if (formattedText.isNotEmpty) {
-      // Formatear los primeros 16 caracteres con espacios cada 4 caracteres
-      for (int i = 0; i < formattedText.length; i++) {
-        if (i > 0 && i % 4 == 0) {
-          newText.write(' '); // Agregar un espacio cada 4 caracteres
-        }
-        newText.write(formattedText[i]);
-      }
-    }
-
-    return TextEditingValue(
-      text: newText.toString(),
-      selection: TextSelection.collapsed(offset: newText.length),
-    );
-  }
-}
-
-class _MonthYearInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    final String formattedText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
-
-    if (formattedText.isEmpty) {
-      return TextEditingValue(
-        text: '',
-        selection: TextSelection.collapsed(offset: 0),
-      );
-    }
-
-    final StringBuffer newText = StringBuffer();
-    newText.write(formattedText.substring(0, min(formattedText.length, 2))); // MM
-    if (formattedText.length > 2) {
-      newText.write('/' + formattedText.substring(2, min(formattedText.length, 4))); // YY
-    }
-
-    return TextEditingValue(
-      text: newText.toString(),
-      selection: TextSelection.collapsed(offset: newText.length),
-    );
-  }
-}

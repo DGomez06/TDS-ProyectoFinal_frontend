@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:lease_managment/Fuctions/Properties/function_register_properties.dart';
 import 'package:lease_managment/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -75,6 +78,21 @@ class ApiConexion {
     }
   }
 
+  Future<bool> changePassword(String newPassword) async {
+    String? token = await getToken();
+
+    try {
+      await dio.post('http://192.168.1.8:8060/api/v1/user',
+          data: {"password": "'$newPassword'"},
+          options: Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
@@ -84,6 +102,11 @@ class ApiConexion {
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
+  }
+
+  Future<String?> getTokenNorify() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('notiToken');
   }
 }
 
@@ -114,3 +137,56 @@ class PhoneNumberFormatter extends TextInputFormatter {
   }
 }
 
+class CardNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final StringBuffer newText = StringBuffer();
+    final String formattedText =
+        newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (formattedText.isNotEmpty) {
+      // Formatear los primeros 16 caracteres con espacios cada 4 caracteres
+      for (int i = 0; i < formattedText.length; i++) {
+        if (i > 0 && i % 4 == 0) {
+          newText.write(' '); // Agregar un espacio cada 4 caracteres
+        }
+        newText.write(formattedText[i]);
+      }
+    }
+
+    return TextEditingValue(
+      text: newText.toString(),
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+}
+
+class MonthYearInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final String formattedText =
+        newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    if (formattedText.isEmpty) {
+      return const TextEditingValue(
+        text: '',
+        selection: TextSelection.collapsed(offset: 0),
+      );
+    }
+
+    final StringBuffer newText = StringBuffer();
+    newText
+        .write(formattedText.substring(0, min(formattedText.length, 2))); // MM
+    if (formattedText.length > 2) {
+      newText.write(
+          '/${formattedText.substring(2, min(formattedText.length, 4))}'); // YY
+    }
+
+    return TextEditingValue(
+      text: newText.toString(),
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+}

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PersonalInfo extends StatefulWidget {
-  const PersonalInfo({Key? key});
+  const PersonalInfo({super.key});
 
   @override
   State<PersonalInfo> createState() => _PersonalInfoState();
@@ -19,11 +20,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
-            SvgPicture.asset(
-              'assets/icons/ProfileScreen/back.svg',
-              height: 25,
-              alignment: Alignment.topRight,
+            const SizedBox(height: 50),
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: SvgPicture.asset(
+                'assets/icons/ProfileScreen/back.svg',
+                height: 25,
+                alignment: Alignment.topRight,
+              ),
             ),
             const SizedBox(height: 20),
             Row(
@@ -43,154 +47,136 @@ class _PersonalInfoState extends State<PersonalInfo> {
               ],
             ),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/ProfileScreen/user.svg',
-                  height: 25,
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  'ID de Usuario',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 25,
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/ProfileScreen/user.svg',
+                          height: 20,
+                        ),
+                        const SizedBox(width: 5),
+                        const Text(
+                          'ID de Usuario',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                  hintText: '723820930',
-                  hintStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  )),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/ProfileScreen/user.svg',
-                  height: 25,
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  'Nombre Completo',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(
+                    height: 40,
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: '723820930',
+                          hintStyle: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                          )),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                  hintText: 'Nombre Completo',
-                  hintStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  )),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/ProfileScreen/phone.svg',
-                  height: 25,
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  'Número de teléfono',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 25,
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/ProfileScreen/user.svg',
+                          height: 20,
+                        ),
+                        const SizedBox(width: 5),
+                        const Text(
+                          'Nombre Completo',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                  hintText: 'Número de teléfono',
-                  hintStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  )),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/ProfileScreen/correo.svg',
-                  height: 25,
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  'Correo Electrónico',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(
+                    height: 40,
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: 'Nombre Completo',
+                          hintStyle: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                          )),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                  hintText: 'Correo Electrónico',
-                  hintStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  )),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/ProfileScreen/Gender.svg',
-                  height: 25,
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  'Genero',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 25,
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/ProfileScreen/phone.svg',
+                          height: 20,
+                        ),
+                        const SizedBox(width: 5),
+                        const Text(
+                          'Número de teléfono',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                  hintText: 'Agregar Genero',
-                  hintStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  )),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/ProfileScreen/Direction.svg',
-                  height: 25,
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  'Dirección',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(
+                    height: 40,
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: 'Número de teléfono',
+                          hintStyle: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                          )),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                  hintText: 'Agregar Direccion',
-                  hintStyle: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  )),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 25,
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/ProfileScreen/correo.svg',
+                          height: 20,
+                        ),
+                        const SizedBox(width: 5),
+                        const Text(
+                          'Correo Electrónico',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: 'Correo Electrónico',
+                          hintStyle: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                          )),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             Container(
@@ -227,7 +213,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ),
               ),
             ),
-            const SizedBox(height: 70),
+            const SizedBox(height: 270),
             GestureDetector(
               onTap: () {
                 showDialog(
@@ -299,7 +285,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                                 border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10.0)), // Eliminar el borde predeterminado
+                                                            10.0)), 
                                                 contentPadding:
                                                     const EdgeInsets.symmetric(
                                                   vertical: 12,
@@ -310,7 +296,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                           ),
                                           const SizedBox(
                                               height:
-                                                  20), // Espacio entre el TextField y el botón
+                                                  20), 
                                           TextButton(
                                             onPressed: () {
                                               // Lógica para el botón de confirmación
@@ -323,7 +309,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                                       const Duration(
                                                           seconds: 5), () {
                                                     Navigator.of(context).pop(
-                                                        true); // Cierra el diálogo después de 5 segundos
+                                                        true); 
                                                   });
                                                   return AlertDialog(
                                                     backgroundColor:
@@ -337,7 +323,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                                         color: Colors.black,
                                                       ),
                                                     ),
-                                                    // Ajusta el tamaño del diálogo aquí
+                                                    // 
                                                     content: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.min,
@@ -346,7 +332,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                                               .center,
                                                       children: [
                                                         SvgPicture.asset(
-                                                          'assets/icons/ProfileScreen/happy.svg', // Reemplaza con la ruta de tu icono
+                                                          'assets/icons/ProfileScreen/happy.svg', 
                                                           height: 50,
                                                         ),
                                                       ],

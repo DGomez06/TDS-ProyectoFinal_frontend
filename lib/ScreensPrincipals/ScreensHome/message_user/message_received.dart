@@ -307,7 +307,7 @@ class _MessageReceivedState extends State<MessageReceived> {
                                   height: 25,
                                 ),
                               ),
-                              const SizedBox(width: 110),
+                              const SizedBox(width: 70),
                               const Text(
                                 'CREAR NUEVO MENSAJE',
                                 style: TextStyle(

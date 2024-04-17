@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/Fuctions/category_dialog.dart';
 import 'package:lease_managment/Fuctions/function_login_logout.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/about.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/appdetails.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/changepass.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/pay_collect.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/personalinfo.dart';
@@ -184,6 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontSize: 16, fontWeight: FontWeight.w600)),
               ],
             ),
+            const SizedBox(height: 10),
             Container(
               height: 105,
               decoration: BoxDecoration(
@@ -251,7 +254,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   style: GoogleFonts.inter(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
-                                      color: Colors.black)),
+                                      color: Color(0xff26C2E4))),
                               Text(
                                 'Ponga su propiedad a la venta',
                                 style: GoogleFonts.inter(
@@ -263,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         const Icon(Icons.arrow_forward_ios_rounded,
-                            color: Color(0xFFD3D2D2)),
+                            color: Color(0xff26C2E4)),
                       ],
                     ),
                   ),
@@ -279,6 +282,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontSize: 16, fontWeight: FontWeight.w600)),
               ],
             ),
+            const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -286,32 +290,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Modo Oscuro',
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => const AppDetails())),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Detalles de la App',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black)),
+                              Text(
+                                'Politica de provacidad - Terminos y condiciones',
                                 style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black)),
-                            Text(
-                              'Activar o Desactivar',
-                              style: GoogleFonts.inter(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
-                        const Icon(Icons.arrow_forward_ios_rounded,
-                            color: Color(0xFFD3D2D2)),
-                      ],
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,
+                              color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -321,58 +328,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: const Color(0xFFD3D2D2),
                   ),
                   const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Detalles de la App',
-                                style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black)),
-                            Text(
-                              'Politica de provacidad - Terminos y condiciones',
-                              style: GoogleFonts.inter(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
-                        const Icon(Icons.arrow_forward_ios_rounded,
-                            color: Color(0xFFD3D2D2)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    height: 1,
-                    width: 300,
-                    color: const Color(0xFFD3D2D2),
-                  ),
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Acerca de',
-                                style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black)),
-                          ],
-                        ),
-                        const Icon(Icons.arrow_forward_ios_rounded,
-                            color: Color(0xFFD3D2D2)),
-                      ],
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const About())),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Acerca de',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black)),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,
+                              color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),

@@ -1,8 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lease_managment/Fuctions/category_dialog.dart';
 import 'package:lease_managment/Fuctions/function_login_logout.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/about.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/appdetails.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/changepass.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/pay_collect.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/personalinfo.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/home.dart';
 import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 
@@ -72,7 +77,6 @@ class _ProfileLandlord extends State<ProfileLandlord> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -85,42 +89,89 @@ class _ProfileLandlord extends State<ProfileLandlord> {
               height: 7,
             ),
             Container(
-                height: 130,
+                height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: const Color(0xFFD3D2D2)),
                 ),
                 child: Column(
                   children: [
-                    ListTile(
-                      dense: true,
-                      title: Text('Configuracion',
-                          style: GoogleFonts.inter(
-                              fontSize: 14, fontWeight: FontWeight.w400)),
-                      subtitle: Text('Usuario, Edad, Genero, Foto',
-                          style: GoogleFonts.inter(
-                              fontSize: 12, fontWeight: FontWeight.w300)),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2),
+                    const SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PersonalInfo()));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Información Personal',
+                                      style: GoogleFonts.inter(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500)),
+                                  Text('Nombre, Corre, Dirección',
+                                      style: GoogleFonts.inter(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black)),
+                                ],
+                              ),
+                              const Icon(Icons.arrow_forward_ios_rounded,
+                                  color: Color(0xFFD3D2D2)),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                    const Divider(
-                      height: 0,
-                      indent: 17,
-                      endIndent: 30,
-                      color: Color(0xFFD3D2D2),
+                    const SizedBox(height: 8),
+                    Container(
+                      height: 1,
+                      width: 300,
+                      color: const Color(0xFFD3D2D2),
                     ),
-                    ListTile(
-                      dense: true,
-                      title: Text('Ocultar',
-                          style: GoogleFonts.inter(
-                              fontSize: 14, fontWeight: FontWeight.w400)),
-                      subtitle: Text('Genero, Edad',
-                          style: GoogleFonts.inter(
-                              fontSize: 12, fontWeight: FontWeight.w300)),
-                      trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                          color: Color(0xFFD3D2D2)),
+                    const SizedBox(height: 4),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const ChangePass()));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Cambio de contraseña',
+                                      style: GoogleFonts.inter(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400)),
+                                  Text(
+                                    'Modificar',
+                                    style: GoogleFonts.inter(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              const Icon(Icons.arrow_forward_ios_rounded,
+                                  color: Color(0xFFD3D2D2)),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 )),
@@ -134,49 +185,87 @@ class _ProfileLandlord extends State<ProfileLandlord> {
               ],
             ),
             Container(
-              height: 130,
+              height: 105,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFFD3D2D2)),
               ),
               child: Column(
                 children: [
-                  ListTile(
-                    dense: true,
-                    title: Text('Notificaciones',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Desactivar o activar',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color(0xFFD3D2D2),
-                    ),
-                  ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
-                  ),
-                  ListTile(
-                    dense: true,
-                    title: Text(
-                      'Vuelvete Usuario',
-                      style: GoogleFonts.inter(
-                          fontSize: 14, fontWeight: FontWeight.w400, color : const Color(0xFF26C2E4) ),
-                    ),
-                    subtitle: Text(
-                      'Valida tus publicaciones',
-                      style: GoogleFonts.inter(
-                          fontSize: 12, fontWeight: FontWeight.w300),
-                    ),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreenHome()));
+                  const SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const PayCollect()));
                     },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Pagos y Cobros',
+                                    style: GoogleFonts.inter(
+                                        fontSize: 14, fontWeight: FontWeight.w400)),
+                                Text(
+                                  'Metodos de pago',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            const Icon(Icons.arrow_forward_ios_rounded,
+                                color: Color(0xFFD3D2D2)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    height: 1,
+                    width: 300,
+                    color: const Color(0xFFD3D2D2),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ScreenHome())),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Vuelvete Usuario',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff26C2E4))),
+                              Text(
+                                'Valida tus publicaciones',
+                                style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(Icons.arrow_forward_ios_rounded,
+                            color: Color(0xff26C2E4)),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -197,114 +286,133 @@ class _ProfileLandlord extends State<ProfileLandlord> {
               ),
               child: Column(
                 children: [
-                  ListTile(
-                    dense: true,
-                    title: Text('Modo Oscuro',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Activar o Desactivar',
-                        style: GoogleFonts.inter(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black)),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color(0xFFD3D2D2),
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AppDetails())),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Detalles de la App',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black)),
+                              Text(
+                                'Politica de provacidad - Terminos y condiciones',
+                                style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,
+                              color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
                     ),
                   ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
+                  const SizedBox(height: 8),
+                  Container(
+                    height: 1,
+                    width: 300,
+                    color: const Color(0xFFD3D2D2),
                   ),
-                  ListTile(
-                    dense: true,
-                    title: Text('Manual',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Manual de informaciones',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const About())),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Acerca de',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black)),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,
+                              color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
+                    ),
                   ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
+                  const SizedBox(height: 8),
+                  Container(
+                    height: 1,
+                    width: 300,
+                    color: const Color(0xFFD3D2D2),
                   ),
-                  ListTile(
-                    dense: true,
-                    title: Text('Detalles de la App',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Almacenamiento de la Aplicacion',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Cerrar Sesion'),
+                                content: const Text(
+                                    '¿Estas seguro de cerrar sesion?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      api.logout();
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const PrincipalScreen()));
+                                    },
+                                    child: const Text('Si'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('No'),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Cerrar Sesion',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.red)),
+                            ],
+                          ),
+                          const Icon(Icons.arrow_forward_ios_rounded,
+                              color: Color(0xFFD3D2D2)),
+                        ],
+                      ),
+                    ),
                   ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
-                  ),
-                  ListTile(
-                    dense: true,
-                    title: Text('Eliminar cuenta',
-                        style: GoogleFonts.inter(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text('Completar el borrado de acceso',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
-                  ),
-                  const Divider(
-                    height: 0,
-                    indent: 17,
-                    endIndent: 30,
-                    color: Color(0xFFD3D2D2),
-                  ),
-                  ListTile(
-                    dense: true,
-                    title: Text('Cerrar Sesion',
-                        style: GoogleFonts.inter(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.red)),
-                    subtitle: Text('Cerrar sesion de la cuenta',
-                        style: GoogleFonts.inter(
-                            fontSize: 12, fontWeight: FontWeight.w300)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0xFFD3D2D2)),
-                    onTap: () {
-                      showDialog(context: context, builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Cerrar Sesion'),
-                          content: const Text('¿Estas seguro de cerrar sesion?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                api.logout();
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PrincipalScreen()));
-                              },
-                              child: const Text('Si'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('No'),
-                            ),
-                          ],
-                        );
-                      });
-                    },
-                  ),
+                  const SizedBox(height: 8),
                 ],
               ),
             )
@@ -314,5 +422,3 @@ class _ProfileLandlord extends State<ProfileLandlord> {
     )));
   }
 }
-
-

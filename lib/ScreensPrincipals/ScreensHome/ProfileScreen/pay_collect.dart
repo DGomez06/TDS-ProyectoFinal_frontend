@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/pay_collects.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/transactions.dart';
 class PayCollect extends StatelessWidget {
   const PayCollect({super.key});
 
@@ -74,30 +75,33 @@ class PayCollect extends StatelessWidget {
               const SizedBox(height: 20),
               const Divider(),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/ProfileScreen/Transaction.svg',
-                        height: 25,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        'Transacciones',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Transactions())),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/ProfileScreen/Transaction.svg',
+                          height: 25,
                         ),
-                      ),
-                    ],
-                  ),
-                  SvgPicture.asset(
-                    'assets/icons/ProfileScreen/arrow.svg',
-                    height: 25,
-                  ),
-                ],
+                        const SizedBox(width: 10),
+                        const Text(
+                          'Transacciones',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SvgPicture.asset(
+                      'assets/icons/ProfileScreen/arrow.svg',
+                      height: 25,
+                    ),
+                  ],
+                ),
               ),
           ],
         ),

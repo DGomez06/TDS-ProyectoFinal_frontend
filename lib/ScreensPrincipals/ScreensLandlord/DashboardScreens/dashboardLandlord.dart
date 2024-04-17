@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lease_managment/Providers/Properties/dashboard_provider.dart';
 import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/DashboardScreens/my_properties.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/DashboardScreens/viewtenant.dart';
 import 'package:provider/provider.dart'; // Import for using SVG icons
 
 class DashboardLandlord extends StatefulWidget {
@@ -14,9 +16,12 @@ class DashboardLandlord extends StatefulWidget {
 }
 
 class _DashboardLandlordState extends State<DashboardLandlord> {
-  bool isTapped = false;
+  bool isTappedProperties = false;
+  bool isTappedTenant = false;
   @override
   Widget build(BuildContext context) {
+    final dashboard = Provider.of<DashboardProvider>(context);
+    dashboard.getDashboard();
     final propertyData = Provider.of<PropertyDataProvider>(context);
     propertyData.getTotalPropertiesByOwner();
     return Scaffold(
@@ -82,23 +87,23 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Column(
+                            Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
-                                Text(
+                                const Text(
                                   'Ingresos totales',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Text(
-                                  '\$13,200', // Replace with actual value
-                                  style: TextStyle(
+                                  '${dashboard.totalIncome}', // Replace with actual value
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -212,10 +217,10 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        isTapped = true;
+                        isTappedProperties = true;
                         Future.delayed(const Duration(milliseconds: 200), () {
                           setState(() {
-                            isTapped = false;
+                            isTappedProperties = false;
                           });
                         });
                         Future.delayed(const Duration(milliseconds: 400), () {
@@ -226,11 +231,10 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                                       const MyPropertiesScreen()));
                         });
                       });
-                      print('hola');
                     },
                     child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
-                        transform: isTapped
+                        transform: isTappedProperties
                             ? Matrix4.translationValues(0, 10, 0)
                             : Matrix4.translationValues(0, 0, 0),
                         width: 165,
@@ -279,9 +283,9 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                                     width: 70,
                                   ),
                                   Text(
-                                    propertyData.getownerProperties.length
+                                    '${dashboard.totalProperties}'
                                         .toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -303,74 +307,97 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                         )),
                   ),
                   const SizedBox(width: 19),
-                  Container(
-                      width: 165,
-                      height: 205,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                            color: const Color(
-                              0xFFd3d2d2,
-                            ),
-                            width: 2.3),
-                        borderRadius: BorderRadius.circular(13),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 1.0,
-                            offset: const Offset(
-                                0, 4), // shadow direction: bottom right
-                          )
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 165,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isTappedTenant = true;
+                        Future.delayed(const Duration(milliseconds: 200), () {
+                          setState(() {
+                            isTappedTenant = false;
+                          });
+                        });
+                        Future.delayed(const Duration(milliseconds: 400), () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ViewTenant()));
+                        });
+                      });
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                        transform: isTappedTenant
+                            ? Matrix4.translationValues(0, 10, 0)
+                            : Matrix4.translationValues(0, 0, 0),
+                        width: 165,
+                        height: 205,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              color: const Color(
+                                0xFFd3d2d2,
                               ),
-                            ),
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 14,
-                                ),
-                                const Text(
-                                  'Total de inquilinos',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SvgPicture.asset(
-                                  'assets/icons/Dashboard/profile-2user.svg',
-                                  width: 70,
-                                ),
-                                const Text(
-                                  '10', // Replace with actual value
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
+                              width: 2.3),
+                          borderRadius: BorderRadius.circular(13),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 1.0,
+                              offset: const Offset(
+                                  0, 4), // shadow direction: bottom right
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 165,
                               decoration: const BoxDecoration(
-                                color: Color(0xFF26c2e4),
+                                color: Colors.white,
                                 borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(12),
-                                  bottomRight: Radius.circular(12),
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  const Text(
+                                    'Total de inquilinos',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/icons/Dashboard/profile-2user.svg',
+                                    width: 70,
+                                  ),
+                                  Text(
+                                    '${dashboard.totalTenants}', // Replace with actual value
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF26c2e4),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(12),
+                                    bottomRight: Radius.circular(12),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      )),
+                          ],
+                        )),
+                  ),
                 ],
               ),
               const SizedBox(height: 16),

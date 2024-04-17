@@ -17,13 +17,16 @@ class ViewTenantState extends State<ViewTenant> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 40),
+          const SizedBox(height: 60),
           Padding(
             padding: const EdgeInsets.only(left: 30),
-            child: SvgPicture.asset(
-              'assets/icons/ProfileScreen/back.svg',
-              height: 25,
-              alignment: Alignment.topRight,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: SvgPicture.asset(
+                'assets/icons/ProfileScreen/back.svg',
+                height: 25,
+                alignment: Alignment.topRight,
+              ),
             ),
           ),
           const SizedBox(
@@ -45,16 +48,17 @@ class ViewTenantState extends State<ViewTenant> {
           Padding(
             padding: const EdgeInsets.only(left: 30),
             child: SizedBox(
-              width: 350, // Set the desired width
-              height: 45, // Set the desired height
+              width: 350, 
+              height: 45, 
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Buscar inquilinos',
+                  contentPadding: const EdgeInsets.only(top: 10),
                   prefixIcon:
-                      const Icon(Icons.search), // Icon before the hint text
+                      const Icon(Icons.search), 
                   border: OutlineInputBorder(
                     borderRadius:
-                        BorderRadius.circular(20), // Rounded border radius
+                        BorderRadius.circular(20), 
                   ),
                 ),
               ),
