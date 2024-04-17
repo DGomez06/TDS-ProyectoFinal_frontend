@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lease_managment/Fuctions/Properties/funciton_get_propertie.dart';
+import 'package:lease_managment/Fuctions/Properties/function_register_properties.dart';
+import 'package:lease_managment/models/favorites.dart';
 import 'package:lease_managment/models/properties.dart';
 
 class PropertyDataProvider extends ChangeNotifier {
@@ -7,6 +9,10 @@ class PropertyDataProvider extends ChangeNotifier {
   List<Content> contentData = [];
   List<Content> filteredContent = [];
   List<Content> filteredContentApi = [];
+  List<Favorites> favData = [];
+  List<Favorites> favContent = [];
+  Map<int, bool> favoriteMap = {};
+  List<Content> getownerProperties = [];
 
   Future<void> fetchProperties() async {
     try {
@@ -14,7 +20,17 @@ class PropertyDataProvider extends ChangeNotifier {
       if (propertiesData.isEmpty) {
         throw ('No properties found');
       }
+
       notifyListeners();
+    } catch (e) {
+      throw ('Error fetching properties: $e');
+    }
+  }
+
+  Future<List<Content>> fetchOwnerProperties() async {
+    try {
+      getownerProperties = await ApiPropertiesGet().getPropertiesOwner();
+      return getownerProperties;
     } catch (e) {
       throw ('Error fetching properties: $e');
     }
@@ -23,9 +39,66 @@ class PropertyDataProvider extends ChangeNotifier {
   Future<List<Content>>? fetchContent() async {
     try {
       contentData = await ApiPropertiesGet().fetchContent();
+      if (favoriteMap.isEmpty) {
+        favoriteMap = {for (var content in contentData) content.id: false};
+      }
       return contentData;
     } catch (e) {
       throw ('Error fetching content: $e');
+    }
+  }
+
+
+  Future<List<Favorites>>? fetchFavContent() async {
+    try {
+      favContent = await ApiPropertiesGet().fetchContentByFavorite();
+      return favContent;
+    } catch (e) {
+      throw ('Error fetching content: $e');
+    }
+  }
+
+  Future<void> toggleFavorite(int id) async {
+    if (favoriteMap.containsKey(id)) {
+      final isFavorite = favoriteMap[id]!;
+      try {
+        if (isFavorite) {
+          await deleteFavorite(id);
+          favoriteMap[id] = false;
+        } else {
+          await addFavorite(id);
+          favoriteMap[id] = true;
+        }
+        notifyListeners();
+      } catch (e) {
+        // Manejar errores
+      }
+    }
+  }
+
+  Future<void> addFavorite(int id) async {
+    try {
+      await ApiRegister().postFavoriteProperty(id);
+      favoriteMap[id] = true;
+      favContent
+          .add(favData.firstWhere((element) => element.property.id == id));
+      //notifyListeners();
+    } catch (e) {
+      throw ('Error adding favorite: $e');
+    }
+  }
+
+  Future<void> deleteFavorite(int favoriteId) async {
+    try {
+      final favoriteEntry =
+          favContent.firstWhere((element) => element.property.id == favoriteId);
+      final propertyId = favoriteEntry.id;
+      await ApiPropertiesGet().deleteFavorite(propertyId);
+      favContent.remove(favoriteEntry);
+      favoriteMap[favoriteId] = false;
+      //notifyListeners();
+    } catch (e) {
+      throw Exception('Error deleting favorite: $e');
     }
   }
 
@@ -56,5 +129,9 @@ class PropertyDataProvider extends ChangeNotifier {
       bathrooms: bathrooms,
     );
     notifyListeners();
+  }
+
+  int getTotalPropertiesByOwner() {
+    return getownerProperties.length;
   }
 }

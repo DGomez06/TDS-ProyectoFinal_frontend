@@ -25,6 +25,23 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
   final TextEditingController _passwordController = TextEditingController();
   ApiConexion apiConexion = ApiConexion();
 
+  String formatPhoneNumber(String value) {
+    if (value.length <= 10) {
+        String formattedText = value.replaceAll('-', '');
+        if (formattedText.length > 3) {
+          formattedText = '${formattedText.substring(0, 3)}-${formattedText.substring(3, formattedText.length)}';
+        }
+        if (formattedText.length > 7) {
+          formattedText = '${formattedText.substring(0, 7)}-${formattedText.substring(7, formattedText.length)}';
+        }
+        _phoneController.value = TextEditingValue(
+          text: formattedText,
+          selection: TextSelection.collapsed(offset: formattedText.length),
+        );
+      }
+    return value;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -60,6 +77,9 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                     hintText: 'Apellido',
                 ),
                   TextFormFieldWidget(
+                    maxLen: 12,
+                    onChanged: formatPhoneNumber,
+                    keyboardType: TextInputType.phone,
                     durationAnimation: const Duration(milliseconds: 3000),
                     containerDuration: containerVisibility.hideContainer ? 2000 : 200,
                     containerOpacity: containerVisibility.hideContainer ? 1.0 : 0.0,
@@ -78,6 +98,7 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
                     hintText: 'Correo',
                 ),
                   TextFormFieldWidget(
+                    obscureText: true,
                     durationAnimation: const Duration(milliseconds: 4000),
                     containerDuration: containerVisibility.hideContainer ? 2000 : 200,
                     containerOpacity: containerVisibility.hideContainer ? 1.0 : 0.0,
@@ -149,6 +170,9 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
         !_emailController.text.contains('.')) {
       return 'Por favor, introduce un correo valido';
     }
+    if (!_emailController.text.contains('@') && _emailController.text.contains('.') && _emailController.text.isNotEmpty) {
+      return 'Por favor, introduce un correo valido';
+    }
     return 'Correcto';
   }
 
@@ -176,6 +200,10 @@ class _ContainerSignUpState extends State<ContainerSignUp> {
             .showSnackBar(const SnackBar(content: Text('Por favor, llena todos los campos')));
       }
       if (_validateFields() == "Por favor, introduce un correo valido") {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Por favor, introduce un correo valido')));
+      }
+      if (_validateFields() == "Por favor, introduce un correo valido" && _emailController.text.isEmpty) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Por favor, introduce un correo valido')));
       }

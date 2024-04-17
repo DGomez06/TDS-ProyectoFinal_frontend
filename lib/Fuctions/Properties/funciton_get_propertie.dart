@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:lease_managment/Fuctions/function_login_logout.dart';
+import 'package:lease_managment/models/favorites.dart';
 import 'package:lease_managment/models/properties.dart';
 
 class ApiPropertiesGet {
@@ -77,6 +79,81 @@ class ApiPropertiesGet {
       final Response response = await Dio().get(url);
       if (response.statusCode == 200) {
         final List<Content> contentList = (response.data['content'] as List)
+            .map((json) => Content.fromJson(json))
+            .toList();
+        return contentList;
+      } else {
+        throw Exception('Failed to load content');
+      }
+    } catch (e) {
+      throw Exception('Error fetching content: $e');
+    }
+  }
+
+  Future<List<Favorites>> fetchContentByFavorite() async {
+    const url = 'http://192.168.1.8:8060/api/v1/property/favorites';
+    String? token = await ApiConexion().getToken();
+    try {
+      final response = await _dio.get(
+        url,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        List<Favorites> contentList = [];
+        final List<dynamic> data = response.data;
+        for (var item in data) {
+          final content = Favorites.fromJson(item);
+          contentList.add(content);
+        }
+        return contentList;
+      } else {
+        throw Exception('Failed to load content');
+      }
+    } catch (e) {
+      throw Exception('Error fetching content: $e');
+    }
+  }
+
+  Future<void> deleteFavorite(int propertyId) async {
+    final url = 'http://192.168.1.8:8060/api/v1/property/favorites/$propertyId';
+    String? token = await ApiConexion().getToken();
+
+    try {
+      final response = await _dio.delete(
+        url,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw Exception('Failed to delete favorite');
+      }
+    } catch (e) {
+      throw Exception('Error deleting favorite: $e');
+    }
+  }
+
+  Future<List<Content>> getPropertiesOwner() async {
+    const url = 'http://192.168.1.8:8060/api/v1/property/owner';
+    String? token = await ApiConexion().getToken();
+
+    try {
+      final response = await _dio.get(
+        url,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        final List<Content> contentList = data
             .map((json) => Content.fromJson(json))
             .toList();
         return contentList;

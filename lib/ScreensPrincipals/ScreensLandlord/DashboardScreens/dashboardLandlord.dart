@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart'; // Import for using SVG icons
+import 'package:flutter_svg/svg.dart';
+import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/DashboardScreens/my_properties.dart';
+import 'package:provider/provider.dart'; // Import for using SVG icons
 
 class DashboardLandlord extends StatefulWidget {
   const DashboardLandlord({super.key});
@@ -11,52 +14,35 @@ class DashboardLandlord extends StatefulWidget {
 }
 
 class _DashboardLandlordState extends State<DashboardLandlord> {
+  bool isTapped = false;
   @override
   Widget build(BuildContext context) {
+    final propertyData = Provider.of<PropertyDataProvider>(context);
+    propertyData.getTotalPropertiesByOwner();
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const SizedBox(
-              width: 10,
-              height: 30,
-            ),
-            const Text(
-              'Tablero',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            SvgPicture.asset('assets/icons/Active/DashBoardBlueFill.svg',
-                width: 30, height: 30),
-          ],
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                height: 45,
-                child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Buscar propiedades',
-                    labelStyle: const TextStyle(color: Colors.black),
-                    hintStyle: const TextStyle(color: Colors.black),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: SvgPicture.asset(
-                        'assets/icons/Lupa.svg',
-                        fit: BoxFit.contain,
-                      ),
+              const SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.only(left: 30),
+                child: Row(
+                  children: [
+                    const Text(
+                      'Tablero',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                    const SizedBox(
+                      width: 10,
                     ),
-                  ),
+                    SvgPicture.asset(
+                      'assets/icons/Active/DashBoardBlueFill.svg',
+                      width: 20,
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 20),
@@ -85,7 +71,7 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                       Container(
                         width: double.infinity,
                         height: 160,
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -93,10 +79,10 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                             topRight: Radius.circular(12),
                           ),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -118,12 +104,9 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                                 ),
                               ],
                             ),
-                            SizedBox(width: 20),
-                            Icon(
-                              Icons.money_rounded,
-                              size: 70,
-                              color: Color(0xFF26c2e4),
-                            ),
+                            const SizedBox(width: 20),
+                            SvgPicture.asset(
+                                'assets/icons/Dashboard/dollar-circle.svg')
                           ],
                         ),
                       ),
@@ -177,10 +160,10 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                             topRight: Radius.circular(12),
                           ),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -202,12 +185,8 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                                 ),
                               ],
                             ),
-                            SizedBox(width: 20),
-                            Icon(
-                              Icons.credit_card_rounded,
-                              size: 70,
-                              color: Color(0xFF26c2e4),
-                            ),
+                            const SizedBox(width: 20),
+                            SvgPicture.asset('assets/icons/Dashboard/cards.svg')
                           ],
                         ),
                       ),
@@ -230,71 +209,99 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                      width: 165,
-                      height: 205,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                            color: const Color(
-                              0xFFd3d2d2,
-                            ),
-                            width: 2.3),
-                        borderRadius: BorderRadius.circular(13),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 1.0,
-                            offset: const Offset(
-                                0, 4), // shadow direction: bottom right
-                          )
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 165,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isTapped = true;
+                        Future.delayed(const Duration(milliseconds: 200), () {
+                          setState(() {
+                            isTapped = false;
+                          });
+                        });
+                        Future.delayed(const Duration(milliseconds: 400), () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MyPropertiesScreen()));
+                        });
+                      });
+                      print('hola');
+                    },
+                    child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        transform: isTapped
+                            ? Matrix4.translationValues(0, 10, 0)
+                            : Matrix4.translationValues(0, 0, 0),
+                        width: 165,
+                        height: 205,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              color: const Color(
+                                0xFFd3d2d2,
                               ),
-                            ),
-                            child: const Column(
-                              children: [
-                                SizedBox(
-                                  height: 14,
-                                ),
-                                Text(
-                                  'Total de propiedades',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(Icons.house, size: 50),
-                                Text(
-                                  '10',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
+                              width: 2.3),
+                          borderRadius: BorderRadius.circular(13),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 1.0,
+                              offset: const Offset(
+                                  0, 4), // shadow direction: bottom right
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 165,
                               decoration: const BoxDecoration(
-                                color: Color(0xFF26c2e4),
+                                color: Colors.white,
                                 borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(12),
-                                  bottomRight: Radius.circular(12),
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  const Text(
+                                    'Total de propiedades',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/icons/Dashboard/house-2.svg',
+                                    width: 70,
+                                  ),
+                                  Text(
+                                    propertyData.getownerProperties.length
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF26c2e4),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(12),
+                                    bottomRight: Radius.circular(12),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      )),
+                          ],
+                        )),
+                  ),
                   const SizedBox(width: 19),
                   Container(
                       width: 165,
@@ -327,19 +334,22 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                                 topRight: Radius.circular(12),
                               ),
                             ),
-                            child: const Column(
+                            child: Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 14,
                                 ),
-                                Text(
+                                const Text(
                                   'Total de inquilinos',
                                   style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Icon(Icons.people_alt_outlined, size: 50),
-                                Text(
+                                SvgPicture.asset(
+                                  'assets/icons/Dashboard/profile-2user.svg',
+                                  width: 70,
+                                ),
+                                const Text(
                                   '10', // Replace with actual value
                                   style: TextStyle(
                                       fontSize: 20,

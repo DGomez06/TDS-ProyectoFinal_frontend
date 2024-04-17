@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/crear.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/dashboardLandlord.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/DashboardScreens/dashboardLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/Message_LandLord/messages.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/profile.dart';
 

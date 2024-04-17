@@ -24,7 +24,7 @@ import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/crea
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/createpropertylocation.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/createpropertyplus.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/toggle_slider.dart';
-import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/dashboardLandlord.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/DashboardScreens/dashboardLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/editproperty.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/homeLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/newproperty.dart';
@@ -57,10 +57,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: EditProperty(),
+      home: PayCollects(),
+
     );
   }
 }

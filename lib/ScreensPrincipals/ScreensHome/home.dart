@@ -20,7 +20,6 @@ class _ScreenHomeState extends State<ScreenHome> {
   late final SvgController _controller1 = AnimatedSvgController();
   late final SvgController _controller2 = AnimatedSvgController();
   late final SvgController _controller3 = AnimatedSvgController();
-  late final SvgController _controller4 = AnimatedSvgController();
   int selectedIndex = 0;
 
   @override
@@ -68,13 +67,7 @@ class _ScreenHomeState extends State<ScreenHome> {
   Widget build(BuildContext context) {
     final screen = [
       const FindScreen(),
-      FavScreen(
-        onPressed: () {
-          setState(() {
-            selectedIndex = 0;
-          });
-        },
-      ),
+      const FavScreen(),
       const ToggleSliderCreateMessage(),
       const ProfileScreen(),
     ];
@@ -135,7 +128,7 @@ class _ScreenHomeState extends State<ScreenHome> {
           ),
           BottomNavigationBarItem(
             icon: AnimatedSvg(
-              controller: _controller3,
+              controller: _controller2,
               duration: const Duration(milliseconds: 500),
               isActive: false,
               size: selectedIndex == 2 ? 22 : 20,
@@ -148,7 +141,7 @@ class _ScreenHomeState extends State<ScreenHome> {
           ),
           BottomNavigationBarItem(
             icon: AnimatedSvg(
-              controller: _controller4,
+              controller: _controller3,
               duration: const Duration(milliseconds: 500),
               isActive: false,
               size: selectedIndex == 3 ? 22 : 20,

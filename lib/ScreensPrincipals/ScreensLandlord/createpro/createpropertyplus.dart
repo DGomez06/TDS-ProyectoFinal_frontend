@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lease_managment/Fuctions/Properties/function_register_properties.dart';
 import 'package:lease_managment/Providers/Properties/property.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/createpro/toggle_slider.dart';
 import 'package:provider/provider.dart';
 
 class CreatePropertyPlus extends StatefulWidget {
@@ -19,23 +20,28 @@ class CreatePropertyPlus extends StatefulWidget {
 }
 
 class CreatePropertyPlusState extends State<CreatePropertyPlus> {
-  List<XFile> _images = [];
+  List<XFile> images = [];
 
   Future<void> getImage(ImageSource source) async {
     List<XFile>? pickedFiles = [];
     try {
       pickedFiles = await ImagePicker().pickMultiImage(
-        imageQuality: 70,  // Adjust image quality (0 to 100)
-        maxWidth: 800,    // Adjust max width for images
-        maxHeight: 800,   // Adjust max height for images
+        imageQuality: 70,
+        maxWidth: 800,
+        maxHeight: 800,
       );
     } catch (e) {
-      print('Error picking images: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error al seleccionar la imagen'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
 
     if (pickedFiles != null) {
       setState(() {
-        _images.addAll(pickedFiles!);
+        images.addAll(pickedFiles!);
       });
     }
   }
@@ -43,21 +49,21 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
   Future<void> takePicture() async {
     final XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
-      imageQuality: 70,  // Adjust image quality (0 to 100)
-      maxWidth: 800,    // Adjust max width for images
-      maxHeight: 800,   // Adjust max height for images
+      imageQuality: 70,
+      maxWidth: 800,
+      maxHeight: 800,
     );
 
     if (pickedFile != null) {
       setState(() {
-        _images.add(pickedFile);
+        images.add(pickedFile);
       });
     }
   }
 
   void removeImage(int index) {
     setState(() {
-      _images.removeAt(index);
+      images.removeAt(index);
     });
   }
 
@@ -90,6 +96,7 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,8 +124,7 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
                     height: 200,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Colors
-                          .grey[200], // Cambia el color del contenedor a azul
+                      color: Colors.grey[200],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -132,8 +138,7 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
-                            color: Colors
-                                .grey, // Hace que el color del texto esté desvanecido
+                            color: Colors.grey,
                           ),
                         ),
                       ],
@@ -166,27 +171,27 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
                 spacing: 10,
                 runSpacing: 10,
                 children: [
-                  for (var image in _images)
+                  for (var image in images)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Stack(
-                        children: [Image.file(
+                      child: Stack(children: [
+                        Image.file(
                           File(image.path),
                           width: 100,
                           height: 100,
                           fit: BoxFit.cover,
                         ),
-                          Positioned(
-                        top: -10,
-                        right: -10,
-                        child: IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            removeImage(_images.indexOf(image));
-                          },
+                        Positioned(
+                          top: -10,
+                          right: -10,
+                          child: IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              removeImage(images.indexOf(image));
+                            },
+                          ),
                         ),
-                      ),
-                    ]),
+                      ]),
                     ),
                 ],
               ),
@@ -284,35 +289,51 @@ class CreatePropertyPlusState extends State<CreatePropertyPlus> {
                                         ),
                                         child: ElevatedButton(
                                           onPressed: () async {
-                                            final propertyData = Provider.of<PropertyData>(context, listen: false);
-                                            dynamic response = await ApiRegister().postRegisterProperty(
-                                              propertyData.typeProperty!,
-                                              propertyData.address!,
-                                              propertyData.description!,
-                                              propertyData.price!,
-                                              propertyData.dimensions!,
-                                              propertyData.rooms!,
-                                              propertyData.bathrooms!,
-                                              propertyData.latitude!,
-                                              propertyData.longitude!,
-                                              _images
-                                            );
+                                            final propertyData =
+                                                Provider.of<PropertyData>(
+                                                    context,
+                                                    listen: false);
+                                            dynamic response =
+                                                await ApiRegister()
+                                                    .postRegisterProperty(
+                                                        propertyData
+                                                            .typeProperty!,
+                                                        propertyData.address!,
+                                                        propertyData
+                                                            .description!,
+                                                        propertyData.price!,
+                                                        propertyData
+                                                            .dimensions!,
+                                                        propertyData.rooms!,
+                                                        propertyData.bathrooms!,
+                                                        propertyData.latitude!,
+                                                        propertyData.longitude!,
+                                                        images);
 
-                                              if(response is int){
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(
-                                                content: Text('Propiedad creada con éxito'),
-                                                backgroundColor: Colors.green,
-                                              ),
-                                            );
-                                              Navigator.pop(context);
-                                            }else{
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(
-                                                content: Text('Error al crear la propiedad'),
-                                                backgroundColor: Colors.red,
-                                              ),
-                                            );
+                                            if (response is int) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Propiedad creada con éxito'),
+                                                  backgroundColor: Colors.green,
+                                                ),
+                                              );
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const ToggleSliderCreateProperty()));
+                                              propertyData.setIndex(0);
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Error al crear la propiedad'),
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              );
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
