@@ -686,7 +686,7 @@ class PayCollectsState extends State<PayCollects> {
                       ),
                       child: TextField(
                         decoration: InputDecoration(
-                            hintText: 'Mes/Año',
+                            hintText: 'CVC',
                             hintStyle:
                                 TextStyle(color: Colors.black.withOpacity(0.5)),
                             border: InputBorder.none),

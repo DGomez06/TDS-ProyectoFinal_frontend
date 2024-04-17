@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
 import 'package:lease_managment/Providers/comunication.dart';
 import 'package:lease_managment/Providers/Properties/property.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/addedmethods.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/pay_collects.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/transactions.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/ProfileScreen/PaymentScreens/transactionsempty.dart';
@@ -43,12 +44,11 @@ void main() async {
   runApp(ChangeNotifierProvider(
     create: (context) => StatusProvider(),
     child: ChangeNotifierProvider(
-      create: (context) => PropertyData(),
-      child: ChangeNotifierProvider(
-        create: (context) => PropertyDataProvider(),
-        child:const  MyApp(),
-      )
-    ),
+        create: (context) => PropertyData(),
+        child: ChangeNotifierProvider(
+          create: (context) => PropertyDataProvider(),
+          child: const MyApp(),
+        )),
   ));
 }
 
@@ -60,11 +60,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-
-      home: ScreenHome(),
-
-
-
+      home: EditProperty(),
     );
   }
 }

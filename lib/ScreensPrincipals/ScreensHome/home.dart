@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/fav.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/find.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensHome/message_user/createmessege.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/message_user/message.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/profile.dart';
 
@@ -74,7 +75,7 @@ class _ScreenHomeState extends State<ScreenHome> {
           });
         },
       ),
-      const Message(),
+      const ToggleSliderCreateMessage(),
       const ProfileScreen(),
     ];
 
@@ -132,7 +133,6 @@ class _ScreenHomeState extends State<ScreenHome> {
             ),
             label: 'Favoritos',
           ),
-          
           BottomNavigationBarItem(
             icon: AnimatedSvg(
               controller: _controller3,
