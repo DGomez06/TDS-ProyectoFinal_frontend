@@ -23,7 +23,7 @@ class ApiRegister {
     try {
       const url = 'http://192.168.1.8:8060/api/v1/property';
       String? token = await ApiConexion().getToken();
-      
+
       final response = await _dio.post(
         url,
         data: {
@@ -43,8 +43,9 @@ class ApiRegister {
       );
 
       if (response.statusCode == 200) {
-        int propertyId = response.data['id']; 
-        bool success = await postPropertyImages(propertyId, image); // _image es la imagen que deseas enviar
+        int propertyId = response.data['id'];
+        bool success = await postPropertyImages(
+            propertyId, image); // _image es la imagen que deseas enviar
 
         if (success) {
           return propertyId;
@@ -58,7 +59,8 @@ class ApiRegister {
     }
   }
 
-   Future<bool> postPropertyImages(int propertyId, List<XFile> imageFiles) async {
+  Future<bool> postPropertyImages(
+      int propertyId, List<XFile> imageFiles) async {
     try {
       String? token = await ApiConexion().getToken();
       const urlBase = 'http://192.168.1.8:8060/api/v1/storage/';
@@ -68,8 +70,8 @@ class ApiRegister {
         FormData formData = FormData.fromMap({
           'file': MultipartFile.fromBytes(
             fileBytes,
-            filename: 'image_$i.jpg', 
-            contentType: MediaType('image', 'jpeg'), 
+            filename: 'image_$i.jpg',
+            contentType: MediaType('image', 'jpeg'),
           ),
         });
         final url = '$urlBase$propertyId';
@@ -90,10 +92,25 @@ class ApiRegister {
         }
       }
 
-      return true; 
+      return true;
     } catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  Future<void> postFavoriteProperty(int propertyId) async {
+    try {
+      String? token = await ApiConexion().getToken();
+      String url = 'http://192.168.1.8:8060/api/v1/property/favorites/$propertyId';
+      final response = await _dio.post(
+        url,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+    } catch (e) {
+      print(e);
     }
   }
 }

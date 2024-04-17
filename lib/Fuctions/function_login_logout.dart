@@ -18,11 +18,6 @@ class ApiConexion {
 
   Future<String> login(String user, String password) async {
     try {
-      final token = await getToken();
-      if (token == null) {
-        throw Exception('No se encontró un token almacenado');
-      }
-
       final response = await dio.post(
         '$base/authenticate',
         data: {'email': user, 'password': password},
@@ -118,3 +113,4 @@ class PhoneNumberFormatter extends TextInputFormatter {
     );
   }
 }
+

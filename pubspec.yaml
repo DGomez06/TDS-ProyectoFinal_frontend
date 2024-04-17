@@ -81,6 +81,7 @@ flutter:
     - assets/icons/ProfileScreen/
     - assets/icons/Payment/
     - assets/icons/property/
+    - assets/icons/Dashboard/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

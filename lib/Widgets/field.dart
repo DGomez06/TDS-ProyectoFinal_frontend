@@ -13,6 +13,9 @@ class TextFormFieldWidget extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final bool? obscureText;
+  final Function(String)? onChanged;
+  final TextInputType? keyboardType;
+  final int? maxLen;
   const TextFormFieldWidget(
       {super.key,
       this.containerDuration,
@@ -23,7 +26,7 @@ class TextFormFieldWidget extends StatefulWidget {
       this.hintText, 
       required this.durationAnimation, 
       this.margin, 
-      this.padding, this.obscureText});
+      this.padding, this.obscureText, this.onChanged, this.keyboardType, this.maxLen});
 
   @override
   State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
@@ -73,10 +76,14 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
           boxShadow: _getBoxShadow(),
         ),
         child: TextFormField(
+          maxLength: widget.maxLen,
+          keyboardType: widget.keyboardType ?? TextInputType.text,
+          onChanged: widget.onChanged,
           focusNode: focusNode,
             controller: widget.controller,
             obscureText: widget.obscureText ?? false,
             decoration: InputDecoration(
+              counterText: '',
                 icon: SvgPicture.asset(
                   widget.icon!,
                   height: 30,

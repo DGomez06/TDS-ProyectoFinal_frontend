@@ -37,7 +37,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
                   : (value.filteredContent.isNotEmpty
                       ? value.filteredContent
                       : value.contentData);
-              return buildGrid(contentList, context);
+              return buildGrid(contentList, context, value);
             }
           },
         );
@@ -45,73 +45,71 @@ class _ListViewScreenState extends State<ListViewScreen> {
     );
   }
 
-
   Widget buildGrid(
     List<Content> contentList,
     BuildContext context,
+    PropertyDataProvider value,
   ) {
-    return Consumer<PropertyDataProvider>(
-      builder: (context, value, child) {
-        // value.filterContentApi();
-        // value.fetchContent();
-        // List<Content> contentList = value.filteredContentApi.isNotEmpty
-        //     ? value.filteredContentApi
-        //     : value.filteredContent;
-
-        return GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 13.0,
-          mainAxisSpacing: 0,
-          childAspectRatio: 0.56,
-          padding: const EdgeInsets.all(10.0),
-          children: List.generate(
-            contentList.length,
-            (index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return DetailScreen(
-                          content: contentList[index],
-                        );
-                      },
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        var begin = const Offset(0.0, 1.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-                        var tween = Tween(begin: begin, end: end)
-                            .chain(CurveTween(curve: curve));
-                        var offsetAnimation = animation.drive(tween);
-                        return SlideTransition(
-                          position: offsetAnimation,
-                          child: child,
-                        );
-                      },
-                      transitionDuration: const Duration(milliseconds: 500),
-                    ),
-                  );
-                },
-                child: _buildPropertyItem(
-                  contentList[index],
-                  context,
-                  index,
+    return GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 13.0,
+      mainAxisSpacing: 0,
+      childAspectRatio: 0.56,
+      padding: const EdgeInsets.all(10.0),
+      children: List.generate(
+        contentList.length,
+        (index) {
+          final content = contentList[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return DetailScreen(
+                      content: content,
+                    );
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var begin = const Offset(0.0, 1.0);
+                    var end = Offset.zero;
+                    var curve = Curves.ease;
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 500),
                 ),
               );
             },
-          ),
-        );
-      },
+            child: LikeButtonWidgetList(content: content, value: value),
+          );
+        },
+      ),
     );
   }
+}
 
-  Widget _buildPropertyItem(
-    Content content,
-    BuildContext context,
-    int index,
-  ) {
+class LikeButtonWidgetList extends StatefulWidget {
+  final Content content;
+  final PropertyDataProvider value;
+
+  const LikeButtonWidgetList({
+    Key? key, required this.content, required this.value,
+  }) : super(key: key);
+
+  @override
+  LikeButtonWidgetListState createState() => LikeButtonWidgetListState();
+}
+
+class LikeButtonWidgetListState extends State<LikeButtonWidgetList> {
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -121,15 +119,14 @@ class _ListViewScreenState extends State<ListViewScreen> {
               height: 170,
               width: 200,
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                child: content.images.isNotEmpty
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: widget.content.images.isNotEmpty
                     ? Image.network(
-                        content.images.first.url,
+                        widget.content.images.first.url,
                         fit: BoxFit.cover,
                       )
                     : Container(
-                        color: Colors
-                            .grey, // Puedes mostrar un placeholder o color de fondo alternativo
+                        color: Colors.grey,
                       ),
               ),
             ),
@@ -147,6 +144,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
                 child: LikeButton(
                   padding: const EdgeInsets.only(left: 3),
                   size: 23,
+                  isLiked: widget.value.favoriteMap[widget.content.id] ?? false,
                   circleColor: const CircleColor(
                     start: Colors.redAccent,
                     end: Colors.red,
@@ -155,15 +153,16 @@ class _ListViewScreenState extends State<ListViewScreen> {
                     dotPrimaryColor: Colors.red,
                     dotSecondaryColor: Colors.redAccent,
                   ),
-                  // isLiked: propertiesProvider.addedPropertiesList
-                  //     .contains(properties),
-                  // likeBuilder: (bool isFav) {
-                  //   return SvgPicture.asset(
-                  //     'assets/icons/FavRounded.svg',
-                  //     color: isFav ? Colors.red : const Color(0xFF292D32),
-                  //     height: 30,
-                  //   );
-                  // },
+                  onTap: (isLiked) {
+                    widget.value.toggleFavorite(widget.content.id);
+                    return Future.value(!isLiked);
+                  },
+                  likeBuilder: (isLiked) {
+                    return SvgPicture.asset(
+                      'assets/icons/FavRounded.svg',
+                      color: isLiked ? Colors.red : Colors.grey,
+                    );
+                  },
                 ),
               ),
             ),
@@ -176,7 +175,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                content.address,
+                widget.content.address,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -184,14 +183,14 @@ class _ListViewScreenState extends State<ListViewScreen> {
                 ),
               ),
               Text(
-                content.description,
+                widget.content.description,
                 style: const TextStyle(
                   fontSize: 12.0,
                   color: Colors.black,
                 ),
               ),
               Text(
-                NumberFormat.currency(symbol: 'RD\$').format(content.price),
+                NumberFormat.currency(symbol: 'RD\$').format(widget.content.price),
                 style: const TextStyle(
                   fontSize: 14.0,
                   color: Colors.black,

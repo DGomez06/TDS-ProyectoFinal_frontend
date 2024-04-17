@@ -137,6 +137,8 @@ class _ContainerSignInState extends State<ContainerSignIn> {
   void login() async {
     ApiConexion api = ApiConexion();
     if (_userController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Por favor, llena todos los campos')));
       return;
     }
     final user = _userController.text;
