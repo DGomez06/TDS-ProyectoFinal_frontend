@@ -2,6 +2,7 @@ import 'package:animated_svg/animated_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/Message_LandLord/createmessagelandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/crear.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/DashboardScreens/dashboardLandlord.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/Message_LandLord/messages.dart';
@@ -67,7 +68,7 @@ class _ScreensLandlord extends State<ScreensLandlord> {
     final screen = [
       const CrearLandlord(),
       const DashboardLandlord(),
-      const MessagesLandLord(),
+      const ToggleSliderCreateMessageLandLord(),
       const ProfileLandlord(),
     ];
 

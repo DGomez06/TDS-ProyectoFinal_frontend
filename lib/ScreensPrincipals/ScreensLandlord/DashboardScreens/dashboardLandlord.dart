@@ -436,8 +436,201 @@ class _BuildDashBoardState extends State<BuildDashBoard>{
                       ),
                     ],
                   )),
-            ),
-          ],
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isTappedProperties = true;
+                        Future.delayed(const Duration(milliseconds: 200), () {
+                          setState(() {
+                            isTappedProperties = false;
+                          });
+                        });
+                        Future.delayed(const Duration(milliseconds: 400), () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MyPropertiesScreen()));
+                        });
+                      });
+                    },
+                    child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        transform: isTappedProperties
+                            ? Matrix4.translationValues(0, 10, 0)
+                            : Matrix4.translationValues(0, 0, 0),
+                        width: 165,
+                        height: 205,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              color: const Color(
+                                0xFFd3d2d2,
+                              ),
+                              width: 2.3),
+                          borderRadius: BorderRadius.circular(13),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 1.0,
+                              offset: const Offset(
+                                  0, 4), // shadow direction: bottom right
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 165,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  const Text(
+                                    'Total de propiedades',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/icons/Dashboard/house-2.svg',
+                                    width: 70,
+                                  ),
+                                  Text(
+                                    '${dashboard.totalProperties}'.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF26c2e4),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(12),
+                                    bottomRight: Radius.circular(12),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                  const SizedBox(width: 19),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isTappedTenant = true;
+                        Future.delayed(const Duration(milliseconds: 200), () {
+                          setState(() {
+                            isTappedTenant = false;
+                          });
+                        });
+                        Future.delayed(const Duration(milliseconds: 400), () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ViewTenant()));
+                        });
+                      });
+                    },
+                    child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        transform: isTappedTenant
+                            ? Matrix4.translationValues(0, 10, 0)
+                            : Matrix4.translationValues(0, 0, 0),
+                        width: 165,
+                        height: 205,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              color: const Color(
+                                0xFFd3d2d2,
+                              ),
+                              width: 2.3),
+                          borderRadius: BorderRadius.circular(13),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 1.0,
+                              offset: const Offset(
+                                  0, 4), // shadow direction: bottom right
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 165,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  topRight: Radius.circular(12),
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  const Text(
+                                    'Total de inquilinos',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/icons/Dashboard/profile-2user.svg',
+                                    width: 70,
+                                  ),
+                                  Text(
+                                    '${dashboard.totalTenants}', // Replace with actual value
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF26c2e4),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(12),
+                                    bottomRight: Radius.circular(12),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              const SizedBox(height: 20),
+              // Placeholder for your table of properties
+            ],
+          ),
         ),
         const SizedBox(height: 16),
         const SizedBox(height: 20),
