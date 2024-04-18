@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lease_managment/Fuctions/function_login_logout.dart';
+import 'package:lease_managment/ScreensPrincipals/principal_screen.dart';
 
 class PersonalInfo extends StatefulWidget {
   const PersonalInfo({super.key});
@@ -11,6 +13,11 @@ class PersonalInfo extends StatefulWidget {
 }
 
 class _PersonalInfoState extends State<PersonalInfo> {
+  TextEditingController fullNameController = TextEditingController();
+  String firstName = '';
+  String lastName = '';
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +80,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   const SizedBox(
                     height: 40,
                     child: TextField(
+                      enabled: false,
                       decoration: InputDecoration(
                           hintText: '723820930',
                           hintStyle: TextStyle(
@@ -101,9 +109,24 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       ],
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 40,
                     child: TextField(
+                      onChanged: (value){
+                        if (value.contains(' ')) {
+                          List<String> nameParts = value.split(' ');
+                          setState(() {
+                            firstName = nameParts[0];
+                            lastName = nameParts.sublist(1).join(' ');
+                          });
+                        } else {
+                          setState(() {
+                            firstName = value;
+                            lastName = ''; // Reiniciar el apellido si no hay espacios
+                          });
+                        }
+                      },
+                      controller: fullNameController,
                       decoration: InputDecoration(
                           hintText: 'Nombre Completo',
                           hintStyle: TextStyle(
@@ -132,9 +155,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       ],
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 40,
                     child: TextField(
+                      controller: phoneController,
                       decoration: InputDecoration(
                           hintText: 'Número de teléfono',
                           hintStyle: TextStyle(
@@ -163,9 +187,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       ],
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 40,
                     child: TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                           hintText: 'Correo Electrónico',
                           hintStyle: TextStyle(
@@ -202,7 +227,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ],
               ),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () async{
+                  bool response = await ApiConexion().updateData(firstName, lastName, emailController.text, phoneController.text);
+                  if (response){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Datos actualizados correctamente'),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Error al actualizar los datos'),
+                      ),
+                    );
+                  }
+                },
                 child: Text(
                   'Editar Datos',
                   style: GoogleFonts.yaldevi(
@@ -233,146 +273,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextButton(
-                              onPressed: () {
-                                // Aquí puedes colocar la lógica para eliminar la cuenta
-                                Navigator.of(context).pop();
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      backgroundColor: Colors.white,
-                                      title: Row(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () => Navigator.pop(
-                                                context), // Close dialog on tap
-                                            child: SvgPicture.asset(
-                                              'assets/icons/ProfileScreen/delete.svg', // Replace with your icon path
-                                              height: 30,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          const Text(
-                                            'Confirmación de eliminar cuenta',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      titleTextStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                          color: Colors.black),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              color: Colors.white,
-                                            ),
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                hintText: 'Contraseña',
-                                                hintStyle: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w300,
-                                                ),
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0)), 
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 12,
-                                                  horizontal: 16,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                              height:
-                                                  20), 
-                                          TextButton(
-                                            onPressed: () {
-                                              // Lógica para el botón de confirmación
-                                              Navigator.of(context).pop();
-                                              showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  Future.delayed(
-                                                      const Duration(
-                                                          seconds: 5), () {
-                                                    Navigator.of(context).pop(
-                                                        true); 
-                                                  });
-                                                  return AlertDialog(
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    title: const Text(
-                                                      'Gracias por ser parte de nuestro servicio',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                    // 
-                                                    content: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          'assets/icons/ProfileScreen/happy.svg', 
-                                                          height: 50,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20.0),
-                                                gradient: const LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    Color(0xFFFF0202),
-                                                    Color(0xFFa82930),
-                                                  ],
-                                                ),
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 20),
-                                              child: const Text(
-                                                'Eliminar',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
+                              onPressed: () async {
+                                bool response = await ApiConexion().deleteUserData();
+                                if (response){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Cuenta eliminada correctamente'),
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Error al eliminar la cuenta'),
+                                    ),
+                                  );
+                                }
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const PrincipalScreen()));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
