@@ -50,7 +50,7 @@ class ApiPropertiesGet {
     int? rooms,
     int? bathrooms,
   }) async {
-    const baseUrl = 'http://10.0.0.41:8060/api/v1/property?page=0';
+    const baseUrl = 'http://192.168.1.8:8060/api/v1/property?page=0';
     String url = baseUrl;
 
     if (type != null && type.isNotEmpty) {
