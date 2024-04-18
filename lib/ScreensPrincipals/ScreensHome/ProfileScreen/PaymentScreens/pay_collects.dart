@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
@@ -26,6 +27,11 @@ class PayCollectsState extends State<PayCollects> {
   String formattedCardName = 'Nombre del Titular';
   String formattedCardDate = '00/00';
   String formattedCardCode = '000';
+  bool showCardAdded = false;
+  bool colorfieldcarnumebr = false;
+  bool colorfieldcardname = false;
+  bool colorfieldcarddate = false;
+  bool colorfieldcardcode = false;
   @override
   void initState() {
     super.initState();
@@ -198,25 +204,362 @@ class PayCollectsState extends State<PayCollects> {
                         ),
                       ),
                     ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          //showCardAdded = false;
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 40),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 30),
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/ProfileScreen/back.svg',
+                                            height: 25,
+                                            alignment: Alignment.topRight,
+                                          ),
+                                          const SizedBox(width: 50),
+                                          const Text(
+                                            'Detalles de tarjeta',
+                                            style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    AnimatedContainer(
+                                      margin: const EdgeInsets.only(
+                                          left: 20, top: 20),
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      curve: Curves.easeInOut,
+                                      height: 180,
+                                      width: 350,
+                                      child: Stack(children: [
+                                        AnimatedContainer(
+                                          margin:
+                                              const EdgeInsets.only(right: 30),
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          width: 300,
+                                          curve: Curves.easeInOut,
+                                          decoration: BoxDecoration(
+                                            gradient: const LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.bottomRight,
+                                              colors: [
+                                                Color(0xFF20D7FF),
+                                                Color(0xFF275E6A),
+                                              ],
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 17),
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: [
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 12),
+                                                    child: Text(
+                                                        'Tarjeta de crédito',
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                  ),
+                                                  const SizedBox(height: 35),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 25),
+                                                    child: Text(
+                                                        formatCreditCardNumber(
+                                                            formattedCardNumber),
+                                                        style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 25,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                  ),
+                                                  const SizedBox(height: 35),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 10),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(formattedCardName,
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white)),
+                                                        Text(formattedCardDate,
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 15),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                            right: 14,
+                                            top: 60,
+                                            child: Container(
+                                                margin: const EdgeInsets.only(
+                                                    top: 10),
+                                                height: 35,
+                                                width: 35,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.black
+                                                            .withOpacity(0.4),
+                                                        spreadRadius: 2,
+                                                        blurRadius: 5,
+                                                        offset:
+                                                            const Offset(0, 3),
+                                                      ),
+                                                    ]),
+                                                child: Center(
+                                                  child: SvgPicture.asset(
+                                                    'assets/icons/Payment/arrow_white.svg',
+                                                    color: Colors.blue,
+                                                  ),
+                                                )))
+                                      ]),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        const SizedBox(width: 20),
+                                        TextButton(
+                                          onPressed: () {
+                                            _toggleOverlayCardVisibility();
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              gradient: const LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  Color(0xFF08D0FC),
+                                                  Color(0xFF0daacc),
+                                                ],
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 20),
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/icons/Payment/card-edit.svg',
+                                                  height: 20,
+                                                ),
+                                                const SizedBox(width: 10),
+                                                const Text(
+                                                  'Editar',
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 20),
+                                        TextButton(
+                                          onPressed: () {
+                                            showCardAdded = false;
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              gradient: const LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  Color(0xFFFF0202),
+                                                  Color(0xFFa82930),
+                                                ],
+                                              ),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 20),
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/icons/Payment/card-remove.svg',
+                                                  height: 20,
+                                                ),
+                                                const SizedBox(width: 10),
+                                                const Text(
+                                                  'Eliminar',
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        });
+                      },
+                      child: AnimatedContainer(
+                        margin: const EdgeInsets.only(left: 30, top: 20),
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                        height: showCardAdded ? 180 : 0,
+                        width: showCardAdded ? 350 : 0,
+                        child: Stack(children: [
+                          AnimatedContainer(
+                            margin: const EdgeInsets.only(right: 30),
+                            duration: const Duration(milliseconds: 500),
+                            width: 300,
+                            curve: Curves.easeInOut,
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Color(0xFF20D7FF),
+                                  Color(0xFF275E6A),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 17),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(top: 12),
+                                      child: Text('Tarjeta de crédito',
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    const SizedBox(height: 35),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 25),
+                                      child: Text(
+                                          formatCreditCardNumber(
+                                              formattedCardNumber),
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    const SizedBox(height: 35),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(formattedCardName,
+                                              style: const TextStyle(
+                                                  color: Colors.white)),
+                                          Text(formattedCardDate,
+                                              style: const TextStyle(
+                                                  color: Colors.white)),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                              right: 34,
+                              top: 60,
+                              child: Container(
+                                  margin: const EdgeInsets.only(top: 10),
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(50),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.4),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: const Offset(0, 3),
+                                        ),
+                                      ]),
+                                  child: Center(
+                                    child: SvgPicture.asset(
+                                      'assets/icons/Payment/arrow_white.svg',
+                                      color: Colors.blue,
+                                    ),
+                                  )))
+                        ]),
+                      ),
+                    ),
                     SizedBox(height: MediaQuery.of(context).size.height * 1),
                   ],
                 ),
               ),
             ),
           ),
-          // GestureDetector(
-          //   onTap: _toggleOverlayVisibility,
-          //   child: AnimatedOpacity(
-          //     duration: const Duration(milliseconds: 300),
-          //     opacity: _isOverlayVisible ? 0.5 : 0,
-          //     curve: Curves.easeInOut,
-          //     child: Container(
-          //       color: Colors.black,
-          //       width: MediaQuery.of(context).size.width,
-          //       height: MediaQuery.of(context).size.height,
-          //     ),
-          //   ),
-          // ),
           AnimatedPositioned(
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeInOut,
@@ -483,8 +826,8 @@ class PayCollectsState extends State<PayCollects> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(formattedCardName,
-                                            style:
-                                                TextStyle(color: Colors.white)),
+                                            style: const TextStyle(
+                                                color: Colors.white)),
                                       ],
                                     ),
                                     Column(
@@ -492,8 +835,8 @@ class PayCollectsState extends State<PayCollects> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(formattedCardDate,
-                                            style:
-                                                TextStyle(color: Colors.white)),
+                                            style: const TextStyle(
+                                                color: Colors.white)),
                                       ],
                                     ),
                                   ],
@@ -502,12 +845,16 @@ class PayCollectsState extends State<PayCollects> {
                             ),
                           )),
                       const SizedBox(height: 20),
-                      Container(
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                            color: const Color(0xFF22d7ff),
+                            color: colorfieldcarnumebr
+                                ? Color(0xFF22d7ff)
+                                : Colors.black,
                             width: 2.5,
                           ),
                           borderRadius: BorderRadius.circular(10),
@@ -521,6 +868,9 @@ class PayCollectsState extends State<PayCollects> {
                           ],
                         ),
                         child: TextField(
+                          onEditingComplete: () {
+                            colorfieldcarnumebr = true;
+                          },
                           controller: cardNumberController,
                           keyboardType: TextInputType.number,
                           inputFormatters: [
@@ -546,7 +896,9 @@ class PayCollectsState extends State<PayCollects> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
-                                color: const Color(0xFF22d7ff),
+                                color: colorfieldcardname
+                                    ? Color(0xFF22d7ff)
+                                    : Colors.black,
                                 width: 2.5,
                               ),
                               borderRadius: BorderRadius.circular(10),
@@ -560,6 +912,8 @@ class PayCollectsState extends State<PayCollects> {
                               ],
                             ),
                             child: TextField(
+                              onEditingComplete: () =>
+                                  colorfieldcardname = true,
                               controller: cardNameController,
                               decoration: InputDecoration(
                                   hintText: 'Nombre Titular',
@@ -575,7 +929,9 @@ class PayCollectsState extends State<PayCollects> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
-                                color: const Color(0xFF22d7ff),
+                                color: colorfieldcarddate
+                                    ? Color(0xFF22d7ff)
+                                    : Colors.black,
                                 width: 2.5,
                               ),
                               borderRadius: BorderRadius.circular(10),
@@ -589,6 +945,8 @@ class PayCollectsState extends State<PayCollects> {
                               ],
                             ),
                             child: TextField(
+                              onEditingComplete: () =>
+                                  colorfieldcarddate = true,
                               controller: cardDateController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
@@ -596,7 +954,11 @@ class PayCollectsState extends State<PayCollects> {
                                   hintStyle: TextStyle(
                                       color: Colors.black.withOpacity(0.5)),
                                   border: InputBorder.none),
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(5), MonthYearInputFormatter()],
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(5),
+                                MonthYearInputFormatter()
+                              ],
                             ),
                           ),
                         ],
@@ -718,7 +1080,7 @@ class PayCollectsState extends State<PayCollects> {
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       child: Text(formattedCardCode,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 20)),
                                     ),
@@ -767,7 +1129,9 @@ class PayCollectsState extends State<PayCollects> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
-                          color: const Color(0xFF22d7ff),
+                          color: colorfieldcardcode
+                              ? Color(0xFF22d7ff)
+                              : Colors.black,
                           width: 2.5,
                         ),
                         borderRadius: BorderRadius.circular(10),
@@ -781,6 +1145,7 @@ class PayCollectsState extends State<PayCollects> {
                         ],
                       ),
                       child: TextField(
+                        onEditingComplete: () => colorfieldcardcode = true,
                         keyboardType: TextInputType.number,
                         controller: cardCodeController,
                         decoration: InputDecoration(
@@ -788,7 +1153,10 @@ class PayCollectsState extends State<PayCollects> {
                             hintStyle:
                                 TextStyle(color: Colors.black.withOpacity(0.5)),
                             border: InputBorder.none),
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(3)],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(3)
+                        ],
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -817,6 +1185,7 @@ class PayCollectsState extends State<PayCollects> {
                       child: TextButton(
                           onPressed: () {
                             _toggleOverlayCardVisibility3();
+                            showCardAdded = true;
                           },
                           child: Text(
                             'Añadir metodo de pago',
@@ -836,5 +1205,19 @@ class PayCollectsState extends State<PayCollects> {
       ),
     );
   }
-}
 
+  String formatCreditCardNumber(String input) {
+    // Eliminar todos los caracteres que no sean dígitos
+    String digitsOnly = input.replaceAll(RegExp(r'\D+'), '');
+
+    if (digitsOnly.length <= 4) {
+      return digitsOnly; // Si hay 4 dígitos o menos, mostrarlos sin ocultar ninguno
+    }
+
+    // Ocultar todos los dígitos excepto los últimos 4
+    String visibleDigits = '*' * (digitsOnly.length - 4) +
+        digitsOnly.substring(digitsOnly.length - 4);
+    return visibleDigits.replaceAllMapped(
+        RegExp(r'.{4}'), (match) => '${match.group(0)} ');
+  }
+}
