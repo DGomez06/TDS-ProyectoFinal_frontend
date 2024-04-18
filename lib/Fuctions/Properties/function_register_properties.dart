@@ -21,7 +21,7 @@ class ApiRegister {
     List<XFile> image,
   ) async {
     try {
-      const url = 'http://192.168.1.8:8060/api/v1/property';
+      const url = 'http://10.0.0.41:8060/api/v1/property';
       String? token = await ApiConexion().getToken();
 
       final response = await _dio.post(
@@ -63,7 +63,7 @@ class ApiRegister {
       int propertyId, List<XFile> imageFiles) async {
     try {
       String? token = await ApiConexion().getToken();
-      const urlBase = 'http://192.168.1.8:8060/api/v1/storage/';
+      const urlBase = 'http://10.0.0.41:8060/api/v1/storage/';
       for (int i = 0; i < imageFiles.length; i++) {
         final XFile imageFile = imageFiles[i];
         List<int> fileBytes = await imageFile.readAsBytes();
@@ -102,7 +102,8 @@ class ApiRegister {
   Future<void> postFavoriteProperty(int propertyId) async {
     try {
       String? token = await ApiConexion().getToken();
-      String url = 'http://192.168.1.8:8060/api/v1/property/favorites/$propertyId';
+      String url =
+          'http://10.0.0.41:8060/api/v1/property/favorites/$propertyId';
       final response = await _dio.post(
         url,
         options: Options(

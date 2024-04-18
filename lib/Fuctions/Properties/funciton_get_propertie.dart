@@ -7,7 +7,7 @@ class ApiPropertiesGet {
   final Dio _dio = Dio();
 
   Future<List<Properties>> fetchProperties() async {
-    const url = 'http://192.168.1.8:8060/api/v1/property';
+    const url = 'http://10.0.0.41:8060/api/v1/property';
 
     try {
       final response = await _dio.get(url);
@@ -28,7 +28,7 @@ class ApiPropertiesGet {
   }
 
   Future<List<Content>> fetchContent() async {
-    const url = 'http://192.168.1.8:8060/api/v1/property';
+    const url = 'http://10.0.0.41:8060/api/v1/property';
 
     try {
       final response = await _dio.get(url);
@@ -53,7 +53,7 @@ class ApiPropertiesGet {
     int? rooms,
     int? bathrooms,
   }) async {
-    const baseUrl = 'http://192.168.1.8:8060/api/v1/property?page=0';
+    const baseUrl = 'http://10.0.0.418:8060/api/v1/property?page=0';
     String url = baseUrl;
 
     if (type != null && type.isNotEmpty) {
@@ -91,7 +91,7 @@ class ApiPropertiesGet {
   }
 
   Future<List<Favorites>> fetchContentByFavorite() async {
-    const url = 'http://192.168.1.8:8060/api/v1/property/favorites';
+    const url = 'http://10.0.0.41:8060/api/v1/property/favorites';
     String? token = await ApiConexion().getToken();
     try {
       final response = await _dio.get(
@@ -118,7 +118,7 @@ class ApiPropertiesGet {
   }
 
   Future<void> deleteFavorite(int propertyId) async {
-    final url = 'http://192.168.1.8:8060/api/v1/property/favorites/$propertyId';
+    final url = 'http://10.0.0.41:8060/api/v1/property/favorites/$propertyId';
     String? token = await ApiConexion().getToken();
 
     try {
@@ -140,7 +140,7 @@ class ApiPropertiesGet {
   }
 
   Future<List<Content>> getPropertiesOwner() async {
-    const url = 'http://192.168.1.8:8060/api/v1/property/owner';
+    const url = 'http://10.0.0.41:8060/api/v1/property/owner';
     String? token = await ApiConexion().getToken();
 
     try {
@@ -153,9 +153,8 @@ class ApiPropertiesGet {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
-        final List<Content> contentList = data
-            .map((json) => Content.fromJson(json))
-            .toList();
+        final List<Content> contentList =
+            data.map((json) => Content.fromJson(json)).toList();
         return contentList;
       } else {
         throw Exception('Failed to load content');
