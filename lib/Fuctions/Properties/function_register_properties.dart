@@ -100,12 +100,17 @@ class ApiRegister {
   Future<void> postFavoriteProperty(int propertyId) async {
     try {
       String? token = await ApiConexion().getToken();
-      await _dio.post(
+      final respose = await _dio.post(
         '$url/favorites/$propertyId',
         options: Options(
           headers: {'Authorization': 'Bearer $token'},
         ),
       );
+      if (respose.statusCode == 200) {
+        print('Property added to favorites');
+      } else {
+        print('Error adding property to favorites');
+      }
     } catch (e) {
       print(e);
     }

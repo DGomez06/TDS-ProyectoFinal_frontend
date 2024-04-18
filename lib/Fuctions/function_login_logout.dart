@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:lease_managment/Fuctions/Properties/function_register_properties.dart';
 import 'package:lease_managment/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,6 +33,53 @@ class ApiConexion {
       }
     } catch (e) {
       return 'Incorrecto';
+    }
+  }
+
+  Future<bool> updateData(
+      String firstName, String lastName, String email, String phone) async {
+    String? token = await ApiConexion().getToken();
+    String url = 'http://192.168.1.8:8060/api/v1';
+    try {
+      final response = await dio.put(
+        '$url/user',
+        data: {
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+          "phone": phone
+        },
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> deleteUserData() async {
+    String? token = await ApiConexion().getToken();
+    String url = 'http://192.168.1.8:8060/api/v1';
+    try {
+      final response = await dio.delete(
+        '$url/user',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 

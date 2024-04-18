@@ -48,7 +48,6 @@ class PropertyDataProvider extends ChangeNotifier {
     }
   }
 
-
   Future<List<Favorites>>? fetchFavContent() async {
     try {
       favContent = await ApiPropertiesGet().fetchContentByFavorite();
@@ -80,9 +79,13 @@ class PropertyDataProvider extends ChangeNotifier {
     try {
       await ApiRegister().postFavoriteProperty(id);
       favoriteMap[id] = true;
-      favContent
+      if (favContent.isEmpty) {
+        favContent = await ApiPropertiesGet().fetchContentByFavorite();
+      } if (favData.isEmpty) {
+        favData = await ApiPropertiesGet().fetchContentByFavorite();
+        favContent
           .add(favData.firstWhere((element) => element.property.id == id));
-      //notifyListeners();
+      }
     } catch (e) {
       throw ('Error adding favorite: $e');
     }
@@ -96,7 +99,6 @@ class PropertyDataProvider extends ChangeNotifier {
       await ApiPropertiesGet().deleteFavorite(propertyId);
       favContent.remove(favoriteEntry);
       favoriteMap[favoriteId] = false;
-      //notifyListeners();
     } catch (e) {
       throw Exception('Error deleting favorite: $e');
     }
