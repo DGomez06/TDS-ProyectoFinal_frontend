@@ -22,6 +22,9 @@ class _CrearLandlordState extends State<CrearLandlord> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
                       Row(
                         children: [
                           Text('Propiedades',
@@ -97,7 +100,11 @@ class _CrearLandlordState extends State<CrearLandlord> {
                           child: Center(
                             child: TextButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const ToggleSliderCreateProperty()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ToggleSliderCreateProperty()));
                               },
                               child: Text(
                                 'Siguiente',

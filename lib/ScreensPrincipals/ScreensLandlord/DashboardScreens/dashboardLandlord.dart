@@ -283,8 +283,7 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                                     width: 70,
                                   ),
                                   Text(
-                                    '${dashboard.totalProperties}'
-                                        .toString(),
+                                    '${dashboard.totalProperties}'.toString(),
                                     style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
@@ -320,13 +319,12 @@ class _DashboardLandlordState extends State<DashboardLandlord> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ViewTenant()));
+                                  builder: (context) => const ViewTenant()));
                         });
                       });
                     },
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
+                        duration: const Duration(milliseconds: 200),
                         transform: isTappedTenant
                             ? Matrix4.translationValues(0, 10, 0)
                             : Matrix4.translationValues(0, 0, 0),

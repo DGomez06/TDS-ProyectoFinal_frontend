@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:lease_managment/Fuctions/Properties/funciton_get_propertie.dart';
 import 'package:lease_managment/Providers/Properties/propertiesProvider.dart';
 import 'package:lease_managment/ScreensPrincipals/ScreensHome/information.dart';
+import 'package:lease_managment/ScreensPrincipals/ScreensLandlord/editproperty.dart';
 import 'package:lease_managment/models/properties.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,6 @@ class MyPropertiesScreen extends StatefulWidget {
 class _MyPropertiesScreenState extends State<MyPropertiesScreen> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -31,7 +31,6 @@ class _MyPropertiesScreenState extends State<MyPropertiesScreen> {
             GestureDetector(
               onTap: () {
                 Navigator.pop(context);
-              
               },
               child: SvgPicture.asset(
                 'assets/icons/ProfileScreen/back.svg',
@@ -113,106 +112,106 @@ class _MyPropertiesScreenState extends State<MyPropertiesScreen> {
   }
 
   Widget buildGrid(
-  List<Content> contentList,
-  BuildContext context,
-  PropertyDataProvider value,
-) {
-  return GridView.count(
-    crossAxisCount: 2,
-    crossAxisSpacing: 13.0,
-    mainAxisSpacing: 20.0,
-    childAspectRatio: 0.65, // Puedes ajustar este valor según sea necesario
-    padding: const EdgeInsets.all(10.0),
-    children: List.generate(
-      contentList.length,
-      (index) {
-        final content = contentList[index];
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) {
-                  return DetailScreen(
-                    content: content,
-                  );
-                },
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = const Offset(0.0, 1.0);
-                  var end = Offset.zero;
-                  var curve = Curves.ease;
-                  var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                  var offsetAnimation = animation.drive(tween);
-                  return SlideTransition(
-                    position: offsetAnimation,
-                    child: child,
-                  );
-                },
-                transitionDuration: const Duration(milliseconds: 500),
-              ),
-            );
-          },
-          child: Container(
-            height: 200,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                height: 150,
-                width: 200,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  child: content.images.isNotEmpty
-                      ? Image.network(
-                          content.images.first.url,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          color: Colors.grey,
-                        ),
+    List<Content> contentList,
+    BuildContext context,
+    PropertyDataProvider value,
+  ) {
+    return GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 13.0,
+      mainAxisSpacing: 20.0,
+      childAspectRatio: 0.65, // Puedes ajustar este valor según sea necesario
+      padding: const EdgeInsets.all(10.0),
+      children: List.generate(
+        contentList.length,
+        (index) {
+          final content = contentList[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return EditProperty();
+                  },
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var begin = const Offset(0.0, 1.0);
+                    var end = Offset.zero;
+                    var curve = Curves.ease;
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 500),
+                ),
+              );
+            },
+            child: Container(
+              height: 200,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      height: 150,
+                      width: 200,
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        child: content.images.isNotEmpty
+                            ? Image.network(
+                                content.images.first.url,
+                                fit: BoxFit.cover,
+                              )
+                            : Container(
+                                color: Colors.grey,
+                              ),
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 5),
-                    //height: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          content.address,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 18.0,
+                    Container(
+                      padding: const EdgeInsets.only(left: 5),
+                      //height: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            content.address,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 18.0,
+                            ),
                           ),
-                        ),
-                        Text(
-                          content.description,
-                          style: const TextStyle(
-                            fontSize: 12.0,
-                            color: Colors.black,
+                          Text(
+                            content.description,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        Text(
-                          NumberFormat.currency(symbol: 'RD\$').format(content.price),
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.black,
+                          Text(
+                            NumberFormat.currency(symbol: 'RD\$')
+                                .format(content.price),
+                            style: const TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    ),
-  );
-}
-
+          );
+        },
+      ),
+    );
+  }
 }
