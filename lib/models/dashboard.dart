@@ -10,8 +10,8 @@ String dashboardToJson(Dashboard data) => json.encode(data.toJson());
 
 class Dashboard {
     final double totalIncome;
-    final double totalProperties;
-    final double totalTenants;
+    final int totalProperties;
+    final int totalTenants;
 
     Dashboard({
         required this.totalIncome,
@@ -21,8 +21,9 @@ class Dashboard {
 
     factory Dashboard.fromJson(Map<String, dynamic> json) => Dashboard(
         totalIncome: json["totalIncome"].toDouble(),
-        totalProperties: json["totalProperties"].toDouble(),
-        totalTenants: json["totalTenants"].toDouble(),
+        totalProperties: json["totalProperties"].toInt(),
+        totalTenants: json["totalTenants"].toInt(),
+
     );
 
     Map<String, dynamic> toJson() => {
