@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiConexion {
   Dio dio = Dio();
-  String base = 'http://192.168.1.8:8060/api/v1/auth';
+  String base = 'http://10.0.0.41:8060/api/v1/auth';
 
   Future<void> registerUserAndGetToken(User user) async {
     try {
@@ -82,7 +82,7 @@ class ApiConexion {
     String? token = await getToken();
 
     try {
-      await dio.post('http://192.168.1.8:8060/api/v1/user',
+      await dio.post('http://10.0.0.41:8060/api/v1/user',
           data: {"password": newPassword},
           options: Options(headers: {
             'Authorization': 'Bearer $token',

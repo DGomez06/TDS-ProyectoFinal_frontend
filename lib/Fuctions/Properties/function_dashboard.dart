@@ -4,7 +4,7 @@ import 'package:lease_managment/models/dashboard.dart';
 
 class Apidashboard {
   Dio dio = Dio();
-  String base = 'http://192.168.1.8:8060/api/v1/dashboard';
+  String base = 'http://10.0.0.41:8060/api/v1/dashboard';
 
   Future<Dashboard> getDashboard() async {
     String? token = await ApiConexion().getToken();

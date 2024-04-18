@@ -5,7 +5,7 @@ import 'package:lease_managment/models/properties.dart';
 
 class ApiPropertiesGet {
   final Dio _dio = Dio();
-  String url  = 'http://192.168.1.8:8060/api/v1/property';
+  String url = 'http://10.0.0.41:8060/api/v1/property';
 
   Future<List<Properties>> fetchProperties() async {
     try {

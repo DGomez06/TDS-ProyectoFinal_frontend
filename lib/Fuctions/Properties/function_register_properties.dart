@@ -7,7 +7,7 @@ import 'package:lease_managment/Fuctions/function_login_logout.dart';
 
 class ApiRegister {
   final Dio _dio = Dio();
-  String url = 'http://192.168.1.8:8060/api/v1/property';
+  String url = 'http://10.0.0.41:8060/api/v1/property';
   Future<int?> postRegisterProperty(
     String typeProperty,
     String address,
@@ -21,7 +21,6 @@ class ApiRegister {
     List<XFile> image,
   ) async {
     try {
-
       String? token = await ApiConexion().getToken();
       final response = await _dio.post(
         url,
@@ -62,7 +61,7 @@ class ApiRegister {
       int propertyId, List<XFile> imageFiles) async {
     try {
       String? token = await ApiConexion().getToken();
-      const urlBase = 'http://192.168.1.8:8060/api/v1/storage/';
+      const urlBase = 'http://10.0.0.41:8060/api/v1/storage/';
       for (int i = 0; i < imageFiles.length; i++) {
         final XFile imageFile = imageFiles[i];
         List<int> fileBytes = await imageFile.readAsBytes();
