@@ -5,10 +5,9 @@ import 'package:lease_managment/models/properties.dart';
 
 class ApiPropertiesGet {
   final Dio _dio = Dio();
+  String url  = 'http://192.168.1.8:8060/api/v1/property';
 
   Future<List<Properties>> fetchProperties() async {
-    const url = 'http://10.0.0.41:8060/api/v1/property';
-
     try {
       final response = await _dio.get(url);
       if (response.statusCode == 200) {
@@ -28,8 +27,6 @@ class ApiPropertiesGet {
   }
 
   Future<List<Content>> fetchContent() async {
-    const url = 'http://10.0.0.41:8060/api/v1/property';
-
     try {
       final response = await _dio.get(url);
       if (response.statusCode == 200) {
@@ -91,11 +88,10 @@ class ApiPropertiesGet {
   }
 
   Future<List<Favorites>> fetchContentByFavorite() async {
-    const url = 'http://10.0.0.41:8060/api/v1/property/favorites';
     String? token = await ApiConexion().getToken();
     try {
       final response = await _dio.get(
-        url,
+        '$url/favorites',
         options: Options(
           headers: {'Authorization': 'Bearer $token'},
         ),
@@ -118,12 +114,11 @@ class ApiPropertiesGet {
   }
 
   Future<void> deleteFavorite(int propertyId) async {
-    final url = 'http://10.0.0.41:8060/api/v1/property/favorites/$propertyId';
     String? token = await ApiConexion().getToken();
 
     try {
       final response = await _dio.delete(
-        url,
+        '$url/favorites/$propertyId',
         options: Options(
           headers: {'Authorization': 'Bearer $token'},
         ),
@@ -140,12 +135,11 @@ class ApiPropertiesGet {
   }
 
   Future<List<Content>> getPropertiesOwner() async {
-    const url = 'http://10.0.0.41:8060/api/v1/property/owner';
     String? token = await ApiConexion().getToken();
 
     try {
       final response = await _dio.get(
-        url,
+        '$url/owner',
         options: Options(
           headers: {'Authorization': 'Bearer $token'},
         ),
